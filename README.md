@@ -93,10 +93,4 @@ The probe reads public pages and one avatar; it never signs in or performs socia
 
 Developer-only `qa` builds provide F8 to capture the window beside the app bundle and F9 for a short automated scrolling measurement. These controls are excluded from the supplied normal build.
 
-## Later platforms
-
-The protocol/model crate is independent of Iced. Windows/Linux can reuse the desktop interface subject to platform builds and testing. This deliverable includes only macOS.
-
-Tegra 2 / ARMv7 without NEON requires a target/dependency audit and actual hardware testing, including Rust target availability, TLS/crypto, fonts, pixel operations, display backend and memory. A software-rendered Mac build does not prove NEON-free compatibility. Older iOS/Android will need historical SDK/toolchain work and likely smaller platform-native UI shells, reusing models/request logic where their toolchains permit. No legacy support is claimed by this prototype.
-
 The application source is licensed under GPL-2.0-or-later. The Mac binary is distributed under GPL-3.0-or-later for compatibility with Apache-2.0 dependencies. See LICENSE, COPYING-GPL-3.0 and THIRD-PARTY-NOTICES.txt. Ripple's name, logo, website assets and captured public content belong to their respective owners; the source license does not relicense those assets. This beta is for the owner's review and is not an official Ripple release. Bundled palette data retains the licenses documented in docs/THEMES.md.
