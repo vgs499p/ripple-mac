@@ -440,6 +440,8 @@ impl Client {
         } else {
             self.load(&target, 1).await?
         };
+        let baseline_ids: std::collections::HashSet<u64> =
+            context.posts.iter().map(|post| post.id).collect();
         let composer = match composition {
             Composition::Quote(_) => context.quote_form,
             _ => context.composer,
@@ -498,12 +500,15 @@ impl Client {
         let _ = bounded_body(response, HTML_LIMIT)
             .await
             .map_err(|_| Error::UnconfirmedPost)?;
+        // Replies may only appear inside their conversation, not in the first
+        // page of the public timeline. Verify against the same route/form page
+        // used to compose so a successful reply is not reported as a failure.
         let after = self
-            .load(&Route::Public, 1)
+            .load(&target, 1)
             .await
             .map_err(|_| Error::UnconfirmedPost)?;
         let confirmed = after.posts.iter().any(|p| {
-            !before.posts.iter().any(|old| old.id == p.id)
+            !baseline_ids.contains(&p.id)
                 && parse::normalize(&p.text).contains(&parse::normalize(&contents))
                 && (!contents.trim().is_empty() || !p.images.is_empty())
                 && author.as_ref().is_none_or(|a| {

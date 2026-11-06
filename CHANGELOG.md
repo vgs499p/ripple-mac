@@ -1,3 +1,7 @@
+# 0.4.0-beta.4
+
+- Fix replies being reported as unsuccessful when Ripple only shows them in the conversation thread. Confirmation now checks the thread used for the reply.
+
 # 0.4.0-beta.3
 
 - Save confirmed sign-ins in macOS Keychain and restore them on launch.
