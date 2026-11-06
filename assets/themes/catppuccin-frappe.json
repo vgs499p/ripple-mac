@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "id": "catppuccin-frappe",
+  "name": "Catppuccin Frapp\u00e9",
+  "author": "Catppuccin Org",
+  "dark": true,
+  "colors": {
+    "background": "#292c3c",
+    "surface": "#303446",
+    "inset": "#414559",
+    "border": "#51576d",
+    "text": "#c6d0f5",
+    "muted": "#a5adce",
+    "link": "#8caaee",
+    "nav_top": "#292c3c",
+    "nav_bottom": "#232634",
+    "nav_text": "#c6d0f5",
+    "accent": "#ca9ee6",
+    "success": "#a6d189",
+    "danger": "#e78284"
+  },
+  "accents": [
+    {
+      "name": "Rosewater",
+      "color": "#f2d5cf"
+    },
+    {
+      "name": "Flamingo",
+      "color": "#eebebe"
+    },
+    {
+      "name": "Pink",
+      "color": "#f4b8e4"
+    },
+    {
+      "name": "Mauve",
+      "color": "#ca9ee6"
+    },
+    {
+      "name": "Red",
+      "color": "#e78284"
+    },
+    {
+      "name": "Maroon",
+      "color": "#ea999c"
+    },
+    {
+      "name": "Peach",
+      "color": "#ef9f76"
+    },
+    {
+      "name": "Yellow",
+      "color": "#e5c890"
+    },
+    {
+      "name": "Green",
+      "color": "#a6d189"
+    },
+    {
+      "name": "Teal",
+      "color": "#81c8be"
+    },
+    {
+      "name": "Sky",
+      "color": "#99d1db"
+    },
+    {
+      "name": "Sapphire",
+      "color": "#85c1dc"
+    },
+    {
+      "name": "Blue",
+      "color": "#8caaee"
+    },
+    {
+      "name": "Lavender",
+      "color": "#babbf1"
+    }
+  ]
+}

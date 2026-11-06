@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "id": "rose-pine-dawn",
+  "name": "Ros\u00e9 Pine Dawn",
+  "author": "Ros\u00e9 Pine",
+  "dark": false,
+  "colors": {
+    "background": "#faf4ed",
+    "surface": "#fffaf3",
+    "inset": "#f2e9e1",
+    "border": "#9893a5",
+    "text": "#464261",
+    "muted": "#797593",
+    "link": "#56949f",
+    "nav_top": "#fffaf3",
+    "nav_bottom": "#faf4ed",
+    "nav_text": "#464261",
+    "accent": "#d7827e",
+    "success": "#56949f",
+    "danger": "#b4637a"
+  },
+  "accents": [
+    {
+      "name": "Love",
+      "color": "#b4637a"
+    },
+    {
+      "name": "Gold",
+      "color": "#ea9d34"
+    },
+    {
+      "name": "Rose",
+      "color": "#d7827e"
+    },
+    {
+      "name": "Pine",
+      "color": "#286983"
+    },
+    {
+      "name": "Foam",
+      "color": "#56949f"
+    },
+    {
+      "name": "Iris",
+      "color": "#907aa9"
+    }
+  ]
+}

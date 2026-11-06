@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "id": "nord",
+  "name": "Nord",
+  "author": "Sven Greb / Nord",
+  "dark": true,
+  "colors": {
+    "background": "#2e3440",
+    "surface": "#3b4252",
+    "inset": "#434c5e",
+    "border": "#4c566a",
+    "text": "#eceff4",
+    "muted": "#d8dee9",
+    "link": "#88c0d0",
+    "nav_top": "#3b4252",
+    "nav_bottom": "#2e3440",
+    "nav_text": "#eceff4",
+    "accent": "#88c0d0",
+    "success": "#a3be8c",
+    "danger": "#bf616a"
+  },
+  "accents": [
+    {
+      "name": "Frost",
+      "color": "#88c0d0"
+    },
+    {
+      "name": "Blue",
+      "color": "#81a1c1"
+    },
+    {
+      "name": "Teal",
+      "color": "#8fbcbb"
+    },
+    {
+      "name": "Purple",
+      "color": "#b48ead"
+    },
+    {
+      "name": "Green",
+      "color": "#a3be8c"
+    },
+    {
+      "name": "Yellow",
+      "color": "#ebcb8b"
+    },
+    {
+      "name": "Orange",
+      "color": "#d08770"
+    },
+    {
+      "name": "Red",
+      "color": "#bf616a"
+    }
+  ]
+}

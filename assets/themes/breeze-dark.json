@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "id": "breeze-dark",
+  "name": "Breeze Dark",
+  "author": "KDE Breeze contributors",
+  "dark": true,
+  "colors": {
+    "background": "#202326",
+    "surface": "#141618",
+    "inset": "#292c30",
+    "border": "#292c30",
+    "text": "#fcfcfc",
+    "muted": "#a1a9b1",
+    "link": "#1d99f3",
+    "nav_top": "#272c31",
+    "nav_bottom": "#202326",
+    "nav_text": "#fcfcfc",
+    "accent": "#3daee9",
+    "success": "#27ae60",
+    "danger": "#da4453"
+  },
+  "accents": [
+    {
+      "name": "Breeze Blue",
+      "color": "#3daee9"
+    },
+    {
+      "name": "Green",
+      "color": "#27ae60"
+    },
+    {
+      "name": "Orange",
+      "color": "#f67400"
+    },
+    {
+      "name": "Red",
+      "color": "#da4453"
+    },
+    {
+      "name": "Purple",
+      "color": "#9b59b6"
+    }
+  ]
+}

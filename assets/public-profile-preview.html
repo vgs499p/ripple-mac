@@ -1,0 +1,741 @@
+
+<!DOCTYPE html>
+<html lang="en">
+        <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
+    <!-- internet explorer shit -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <![endif]-->
+    <script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
+    <!--
+    <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js"></script>
+    -->
+    <script src="https://cdn.jsdelivr.net/npm/@twemoji/api@latest/dist/twemoji.min.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/js/bootstrap-dropdown.js"></script>
+    <script type="text/javascript" src="/js/bootstrap-modal.js"></script>
+    <script type="text/javascript" src="/js/bootstrap-twipsy.js"></script>
+
+    <!-- css :cold_sweat: -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/misc.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favi/ripple-server.png">
+    <link rel="shortcut icon" href="/img/favi/ripple-32.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favi/ripple-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favi/ripple-16.png">
+    <link rel="icon" type="image/x-icon" href="/img/favi/favicon.ico">
+    <link rel="manifest" href="/site.webmanifest">
+
+  </head>
+          
+    <meta name="description" content="What's on your mind?">
+    <meta name="author" content="kylarz">
+    
+    <style>.rptpost:first-of-type, .fwtlist:first-of-type {
+margin-top: -5px !important;
+}
+  </style><style>.userpost:first-of-type { border-top:none;margin-top:-5px !important;padding-top:0;}</style>                <meta name="title" content="vgs499p - Ripple">
+                <meta name="description" content="">
+                <meta property="og:site_name" content="Ripple" />
+                <meta property="og:title" content="vgs499p">
+                <meta property="og:description" content="">
+                <meta property="og:image" content="/content/pfp/223.jpg">
+                <meta property="og:url" content="https://rippl.fun/~vgs499p">
+                <meta property="twitter:title" content="vgs499p">
+                <meta property="twitter:description" content="">
+                <meta property="twitter:image" content="/content/pfp/223.jpg">
+                <title>vgs499p (@vgs499p) / Ripple</title>    <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="css/profileref.css">
+    <script src="https://kit.fontawesome.com/fbb4da9442.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/google/code-prettify@master/src/prettify.css">
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+
+
+  <body>
+
+  <script>
+(function(){
+  const safeselectors = [
+    'input',
+    'textarea',
+    'select',
+    'label',
+    '.dropdown-nc',
+  ].join(',');
+
+  function kforme(e) {
+    if (!e.target || !e.target.closest) return;
+
+    if (e.target.closest('.dropdown-menu') &&
+        e.target.closest(safeselectors)) {
+      e.stopPropagation();
+    }
+  }
+
+  ['click', 'mousedown', 'pointerdown', 'touchstart'].forEach(evt => {
+    document.addEventListener(evt, kforme, true);
+  });
+})();
+</script>
+<div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <ul class="nav">
+          <a class="brand" href="/"><img src="/img/ripple.svg" alt="Ripple"></a>
+                                              </ul>
+          <ul class="nav secondary-nav">
+        <li class="dropdown" data-dropdown="dropdown" role="menu">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            Have an account? <b>Sign in</b> <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu" style="padding: 15px; min-width: 250px;">
+            <form class="form-stacked lgdd" method="post" action="/login" accept-charset="UTF-8">
+              <label class="qqqq">Username</label>
+              <input type="text" class="span4 qqq" name="username">
+              <label>Password</label>
+              <input type="password" class="span4" name="password">
+              <div style="margin-top: 10px;float:right;margin-right:-10px;">
+                <button type="submit" class="btn btn-primary">Sign in</button>
+              </div>
+              <div style="margin-top: 14px;">
+                <a class="rlink" href="/register">Don't have an account?</a>
+              </div>
+            </form>
+          </ul>
+        </li>
+      </ul>          <form class=" swi" action="/results">
+            <input name="q" id="q" type="text" placeholder="Search" >
+            <i class="bi bi-search icon"></i>
+          </form>
+        </div>
+      </div>
+    </div>
+    <noscript>
+  <div class="alert-message warning" style="margin-bottom:0;text-align:center;margin-top:2px;"><p style="font-weight:bolder !important;">Javascript is disabled, but it's needed for some parts of Ripple.</p></div>
+</noscript>
+<div id="image-popup" tabindex="-1" role="dialog" aria-modal="true">
+  <div class="popup-content">
+    <button id="popup-prev" class="popup-nav" aria-label="Previous image">‹</button>
+    <img id="popup-img" src="" alt="Popup image">
+    <button id="popup-next" class="popup-nav" aria-label="Next image">›</button>
+    <a id="show-original" href="#" target="_blank" rel="noopener noreferrer">Show Original</a>
+  </div>
+</div>    <div class="container">
+  <style> .content { border-radius: 6px !important; } .banner { border-radius: 6px 6px 0 0 !important; } </style>
+<div class="alert-message block-message warning sum sum2">
+  <p class="t">Hey there! <strong>vgs499p</strong> is using Ripple.</p><p class="nor">Ripple is a free service that lets you keep in touch with people through the exchange of quick, frequent answers to one simple question: What's on your mind? <a class="unstylink" href="/register">Join today</a> and <b>follow @vgs499p</b>.</p>
+  <div class="alert-actions">
+    <a class="btn yellowbtn lgyl" href="/register">Join today ›</a> <!--<a class="btn small" href="/login">Already have an account?</a>-->
+  </div>
+  <img height="50px" style="float:right;opacity: 0.15;margin-top: -50px;filter: grayscale(1)" src="/img/ripple.svg">
+</div>
+    <div class="content">
+       <img class="banner" onerror="this.src='/content/banner/default.png'" src="/content/banner/223.jpg">
+       <div class="page-header">
+                
+                        <style>
+                        /* rare */
+                        body {
+                            background: url('/content/background/223.jpg') no-repeat center fixed !important;
+                            background-size: cover !important;
+                        }
+                        </style>
+                                                              <img id="rechannel-pfp" src="/content/pfp/223.jpg">
+          <h1>vgs499p <small><div id="usernamecontainer">@vgs499p </div></small></h1>
+                    
+                              <div class="subbtnrechannel">
+                              <a class="btn disabled" style="margin-left: 44px; margin-top: 8px;"><span class="sub-button-text">Follow</span></a> <span class="yt-subscription-button-subscriber-count-branded-horizontal subscribed">8</span>
+                              </div>
+                                                          </div>  
+                            <div class="page-header biobox abtbox"><p><div class="statsection"><i class="bi bi-geo"></i> Brazil</div><div class="statsection"><i class="bi bi-calendar-week"></i> Joined October 29, 2026</div> <div class="statsection"><i class="bi bi-calendar-date"></i> Last seen November 5, 2026</div></p>
+                                </div>                            <div class="row">
+          <div class="span10">
+        <div class="container-flex">
+            <div class="col-2-3">
+                <ul class="tabs" data-tabs="tabs">
+  
+  <li id="postslink"><a href="#posts"><span class='thdr'>Posts</span> <b>52</b></a></li>
+  <li><a href="#followers"><span class='thdr'>Followers</span> <b>8</b></a></li>
+  <li><a href="#following"><span class='thdr'>Following</span> <b>6</b></a></li>
+  <li class="dropdown more" id="more" data-dropdown="dropdown">
+          <a href="#" class="dropdown-toggle">More...</a>
+          <ul class="dropdown-menu d2">
+                    
+            <li class="more"><a data-controls-modal="viewcss" data-backdrop="static">View CSS</a></li>
+          </ul>
+        </li>
+    </ul>
+<div id="tab-content" class="tab-content">
+    <div class="tab-pane" id="posts">
+                                                                  
+              
+                        <div class="userpost" id="post-7286">
+                        <div>
+                            <img class="postpfp" src="/content/pfp/223.jpg">
+                        </div>
+                        <div>
+                            <span class="postheader"><a href="~vgs499p"><b class="displayname">vgs499p</b></a>  <span class="username">@vgs499p</span> <span class="timeago" rel="twipsy" id="tmago7286" rel="tooltip" data-original-title="November 5, 2026 at 11:30 PM">5 minutes ago</span> <span class="gtr"></span>
+                            <div class="plabels"> 
+                              
+                            </div>
+                            </span>
+                            <p></p>
+                            
+        <img onerror="this.src='/img/missing.png'" src="/content/attachments/img_6aed11b330e52.jpg" id="img7286" class="attachment clickable-image">
+                            
+                            <div class="interactions">
+                                <div><a href="like.php?v=7286"><img class="like" src="./img/interactions/heart.png"> <span class="count like">0</span></a></div>
+                                <div><a href="/status/7286"><img src="./img/interactions/comment.png"> <span class="count">0</span></a></div>
+                                <div><a href="repost?v=7286"><img class="like rtbtn" src="/img/repost.png"> <span class="count like rtbtn">0</span></a></div>
+                                <div><a href="#" class="open-modal" data-id="7286"><img class="rtbtn" src="/img/quote.png"> <span class="count">0</span></a></div>
+                                
+                                </div>
+                                </div>
+                            </div><hr class="j">
+                        <div class="userpost" id="post-7283">
+                        <div>
+                            <img class="postpfp" src="/content/pfp/223.jpg">
+                        </div>
+                        <div>
+                            <span class="postheader"><a href="~vgs499p"><b class="displayname">vgs499p</b></a>  <span class="username">@vgs499p</span> <span class="timeago" rel="twipsy" id="tmago7283" rel="tooltip" data-original-title="November 5, 2026 at 8:58 PM">2 hours ago</span> <span class="gtr"></span>
+                            <div class="plabels"> 
+                              
+                            </div>
+                            </span>
+                            <p>Meow</p>
+                            
+                            
+                            <div class="interactions">
+                                <div><a href="like.php?v=7283"><img class="like" src="./img/interactions/heart.png"> <span class="count like">0</span></a></div>
+                                <div><a href="/status/7283"><img src="./img/interactions/comment.png"> <span class="count">0</span></a></div>
+                                <div><a href="repost?v=7283"><img class="like rtbtn" src="/img/repost.png"> <span class="count like rtbtn">0</span></a></div>
+                                <div><a href="#" class="open-modal" data-id="7283"><img class="rtbtn" src="/img/quote.png"> <span class="count">0</span></a></div>
+                                
+                                </div>
+                                </div>
+                            </div><hr class="j">
+                        <div class="userpost" id="post-7280">
+                        <div>
+                            <img class="postpfp" src="/content/pfp/223.jpg">
+                        </div>
+                        <div>
+                            <span class="postheader"><a href="~vgs499p"><b class="displayname">vgs499p</b></a>  <span class="username">@vgs499p</span> <span class="timeago" rel="twipsy" id="tmago7280" rel="tooltip" data-original-title="November 5, 2026 at 6:46 PM">4 hours ago</span> <span class="gtr"></span>
+                            <div class="plabels"> 
+                              
+                            </div>
+                            </span>
+                            <p>I need 1 million followers on ripple</p>
+                            
+                            
+                            <div class="interactions">
+                                <div><a href="like.php?v=7280"><img class="like" src="./img/interactions/heart.png"> <span class="count like">0</span></a></div>
+                                <div><a href="/status/7280"><img src="./img/interactions/comment.png"> <span class="count">0</span></a></div>
+                                <div><a href="repost?v=7280"><img class="like rtbtn" src="/img/repost.png"> <span class="count like rtbtn">0</span></a></div>
+                                <div><a href="#" class="open-modal" data-id="7280"><img class="rtbtn" src="/img/quote.png"> <span class="count">0</span></a></div>
+                                
+                                </div>
+                                </div>
+                            </div><hr class="j">
+                        <div class="userpost" id="post-7277">
+                        <div>
+                            <img class="postpfp" src="/content/pfp/223.jpg">
+                        </div>
+                        <div>
+                            <span class="postheader"><a href="~vgs499p"><b class="displayname">vgs499p</b></a>  <span class="username">@vgs499p</span> <span class="timeago" rel="twipsy" id="tmago7277" rel="tooltip" data-original-title="November 5, 2026 at 2:57 PM">8 hours ago</span> <span class="gtr"></span>
+                            <div class="plabels"> 
+                              
+                            </div>
+                            </span>
+                            <p>Hey there! i&#039;m using Ripple</p>
+                            
+                            
+                            <div class="interactions">
+                                <div><a href="like.php?v=7277"><img class="like" src="./img/interactions/heart.png"> <span class="count like">0</span></a></div>
+                                <div><a href="/status/7277"><img src="./img/interactions/comment.png"> <span class="count">0</span></a></div>
+                                <div><a href="repost?v=7277"><img class="like rtbtn" src="/img/repost.png"> <span class="count like rtbtn">0</span></a></div>
+                                <div><a href="#" class="open-modal" data-id="7277"><img class="rtbtn" src="/img/quote.png"> <span class="count">0</span></a></div>
+                                
+                                </div>
+                                </div>
+                            </div><hr class="j">
+                        <div class="userpost" id="post-7271">
+                        <div>
+                            <img class="postpfp" src="/content/pfp/223.jpg">
+                        </div>
+                        <div>
+                            <span class="postheader"><a href="~vgs499p"><b class="displayname">vgs499p</b></a>  <span class="username">@vgs499p</span> <span class="timeago" rel="twipsy" id="tmago7271" rel="tooltip" data-original-title="November 5, 2026 at 1:05 AM">22 hours ago</span> <span class="gtr"></span>
+                            <div class="plabels"> 
+                              
+                            </div>
+                            </span>
+                            <p>How it feels cooking a yummy meal as an <a href="/results?q=%23angel">#angel</a></p>
+                            
+        <img onerror="this.src='/img/missing.png'" src="/content/attachments/img_6aebd66e900af.jpg" id="img7271" class="attachment clickable-image">
+                            
+                            <div class="interactions">
+                                <div><a href="like.php?v=7271"><img class="like" src="./img/interactions/heart.png"> <span class="count like">2</span></a></div>
+                                <div><a href="/status/7271"><img src="./img/interactions/comment.png"> <span class="count">0</span></a></div>
+                                <div><a href="repost?v=7271"><img class="like rtbtn" src="/img/repost.png"> <span class="count like rtbtn">0</span></a></div>
+                                <div><a href="#" class="open-modal" data-id="7271"><img class="rtbtn" src="/img/quote.png"> <span class="count">0</span></a></div>
+                                
+                                </div>
+                                </div>
+                            </div><hr class="j">
+                        <div class="userpost" id="post-7268">
+                        <div>
+                            <img class="postpfp" src="/content/pfp/223.jpg">
+                        </div>
+                        <div>
+                            <span class="postheader"><a href="~vgs499p"><b class="displayname">vgs499p</b></a>  <span class="username">@vgs499p</span> <span class="timeago" rel="twipsy" id="tmago7268" rel="tooltip" data-original-title="November 5, 2026 at 12:44 AM">22 hours ago</span> <span class="gtr"><a href="/status/7267">↪ @kylarz</a></span>
+                            <div class="plabels"> 
+                              
+                            </div>
+                            </span>
+                            <p>Ok give me an api now so i can make a shitty port to arm32 legacy ios  immediately with haiku 5.5 on MEDIUM effort</p>
+                            
+                            
+                            <div class="interactions">
+                                <div><a href="like.php?v=7268"><img class="like" src="./img/interactions/heart.png"> <span class="count like">1</span></a></div>
+                                <div><a href="/status/7268"><img src="./img/interactions/comment.png"> <span class="count">1</span></a></div>
+                                <div><a href="repost?v=7268"><img class="like rtbtn" src="/img/repost.png"> <span class="count like rtbtn">0</span></a></div>
+                                <div><a href="#" class="open-modal" data-id="7268"><img class="rtbtn" src="/img/quote.png"> <span class="count">0</span></a></div>
+                                
+                                </div>
+                                </div>
+                            </div><hr class="j">
+                        <div class="userpost" id="post-7266">
+                        <div>
+                            <img class="postpfp" src="/content/pfp/223.jpg">
+                        </div>
+                        <div>
+                            <span class="postheader"><a href="~vgs499p"><b class="displayname">vgs499p</b></a>  <span class="username">@vgs499p</span> <span class="timeago" rel="twipsy" id="tmago7266" rel="tooltip" data-original-title="November 5, 2026 at 12:35 AM">23 hours ago</span> <span class="gtr"></span>
+                            <div class="plabels"> 
+                              
+                            </div>
+                            </span>
+                            <p>the website is dying!<br>
+<br>
+there is nothing &quot;we&quot; can do</p>
+                            
+                            
+                            <div class="interactions">
+                                <div><a href="like.php?v=7266"><img class="like" src="./img/interactions/heart.png"> <span class="count like">2</span></a></div>
+                                <div><a href="/status/7266"><img src="./img/interactions/comment.png"> <span class="count">0</span></a></div>
+                                <div><a href="repost?v=7266"><img class="like rtbtn" src="/img/repost.png"> <span class="count like rtbtn">0</span></a></div>
+                                <div><a href="#" class="open-modal" data-id="7266"><img class="rtbtn" src="/img/quote.png"> <span class="count">0</span></a></div>
+                                
+                                </div>
+                                </div>
+                            </div><hr class="j">
+                        <div class="userpost" id="post-7263">
+                        <div>
+                            <img class="postpfp" src="/content/pfp/223.jpg">
+                        </div>
+                        <div>
+                            <span class="postheader"><a href="~vgs499p"><b class="displayname">vgs499p</b></a>  <span class="username">@vgs499p</span> <span class="timeago" rel="twipsy" id="tmago7263" rel="tooltip" data-original-title="November 4, 2026 at 9:47 PM">1 day ago</span> <span class="gtr"></span>
+                            <div class="plabels"> 
+                              
+                            </div>
+                            </span>
+                            <p>jisgjsmrfoglmsklgimdklsgeklintgkldgukldnegundg</p>
+                            
+                            
+                            <div class="interactions">
+                                <div><a href="like.php?v=7263"><img class="like" src="./img/interactions/heart.png"> <span class="count like">0</span></a></div>
+                                <div><a href="/status/7263"><img src="./img/interactions/comment.png"> <span class="count">0</span></a></div>
+                                <div><a href="repost?v=7263"><img class="like rtbtn" src="/img/repost.png"> <span class="count like rtbtn">0</span></a></div>
+                                <div><a href="#" class="open-modal" data-id="7263"><img class="rtbtn" src="/img/quote.png"> <span class="count">0</span></a></div>
+                                
+                                </div>
+                                </div>
+                            </div><hr class="j">
+                        <div class="userpost" id="post-7262">
+                        <div>
+                            <img class="postpfp" src="/content/pfp/223.jpg">
+                        </div>
+                        <div>
+                            <span class="postheader"><a href="~vgs499p"><b class="displayname">vgs499p</b></a>  <span class="username">@vgs499p</span> <span class="timeago" rel="twipsy" id="tmago7262" rel="tooltip" data-original-title="November 4, 2026 at 9:16 PM">1 day ago</span> <span class="gtr"></span>
+                            <div class="plabels"> 
+                              
+                            </div>
+                            </span>
+                            <p>BREAKING: Haas confirm Rafael Camara will make F1 debut at the Sao Paulo Grand Prix<br>
+<br>
+The 21-year-old is set to become the 34th driver from Brazil to race in F1 🇧🇷<br>
+<br>
+<a href="/results?q=%23F1">#F1</a></p>
+                            
+        <img onerror="this.src='/img/missing.png'" src="/content/attachments/img_6aeba0b00f512.jpg" id="img7262" class="attachment clickable-image">
+                            
+                            <div class="interactions">
+                                <div><a href="like.php?v=7262"><img class="like" src="./img/interactions/heart.png"> <span class="count like">0</span></a></div>
+                                <div><a href="/status/7262"><img src="./img/interactions/comment.png"> <span class="count">0</span></a></div>
+                                <div><a href="repost?v=7262"><img class="like rtbtn" src="/img/repost.png"> <span class="count like rtbtn">0</span></a></div>
+                                <div><a href="#" class="open-modal" data-id="7262"><img class="rtbtn" src="/img/quote.png"> <span class="count">0</span></a></div>
+                                
+                                </div>
+                                </div>
+                            </div><hr class="j">
+                        <div class="userpost" id="post-7261">
+                        <div>
+                            <img class="postpfp" src="/content/pfp/223.jpg">
+                        </div>
+                        <div>
+                            <span class="postheader"><a href="~vgs499p"><b class="displayname">vgs499p</b></a>  <span class="username">@vgs499p</span> <span class="timeago" rel="twipsy" id="tmago7261" rel="tooltip" data-original-title="November 4, 2026 at 9:15 PM">1 day ago</span> <span class="gtr"></span>
+                            <div class="plabels"> 
+                              
+                            </div>
+                            </span>
+                            <p>I NEED TO DIE </p>
+                            
+                            
+                            <div class="interactions">
+                                <div><a href="like.php?v=7261"><img class="like" src="./img/interactions/heart.png"> <span class="count like">0</span></a></div>
+                                <div><a href="/status/7261"><img src="./img/interactions/comment.png"> <span class="count">0</span></a></div>
+                                <div><a href="repost?v=7261"><img class="like rtbtn" src="/img/repost.png"> <span class="count like rtbtn">0</span></a></div>
+                                <div><a href="#" class="open-modal" data-id="7261"><img class="rtbtn" src="/img/quote.png"> <span class="count">0</span></a></div>
+                                
+                                </div>
+                                </div>
+                            </div><hr class="j">
+            
+            <ul class="pager">
+                <li class="previous disabled">
+                    <a href="#">&larr; Newer</a>
+                </li>
+                <li class="next ">
+                    <a href="/vgs499p?pageno=2">Older &rarr;</a>
+                </li>
+            </ul>
+
+    </div> <!--End Posts Tab-->
+    <div class="tab-pane" id="followers">
+        
+                        <div class="userpost fwtlist">
+                        <div>
+                            <img class="postpfp" src="/content/pfp/1.jpg">
+                        </div>
+                        <div>
+                        <span class="postheader"><a href="~kylarz"><b class="displayname">DawnH</b></a> <img rel="twipsy" id="vfb" title="Verified" class="verified" src="/img/verified.png"> <span class="username">@kylarz</span></span>
+                              <p>
+                              <a class="btn disabled"><span class="sub-button-text">Follow</span></a> <span class="yt-subscription-button-subscriber-count-branded-horizontal subscribed">63</span>
+                              </p>
+                              </div>
+                        </div><hr class="j">
+                
+                        <div class="userpost fwtlist">
+                        <div>
+                            <img class="postpfp" src="/content/pfp/58.jpg">
+                        </div>
+                        <div>
+                        <span class="postheader"><a href="~rosaura"><b class="displayname">rosaura</b></a> <img rel="twipsy" id="vfb" title="Verified" class="verified" src="/img/verified.png"> <span class="username">@rosaura</span></span>
+                              <p>
+                              <a class="btn disabled"><span class="sub-button-text">Follow</span></a> <span class="yt-subscription-button-subscriber-count-branded-horizontal subscribed">3</span>
+                              </p>
+                              </div>
+                        </div><hr class="j">
+                
+                        <div class="userpost fwtlist">
+                        <div>
+                            <img class="postpfp" src="/content/pfp/218.jpg">
+                        </div>
+                        <div>
+                        <span class="postheader"><a href="~riley"><b class="displayname">riley</b></a> <img rel="twipsy" id="vfb" title="Verified" class="verified" src="/img/verified.png"> <span class="username">@riley</span></span>
+                              <p>
+                              <a class="btn disabled"><span class="sub-button-text">Follow</span></a> <span class="yt-subscription-button-subscriber-count-branded-horizontal subscribed">8</span>
+                              </p>
+                              </div>
+                        </div><hr class="j">
+                
+                        <div class="userpost fwtlist">
+                        <div>
+                            <img class="postpfp" src="/content/pfp/226.jpg">
+                        </div>
+                        <div>
+                        <span class="postheader"><a href="~makeljbgreatagain"><b class="displayname">mel</b></a> <img rel="twipsy" id="vfb" title="Verified" class="verified" src="/img/verified.png"> <span class="username">@makeljbgreatagain</span></span>
+                              <p>
+                              <a class="btn disabled"><span class="sub-button-text">Follow</span></a> <span class="yt-subscription-button-subscriber-count-branded-horizontal subscribed">7</span>
+                              </p>
+                              </div>
+                        </div><hr class="j">
+                
+                        <div class="userpost fwtlist">
+                        <div>
+                            <img class="postpfp" src="/content/pfp/224.jpg">
+                        </div>
+                        <div>
+                        <span class="postheader"><a href="~sk3p"><b class="displayname">sk3p</b></a>  <span class="username">@sk3p</span></span>
+                              <p>
+                              <a class="btn disabled"><span class="sub-button-text">Follow</span></a> <span class="yt-subscription-button-subscriber-count-branded-horizontal subscribed">5</span>
+                              </p>
+                              </div>
+                        </div><hr class="j">
+                
+                        <div class="userpost fwtlist">
+                        <div>
+                            <img class="postpfp" src="/content/pfp/219.jpg">
+                        </div>
+                        <div>
+                        <span class="postheader"><a href="~aviv"><b class="displayname">aviv</b></a>  <span class="username">@aviv</span></span>
+                              <p>
+                              <a class="btn disabled"><span class="sub-button-text">Follow</span></a> <span class="yt-subscription-button-subscriber-count-branded-horizontal subscribed">5</span>
+                              </p>
+                              </div>
+                        </div><hr class="j">
+                
+                        <div class="userpost fwtlist">
+                        <div>
+                            <img class="postpfp" src="/content/pfp/236.jpg">
+                        </div>
+                        <div>
+                        <span class="postheader"><a href="~octo"><b class="displayname">octo</b></a>  <span class="username">@octo</span></span>
+                              <p>
+                              <a class="btn disabled"><span class="sub-button-text">Follow</span></a> <span class="yt-subscription-button-subscriber-count-branded-horizontal subscribed">3</span>
+                              </p>
+                              </div>
+                        </div><hr class="j">
+                
+                        <div class="userpost fwtlist">
+                        <div>
+                            <img class="postpfp" src="/content/pfp/237.jpg">
+                        </div>
+                        <div>
+                        <span class="postheader"><a href="~Reinaisverysleepy"><b class="displayname">Reinaisverysleepy</b></a>  <span class="username">@Reinaisverysleepy</span></span>
+                              <p>
+                              <a class="btn disabled"><span class="sub-button-text">Follow</span></a> <span class="yt-subscription-button-subscriber-count-branded-horizontal subscribed">1</span>
+                              </p>
+                              </div>
+                        </div><hr class="j">
+                <pre>TODO: Add pagination...</pre>    </div>
+        <div class="tab-pane" id="following">
+               
+                        <div class="userpost fwtlist">
+                        <div>
+                            <img class="postpfp" src="/content/pfp/222.jpg">
+                        </div>
+                        <div>
+                        <span class="postheader"><a href="~kirkfrdk"><b class="displayname">kirkfrdk</b></a>  <span class="username">@kirkfrdk</span></span>
+                              <p>
+                              <a class="btn disabled"><span class="sub-button-text">Follow</span></a> <span class="yt-subscription-button-subscriber-count-branded-horizontal subscribed">5</span>
+                              </p>
+                              </div>
+                        </div><hr class="j">
+                
+                        <div class="userpost fwtlist">
+                        <div>
+                            <img class="postpfp" src="/content/pfp/154.jpg">
+                        </div>
+                        <div>
+                        <span class="postheader"><a href="~TechPowerUp"><b class="displayname">TechPowerUp</b></a>  <span class="username">@TechPowerUp</span></span>
+                              <p>
+                              <a class="btn disabled"><span class="sub-button-text">Follow</span></a> <span class="yt-subscription-button-subscriber-count-branded-horizontal subscribed">5</span>
+                              </p>
+                              </div>
+                        </div><hr class="j">
+                
+                        <div class="userpost fwtlist">
+                        <div>
+                            <img class="postpfp" src="/content/pfp/224.jpg">
+                        </div>
+                        <div>
+                        <span class="postheader"><a href="~sk3p"><b class="displayname">sk3p</b></a>  <span class="username">@sk3p</span></span>
+                              <p>
+                              <a class="btn disabled"><span class="sub-button-text">Follow</span></a> <span class="yt-subscription-button-subscriber-count-branded-horizontal subscribed">5</span>
+                              </p>
+                              </div>
+                        </div><hr class="j">
+                
+                        <div class="userpost fwtlist">
+                        <div>
+                            <img class="postpfp" src="/content/pfp/226.jpg">
+                        </div>
+                        <div>
+                        <span class="postheader"><a href="~makeljbgreatagain"><b class="displayname">mel</b></a> <img rel="twipsy" id="vfb" title="Verified" class="verified" src="/img/verified.png"> <span class="username">@makeljbgreatagain</span></span>
+                              <p>
+                              <a class="btn disabled"><span class="sub-button-text">Follow</span></a> <span class="yt-subscription-button-subscriber-count-branded-horizontal subscribed">7</span>
+                              </p>
+                              </div>
+                        </div><hr class="j">
+                
+                        <div class="userpost fwtlist">
+                        <div>
+                            <img class="postpfp" src="/content/pfp/218.jpg">
+                        </div>
+                        <div>
+                        <span class="postheader"><a href="~riley"><b class="displayname">riley</b></a> <img rel="twipsy" id="vfb" title="Verified" class="verified" src="/img/verified.png"> <span class="username">@riley</span></span>
+                              <p>
+                              <a class="btn disabled"><span class="sub-button-text">Follow</span></a> <span class="yt-subscription-button-subscriber-count-branded-horizontal subscribed">8</span>
+                              </p>
+                              </div>
+                        </div><hr class="j">
+                
+                        <div class="userpost fwtlist">
+                        <div>
+                            <img class="postpfp" src="/content/pfp/58.jpg">
+                        </div>
+                        <div>
+                        <span class="postheader"><a href="~rosaura"><b class="displayname">rosaura</b></a> <img rel="twipsy" id="vfb" title="Verified" class="verified" src="/img/verified.png"> <span class="username">@rosaura</span></span>
+                              <p>
+                              <a class="btn disabled"><span class="sub-button-text">Follow</span></a> <span class="yt-subscription-button-subscriber-count-branded-horizontal subscribed">3</span>
+                              </p>
+                              </div>
+                        </div><hr class="j">
+                <pre>TODO: Add pagination...</pre>    </div>
+    </div></div>
+                            <!--endpost-->  
+                            <!-- <p style="text-align: center" class="text-muted">You have reached the end.</p>   -->
+                        </div>
+        </div>
+          <div class="span4" id="channel">
+                                    <h3>About Me</h3>
+                                    <div><b>Name</b> vic tor,</div><div><b>Pronouns</b> she/they, he/they</div><div><b>Favorite Games</b> yuri ddlc</div><div><b>Favorite Music</b> yuri ddlc</div>                                        <hr class="jthr">
+                                        <!--<h3>Statistics</h3>
+                    <div class="card message">
+                    <div><b>Joined</b> October 29, 2026</div>
+                    <div><b>Last seen</b> November 5, 2026</div>
+          </div>
+                -->
+          <div class="card message">
+          </div>
+        </div>
+      </div>
+    </div>
+
+            <footer>
+        <p>&copy; 2023-2026 <b>strata</b>digital <span>-</span> <a href="/about">About</a> <span>-</span> <a href="/tos">Terms of Service</a> <span>-</span> <a href="/privacy">Privacy Policy</a> <span>-</span> <a href="/help">Help</a> <span>-</span> <a href="/news">News</a> <span>-</span> <a href="https://discord.gg/56pNzgcWJD">Discord</a></p>
+      </footer>
+<script type="text/javascript" src="/js/fjs.js"></script>
+<div id="quoteModal" class="modal hide fade">
+  <form id="quoteForm" method="post" action="/quote" enctype="multipart/form-data">
+  <div class="modal-header">
+    <a href="#" class="close" data-dismiss="modal">×</a>
+    <h3>Quote Post</h3>
+  </div>
+  <div class="modal-body">
+  <input type="hidden" name="qid" id="modalqid">
+   <div class="modal-form">
+   <textarea name="postcontentsQ" class="newpost qf" placeholder="What's on your mind?"></textarea>
+                <div class="input-group" style="width: 550px;height: 20px;">
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const textarea = document.querySelector('textarea[name="postcontentsQ"]');
+  const charNum = document.getElementById('charNumQ');
+  const submitBtn = document.querySelector('input[type="submit"][name="submit"]');
+  const maxLength = 256;
+
+  const updateCounter = () => {
+    const remaining = maxLength - textarea.value.length;
+    charNum.textContent = remaining;
+
+    charNum.style.color = 'gray';
+
+    if (remaining <= 20 && remaining >= 0) {
+      charNum.style.color = 'orange';
+    } else if (remaining < 0) {
+      charNum.style.color = 'red';
+    }
+
+    submitBtn.disabled = remaining < 0;
+  };
+
+  updateCounter();
+
+  textarea.addEventListener('input', updateCounter);
+});
+</script>
+            <div></div>
+            <div style="width:550px;height:20px;"><span id="charNumQ"></span><div class="aimg"><label><img src="/img/img.png"><input type="file" id="fipQ" name="qimages[]" multiple accept="image/jpeg,image/png,image/gif"></label><span id="imgnameQ"></span></div></div>
+          </div>
+    <div id="quotePreview" class="quotepost" style="display:block;"></div>
+  </div>
+</div>
+  <div class="modal-footer" style="margin-bottom:-20px">
+    <button type="submit" name="submit" class="btn error">Post</button>
+  </div>
+  </form><script type="text/javascript" src="/js/qjs2.js"></script>
+<script>
+    $('[rel=tooltip], [rel=twipsy], [rel=tooltiplfm]').twipsy({
+        placement: 'above',
+        title: 'data-original-title',
+    });
+    $('[rel=tooltipabt').twipsy({
+        html: true
+    });
+    $(document).ready(function() {
+        $('.userpost:has(ul, ol)').each(function() {
+            $(this).find('p').each(function() {
+                var $p = $(this);
+                if (!$p.text().trim() && $p.find('img').length === 0) {
+                    $p.remove();
+                }
+            });
+        });
+    });
+
+</script>      <script type="text/javascript" src="/js/bootstrap-tabs.js"></script>
+            <script>
+$(function(){
+    $('#postslink').find('a').trigger('click');
+})
+document.getElementById('fip').addEventListener('change', function() {
+  const names = Array.from(this.files).slice(0, 5).map(f => f.name);
+  document.getElementById('imgname').textContent = names.join(', ');
+});
+const form = document.getElementById("npform");
+const fileInput = document.getElementById("fip");
+const newpost = document.querySelector(".newpost");
+
+window.addEventListener('paste', e => {
+  if (document.activeElement === newpost) {
+    if (e.clipboardData && e.clipboardData.files.length > 0) {
+      const existingFiles = Array.from(fileInput.files);
+      const pastedFiles = Array.from(e.clipboardData.files);
+      const combinedFiles = existingFiles.concat(pastedFiles).slice(0, 5);
+      const dataTransfer = new DataTransfer();
+      combinedFiles.forEach(file => dataTransfer.items.add(file));
+
+      fileInput.files = dataTransfer.files;
+      fileInput.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+  }
+});
+</script>
+    </div> <!-- /container -->
+    <style>
+        li.L0, li.L1, li.L2, li.L3, li.L5, li.L6, li.L7, li.L8 {
+  list-style-type: decimal !important;
+}</style>
+<div id="viewcss" class="modal hide fade in">
+            <div class="modal-header">
+              <a href="#" class="close">×</a>
+              <h3>View CSS</h3>
+            </div>
+            <div class="modal-body">
+              This user does not have any custom CSS.            </div>
+            <!-- <div class="modal-footer">
+              <a href="#" class="btn secondary">Copy</a> 
+            </div> -->
+          </div>
+<script>
+const form = document.getElementById("npform");
+const fileInput = document.getElementById("fip");
+const newpost = document.querySelector(".newpost");
+
+window.addEventListener('paste', e => {
+  if (document.activeElement === newpost) {
+    if (e.clipboardData && e.clipboardData.files.length > 0) {
+      fileInput.files = e.clipboardData.files;
+      fileInput.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+  }
+});
+</script>
+<script src="/js/ipv.js"></script>
+  </body>
+</html>

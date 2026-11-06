@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "id": "catppuccin-latte",
+  "name": "Catppuccin Latte",
+  "author": "Catppuccin Org",
+  "dark": false,
+  "colors": {
+    "background": "#e6e9ef",
+    "surface": "#eff1f5",
+    "inset": "#ccd0da",
+    "border": "#bcc0cc",
+    "text": "#4c4f69",
+    "muted": "#6c6f85",
+    "link": "#1e66f5",
+    "nav_top": "#e6e9ef",
+    "nav_bottom": "#dce0e8",
+    "nav_text": "#4c4f69",
+    "accent": "#8839ef",
+    "success": "#40a02b",
+    "danger": "#d20f39"
+  },
+  "accents": [
+    {
+      "name": "Rosewater",
+      "color": "#dc8a78"
+    },
+    {
+      "name": "Flamingo",
+      "color": "#dd7878"
+    },
+    {
+      "name": "Pink",
+      "color": "#ea76cb"
+    },
+    {
+      "name": "Mauve",
+      "color": "#8839ef"
+    },
+    {
+      "name": "Red",
+      "color": "#d20f39"
+    },
+    {
+      "name": "Maroon",
+      "color": "#e64553"
+    },
+    {
+      "name": "Peach",
+      "color": "#fe640b"
+    },
+    {
+      "name": "Yellow",
+      "color": "#df8e1d"
+    },
+    {
+      "name": "Green",
+      "color": "#40a02b"
+    },
+    {
+      "name": "Teal",
+      "color": "#179299"
+    },
+    {
+      "name": "Sky",
+      "color": "#04a5e5"
+    },
+    {
+      "name": "Sapphire",
+      "color": "#209fb5"
+    },
+    {
+      "name": "Blue",
+      "color": "#1e66f5"
+    },
+    {
+      "name": "Lavender",
+      "color": "#7287fd"
+    }
+  ]
+}

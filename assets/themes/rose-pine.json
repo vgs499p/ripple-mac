@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "id": "rose-pine",
+  "name": "Ros\u00e9 Pine",
+  "author": "Ros\u00e9 Pine",
+  "dark": true,
+  "colors": {
+    "background": "#191724",
+    "surface": "#1f1d2e",
+    "inset": "#26233a",
+    "border": "#6e6a86",
+    "text": "#e0def4",
+    "muted": "#908caa",
+    "link": "#9ccfd8",
+    "nav_top": "#1f1d2e",
+    "nav_bottom": "#191724",
+    "nav_text": "#e0def4",
+    "accent": "#ebbcba",
+    "success": "#9ccfd8",
+    "danger": "#eb6f92"
+  },
+  "accents": [
+    {
+      "name": "Love",
+      "color": "#eb6f92"
+    },
+    {
+      "name": "Gold",
+      "color": "#f6c177"
+    },
+    {
+      "name": "Rose",
+      "color": "#ebbcba"
+    },
+    {
+      "name": "Pine",
+      "color": "#31748f"
+    },
+    {
+      "name": "Foam",
+      "color": "#9ccfd8"
+    },
+    {
+      "name": "Iris",
+      "color": "#c4a7e7"
+    }
+  ]
+}

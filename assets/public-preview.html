@@ -1,0 +1,1197 @@
+
+<!DOCTYPE html>
+<html lang="en">
+            <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
+    <!-- internet explorer shit -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <![endif]-->
+    <script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
+    <!--
+    <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js"></script>
+    -->
+    <script src="https://cdn.jsdelivr.net/npm/@twemoji/api@latest/dist/twemoji.min.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/js/bootstrap-dropdown.js"></script>
+    <script type="text/javascript" src="/js/bootstrap-modal.js"></script>
+    <script type="text/javascript" src="/js/bootstrap-twipsy.js"></script>
+
+    <!-- css :cold_sweat: -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/misc.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favi/ripple-server.png">
+    <link rel="shortcut icon" href="/img/favi/ripple-32.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favi/ripple-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favi/ripple-16.png">
+    <link rel="icon" type="image/x-icon" href="/img/favi/favicon.ico">
+    <link rel="manifest" href="/site.webmanifest">
+
+  </head>
+      <title>Ripple</title>    
+    <meta name="description" content="Virginia's (second) worst microblogging service">
+    <meta name="author" content="kylarz">
+    
+    <style>.rptpost:first-of-type, .fwtlist:first-of-type {
+margin-top: -5px !important;
+}
+  </style>    <link rel="stylesheet" href="/css/profile.css">
+    <link rel="stylesheet" href="/css/index.css">
+  <body>
+
+  <script>
+(function(){
+  const safeselectors = [
+    'input',
+    'textarea',
+    'select',
+    'label',
+    '.dropdown-nc',
+  ].join(',');
+
+  function kforme(e) {
+    if (!e.target || !e.target.closest) return;
+
+    if (e.target.closest('.dropdown-menu') &&
+        e.target.closest(safeselectors)) {
+      e.stopPropagation();
+    }
+  }
+
+  ['click', 'mousedown', 'pointerdown', 'touchstart'].forEach(evt => {
+    document.addEventListener(evt, kforme, true);
+  });
+})();
+</script>
+<div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <ul class="nav">
+          <a class="brand" href="/"><img src="/img/ripple.svg" alt="Ripple"></a>
+                                              </ul>
+          <ul class="nav secondary-nav">
+        <li class="dropdown" data-dropdown="dropdown" role="menu">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            Have an account? <b>Sign in</b> <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu" style="padding: 15px; min-width: 250px;">
+            <form class="form-stacked lgdd" method="post" action="/login" accept-charset="UTF-8">
+              <label class="qqqq">Username</label>
+              <input type="text" class="span4 qqq" name="username">
+              <label>Password</label>
+              <input type="password" class="span4" name="password">
+              <div style="margin-top: 10px;float:right;margin-right:-10px;">
+                <button type="submit" class="btn btn-primary">Sign in</button>
+              </div>
+              <div style="margin-top: 14px;">
+                <a class="rlink" href="/register">Don't have an account?</a>
+              </div>
+            </form>
+          </ul>
+        </li>
+      </ul>          <form class=" swi" action="/results">
+            <input name="q" id="q" type="text" placeholder="Search" >
+            <i class="bi bi-search icon"></i>
+          </form>
+        </div>
+      </div>
+    </div>
+    <noscript>
+  <div class="alert-message warning" style="margin-bottom:0;text-align:center;margin-top:2px;"><p style="font-weight:bolder !important;">Javascript is disabled, but it's needed for some parts of Ripple.</p></div>
+</noscript>
+<div id="image-popup" tabindex="-1" role="dialog" aria-modal="true">
+  <div class="popup-content">
+    <button id="popup-prev" class="popup-nav" aria-label="Previous image">‹</button>
+    <img id="popup-img" src="" alt="Popup image">
+    <button id="popup-next" class="popup-nav" aria-label="Next image">›</button>
+    <a id="show-original" href="#" target="_blank" rel="noopener noreferrer">Show Original</a>
+  </div>
+</div>
+    <header class="jumbotron masthead" id="overview">
+      <div class="inner">
+        <div class="container m">
+        <div class="ext">
+                </div>
+          <div>
+          
+          <h1>Welcome to Ripple.</h1>
+          <p class="lead">
+            What's on your mind? <br><a href="register.php" class="btn primary yellowbtn">Sign up for Ripple</a>
+          </p>          <!-- <p><strong>thing:</strong> thing 2</p> -->
+        </div><!--endfirstblock-->
+        </div><!-- /container -->
+      </div>
+    </header>
+
+    <div class="container">
+
+      <div class="content">
+        <div class="row">
+          <div class="span10">
+                                                          
+                        <div class="userpost" id="post-7286">
+                        <div>
+                            <img class="postpfp" data-author-id="223" src="/content/pfp/223.jpg">
+                        </div>
+                        <div>
+                            <span class="postheader"><a href="~vgs499p"><b class="displayname">vgs499p</b></a>  <span class="username">@vgs499p</span> <span class="timeago" rel="twipsy" id="tmago7286" rel="tooltip" data-original-title="October 29, 2026 at 1:23 AM">5 minutes ago</span> <span class="gtr"></span>    <div class="hover-card">
+        <div class="hover-card-header" style="background-image: url('/content/banner/223.jpg');"></div>
+        <a href="/~vgs499p">
+            <img src="/content/pfp/223.jpg" class="hover-card-avatar">
+        </a>
+        <a href="/~vgs499p">
+            <h4>vgs499p <small>@vgs499p</small></h4>
+        </a>
+                <div class="hover-card-stats">
+            <span><strong>8</strong> Followers</span>
+            <span><strong>6</strong> Following</span>
+            <span><strong>52</strong> Posts</span>
+        </div>
+    </div>
+
+                            <div class="plabels"> 
+                          
+                            </div>
+                            </span>
+                            <p></p>
+                            
+        <img onerror="this.src='/img/missing.png'" src="/content/attachments/img_6aed11b330e52.jpg" id="img7286" class="attachment clickable-image">
+                            
+                            <div class="interactions">
+                                <div><a href="like?v=7286"><img class="like" src="./img/interactions/heart.png"> <span class="count like">0</span></a></div>
+                                <div><a href="/status/7286"><img src="./img/interactions/comment.png"> <span class="count">0</span></a></div>
+                                <div><a href="repost?v=7286"><img class="like rtbtn" src="/img/repost.png"> <span class="count like rtbtn">0</span></a></div>
+                                <div><a href="#" class="open-modal" data-id="7286"><img class="rtbtn" src="/img/quote.png"> <span class="count">0</span></a></div>
+                                
+                                </div>
+                                </div>
+                            </div><hr class="j">
+                        <div class="userpost" id="post-7285">
+                        <div>
+                            <img class="postpfp" data-author-id="218" src="/content/pfp/218.jpg">
+                        </div>
+                        <div>
+                            <span class="postheader"><a href="~riley"><b class="displayname">riley</b></a> <img rel="twipsy" id="vfb" title="Verified" class="verified" src="/img/verified.png"> <span class="username">@riley</span> <span class="timeago" rel="twipsy" id="tmago7285" rel="tooltip" data-original-title="October 27, 2026 at 1:30 AM">12 minutes ago</span> <span class="gtr"></span>    <div class="hover-card">
+        <div class="hover-card-header" style="background-image: url('/content/banner/218.jpg');"></div>
+        <a href="/~riley">
+            <img src="/content/pfp/218.jpg" class="hover-card-avatar">
+        </a>
+        <a href="/~riley">
+            <h4>riley <img rel="twipsy" id="vfb" title="Verified" class="verified" src="/img/verified.png"><small>@riley</small></h4>
+        </a>
+                    <p class="hover-card-bio">Meow</p>
+                <div class="hover-card-stats">
+            <span><strong>8</strong> Followers</span>
+            <span><strong>7</strong> Following</span>
+            <span><strong>39</strong> Posts</span>
+        </div>
+    </div>
+
+                            <div class="plabels"> 
+                          
+                            </div>
+                            </span>
+                            <p>nya mrrp nya noew</p>
+                            
+                            
+                            <div class="interactions">
+                                <div><a href="like?v=7285"><img class="like" src="./img/interactions/heart.png"> <span class="count like">0</span></a></div>
+                                <div><a href="/status/7285"><img src="./img/interactions/comment.png"> <span class="count">0</span></a></div>
+                                <div><a href="repost?v=7285"><img class="like rtbtn" src="/img/repost.png"> <span class="count like rtbtn">0</span></a></div>
+                                <div><a href="#" class="open-modal" data-id="7285"><img class="rtbtn" src="/img/quote.png"> <span class="count">0</span></a></div>
+                                
+                                </div>
+                                </div>
+                            </div><hr class="j">
+                        <div class="userpost" id="post-7284">
+                        <div>
+                            <img class="postpfp" data-author-id="154" src="/content/pfp/154.jpg">
+                        </div>
+                        <div>
+                            <span class="postheader"><a href="~TechPowerUp"><b class="displayname">TechPowerUp</b></a>  <span class="username">@TechPowerUp</span> <span class="timeago" rel="twipsy" id="tmago7284" rel="tooltip" data-original-title="December 18, 2025 at 4:26 PM">1 hour ago</span> <span class="gtr"></span>    <div class="hover-card">
+        <div class="hover-card-header" style="background-image: url('/content/banner/154.jpg');"></div>
+        <a href="/~TechPowerUp">
+            <img src="/content/pfp/154.jpg" class="hover-card-avatar">
+        </a>
+        <a href="/~TechPowerUp">
+            <h4>TechPowerUp <small>@TechPowerUp</small></h4>
+        </a>
+                <div class="hover-card-stats">
+            <span><strong>5</strong> Followers</span>
+            <span><strong>0</strong> Following</span>
+            <span><strong>136</strong> Posts</span>
+        </div>
+    </div>
+
+                            <div class="plabels"> 
+                          
+                            </div>
+                            </span>
+                            <p>Nintendo Has No Plans for Another Switch 2 Price Hike<br>
+<br>
+<a href="https://www.techpowerup.com/354516/nintendo-has-no-plans-for-another-switch-2-price-hike" target="_blank" rel="nofollow"><a href="https://www.techpowerup.com/354516/nintendo-has-no-plans-for-another-switch-2-price-hike"><a href="https://www.techpowerup.com/354516/nintendo-has-no-plans-for-another-switch-2-price-hike">https://www.techpowerup.com/354516/nintendo-has-no-plans-for-another-switch-2-price-hike</a></a></a></p>
+                            
+        <img onerror="this.src='/img/missing.png'" src="/content/attachments/img_6aecfc63b6764.jpg" id="img7284" class="attachment clickable-image">
+                            
+                            <div class="interactions">
+                                <div><a href="like?v=7284"><img class="like" src="./img/interactions/heart.png"> <span class="count like">0</span></a></div>
+                                <div><a href="/status/7284"><img src="./img/interactions/comment.png"> <span class="count">0</span></a></div>
+                                <div><a href="repost?v=7284"><img class="like rtbtn" src="/img/repost.png"> <span class="count like rtbtn">0</span></a></div>
+                                <div><a href="#" class="open-modal" data-id="7284"><img class="rtbtn" src="/img/quote.png"> <span class="count">0</span></a></div>
+                                
+                                </div>
+                                </div>
+                            </div><hr class="j">
+                        <div class="userpost" id="post-7283">
+                        <div>
+                            <img class="postpfp" data-author-id="223" src="/content/pfp/223.jpg">
+                        </div>
+                        <div>
+                            <span class="postheader"><a href="~vgs499p"><b class="displayname">vgs499p</b></a>  <span class="username">@vgs499p</span> <span class="timeago" rel="twipsy" id="tmago7283" rel="tooltip" data-original-title="October 29, 2026 at 1:23 AM">2 hours ago</span> <span class="gtr"></span>    <div class="hover-card">
+        <div class="hover-card-header" style="background-image: url('/content/banner/223.jpg');"></div>
+        <a href="/~vgs499p">
+            <img src="/content/pfp/223.jpg" class="hover-card-avatar">
+        </a>
+        <a href="/~vgs499p">
+            <h4>vgs499p <small>@vgs499p</small></h4>
+        </a>
+                <div class="hover-card-stats">
+            <span><strong>8</strong> Followers</span>
+            <span><strong>6</strong> Following</span>
+            <span><strong>52</strong> Posts</span>
+        </div>
+    </div>
+
+                            <div class="plabels"> 
+                          
+                            </div>
+                            </span>
+                            <p>Meow</p>
+                            
+                            
+                            <div class="interactions">
+                                <div><a href="like?v=7283"><img class="like" src="./img/interactions/heart.png"> <span class="count like">0</span></a></div>
+                                <div><a href="/status/7283"><img src="./img/interactions/comment.png"> <span class="count">0</span></a></div>
+                                <div><a href="repost?v=7283"><img class="like rtbtn" src="/img/repost.png"> <span class="count like rtbtn">0</span></a></div>
+                                <div><a href="#" class="open-modal" data-id="7283"><img class="rtbtn" src="/img/quote.png"> <span class="count">0</span></a></div>
+                                
+                                </div>
+                                </div>
+                            </div><hr class="j">
+                        <div class="userpost" id="post-7282">
+                        <div>
+                            <img class="postpfp" data-author-id="90" src="/content/pfp/90.jpg">
+                        </div>
+                        <div>
+                            <span class="postheader"><a href="~shack"><b class="displayname">shack</b></a> <img rel="twipsy" id="vfb" title="Verified" class="verified" src="/img/verified.png"> <span class="username">@shack</span> <span class="timeago" rel="twipsy" id="tmago7282" rel="tooltip" data-original-title="October 24, 2025 at 7:56 PM">3 hours ago</span> <span class="gtr"></span>    <div class="hover-card">
+        <div class="hover-card-header" style="background-image: url('/content/banner/90.jpg');"></div>
+        <a href="/~shack">
+            <img src="/content/pfp/90.jpg" class="hover-card-avatar">
+        </a>
+        <a href="/~shack">
+            <h4>shack <img rel="twipsy" id="vfb" title="Verified" class="verified" src="/img/verified.png"><small>@shack</small></h4>
+        </a>
+                    <p class="hover-card-bio">call me what you will, i&#039;m fucking lazy</p>
+                <div class="hover-card-stats">
+            <span><strong>10</strong> Followers</span>
+            <span><strong>14</strong> Following</span>
+            <span><strong>130</strong> Posts</span>
+        </div>
+    </div>
+
+                            <div class="plabels"> 
+                          
+                            </div>
+                            </span>
+                            <p>Wagwan</p>
+                            
+                            
+                            <div class="interactions">
+                                <div><a href="like?v=7282"><img class="like" src="./img/interactions/heart.png"> <span class="count like">0</span></a></div>
+                                <div><a href="/status/7282"><img src="./img/interactions/comment.png"> <span class="count">0</span></a></div>
+                                <div><a href="repost?v=7282"><img class="like rtbtn" src="/img/repost.png"> <span class="count like rtbtn">0</span></a></div>
+                                <div><a href="#" class="open-modal" data-id="7282"><img class="rtbtn" src="/img/quote.png"> <span class="count">0</span></a></div>
+                                
+                                </div>
+                                </div>
+                            </div><hr class="j">
+                        <div class="userpost" id="post-7281">
+                        <div>
+                            <img class="postpfp" data-author-id="132" src="/content/pfp/132.jpg">
+                        </div>
+                        <div>
+                            <span class="postheader"><a href="~evelyn"><b class="displayname">evelyn</b></a> <img rel="twipsy" id="vfb" title="Verified" class="verified" src="/img/verified.png"> <span class="username">@evelyn</span> <span class="timeago" rel="twipsy" id="tmago7281" rel="tooltip" data-original-title="November 2, 2025 at 7:23 PM">4 hours ago</span> <span class="gtr"><a href="/status/7238">↪ @makeljbgreatagain</a></span>    <div class="hover-card">
+        <div class="hover-card-header" style="background-image: url('/content/banner/default.png');"></div>
+        <a href="/~evelyn">
+            <img src="/content/pfp/132.jpg" class="hover-card-avatar">
+        </a>
+        <a href="/~evelyn">
+            <h4>evelyn <img rel="twipsy" id="vfb" title="Verified" class="verified" src="/img/verified.png"><small>@evelyn</small></h4>
+        </a>
+                <div class="hover-card-stats">
+            <span><strong>5</strong> Followers</span>
+            <span><strong>3</strong> Following</span>
+            <span><strong>25</strong> Posts</span>
+        </div>
+    </div>
+
+                            <div class="plabels"> 
+                          
+                            </div>
+                            </span>
+                            <p>proof of atusim</p>
+                            
+                            
+                            <div class="interactions">
+                                <div><a href="like?v=7281"><img class="like" src="./img/interactions/heart.png"> <span class="count like">0</span></a></div>
+                                <div><a href="/status/7281"><img src="./img/interactions/comment.png"> <span class="count">0</span></a></div>
+                                <div><a href="repost?v=7281"><img class="like rtbtn" src="/img/repost.png"> <span class="count like rtbtn">0</span></a></div>
+                                <div><a href="#" class="open-modal" data-id="7281"><img class="rtbtn" src="/img/quote.png"> <span class="count">0</span></a></div>
+                                
+                                </div>
+                                </div>
+                            </div><hr class="j">
+                        <div class="userpost" id="post-7280">
+                        <div>
+                            <img class="postpfp" data-author-id="223" src="/content/pfp/223.jpg">
+                        </div>
+                        <div>
+                            <span class="postheader"><a href="~vgs499p"><b class="displayname">vgs499p</b></a>  <span class="username">@vgs499p</span> <span class="timeago" rel="twipsy" id="tmago7280" rel="tooltip" data-original-title="October 29, 2026 at 1:23 AM">4 hours ago</span> <span class="gtr"></span>    <div class="hover-card">
+        <div class="hover-card-header" style="background-image: url('/content/banner/223.jpg');"></div>
+        <a href="/~vgs499p">
+            <img src="/content/pfp/223.jpg" class="hover-card-avatar">
+        </a>
+        <a href="/~vgs499p">
+            <h4>vgs499p <small>@vgs499p</small></h4>
+        </a>
+                <div class="hover-card-stats">
+            <span><strong>8</strong> Followers</span>
+            <span><strong>6</strong> Following</span>
+            <span><strong>52</strong> Posts</span>
+        </div>
+    </div>
+
+                            <div class="plabels"> 
+                          
+                            </div>
+                            </span>
+                            <p>I need 1 million followers on ripple</p>
+                            
+                            
+                            <div class="interactions">
+                                <div><a href="like?v=7280"><img class="like" src="./img/interactions/heart.png"> <span class="count like">0</span></a></div>
+                                <div><a href="/status/7280"><img src="./img/interactions/comment.png"> <span class="count">0</span></a></div>
+                                <div><a href="repost?v=7280"><img class="like rtbtn" src="/img/repost.png"> <span class="count like rtbtn">0</span></a></div>
+                                <div><a href="#" class="open-modal" data-id="7280"><img class="rtbtn" src="/img/quote.png"> <span class="count">0</span></a></div>
+                                
+                                </div>
+                                </div>
+                            </div><hr class="j">
+                        <div class="userpost" id="post-7279">
+                        <div>
+                            <img class="postpfp" data-author-id="226" src="/content/pfp/226.jpg">
+                        </div>
+                        <div>
+                            <span class="postheader"><a href="~makeljbgreatagain"><b class="displayname">mel</b></a> <img rel="twipsy" id="vfb" title="Verified" class="verified" src="/img/verified.png"> <span class="username">@makeljbgreatagain</span> <span class="timeago" rel="twipsy" id="tmago7279" rel="tooltip" data-original-title="October 29, 2026 at 3:39 AM">5 hours ago</span> <span class="gtr"></span>    <div class="hover-card">
+        <div class="hover-card-header" style="background-image: url('/content/banner/226.jpg');"></div>
+        <a href="/~makeljbgreatagain">
+            <img src="/content/pfp/226.jpg" class="hover-card-avatar">
+        </a>
+        <a href="/~makeljbgreatagain">
+            <h4>mel <img rel="twipsy" id="vfb" title="Verified" class="verified" src="/img/verified.png"><small>@makeljbgreatagain</small></h4>
+        </a>
+                    <p class="hover-card-bio">stan loona</p>
+                <div class="hover-card-stats">
+            <span><strong>7</strong> Followers</span>
+            <span><strong>6</strong> Following</span>
+            <span><strong>69</strong> Posts</span>
+        </div>
+    </div>
+
+                            <div class="plabels"> 
+                          
+                            </div>
+                            </span>
+                            <p>stan aespa and loona and girls generation and kara and f(x) and illit and wonder girls and red velvet and phantom siita and gfriend and artms and ive and hearts2hearts and rescene and tripleS and yena and tuide and kiiikiii and izna and fromis9 and ifeye and orange caramel and le sserafim and itzy and twice and purple kiss and chuu and t-ara and i-dle </p>
+                            
+                            
+                            <div class="interactions">
+                                <div><a href="like?v=7279"><img class="like" src="./img/interactions/heart.png"> <span class="count like">0</span></a></div>
+                                <div><a href="/status/7279"><img src="./img/interactions/comment.png"> <span class="count">0</span></a></div>
+                                <div><a href="repost?v=7279"><img class="like rtbtn" src="/img/repost.png"> <span class="count like rtbtn">0</span></a></div>
+                                <div><a href="#" class="open-modal" data-id="7279"><img class="rtbtn" src="/img/quote.png"> <span class="count">0</span></a></div>
+                                
+                                </div>
+                                </div>
+                            </div><hr class="j">
+                        <div class="userpost" id="post-7278">
+                        <div>
+                            <img class="postpfp" data-author-id="226" src="/content/pfp/226.jpg">
+                        </div>
+                        <div>
+                            <span class="postheader"><a href="~makeljbgreatagain"><b class="displayname">mel</b></a> <img rel="twipsy" id="vfb" title="Verified" class="verified" src="/img/verified.png"> <span class="username">@makeljbgreatagain</span> <span class="timeago" rel="twipsy" id="tmago7278" rel="tooltip" data-original-title="October 29, 2026 at 3:39 AM">8 hours ago</span> <span class="gtr"></span>    <div class="hover-card">
+        <div class="hover-card-header" style="background-image: url('/content/banner/226.jpg');"></div>
+        <a href="/~makeljbgreatagain">
+            <img src="/content/pfp/226.jpg" class="hover-card-avatar">
+        </a>
+        <a href="/~makeljbgreatagain">
+            <h4>mel <img rel="twipsy" id="vfb" title="Verified" class="verified" src="/img/verified.png"><small>@makeljbgreatagain</small></h4>
+        </a>
+                    <p class="hover-card-bio">stan loona</p>
+                <div class="hover-card-stats">
+            <span><strong>7</strong> Followers</span>
+            <span><strong>6</strong> Following</span>
+            <span><strong>69</strong> Posts</span>
+        </div>
+    </div>
+
+                            <div class="plabels"> 
+                          
+                            </div>
+                            </span>
+                            <p>the fridge<br></p>
+                            
+                            
+                            <div class="interactions">
+                                <div><a href="like?v=7278"><img class="like" src="./img/interactions/heart.png"> <span class="count like">0</span></a></div>
+                                <div><a href="/status/7278"><img src="./img/interactions/comment.png"> <span class="count">0</span></a></div>
+                                <div><a href="repost?v=7278"><img class="like rtbtn" src="/img/repost.png"> <span class="count like rtbtn">0</span></a></div>
+                                <div><a href="#" class="open-modal" data-id="7278"><img class="rtbtn" src="/img/quote.png"> <span class="count">0</span></a></div>
+                                
+                                </div>
+                                </div>
+                            </div><hr class="j">
+                        <div class="userpost" id="post-7277">
+                        <div>
+                            <img class="postpfp" data-author-id="223" src="/content/pfp/223.jpg">
+                        </div>
+                        <div>
+                            <span class="postheader"><a href="~vgs499p"><b class="displayname">vgs499p</b></a>  <span class="username">@vgs499p</span> <span class="timeago" rel="twipsy" id="tmago7277" rel="tooltip" data-original-title="October 29, 2026 at 1:23 AM">8 hours ago</span> <span class="gtr"></span>    <div class="hover-card">
+        <div class="hover-card-header" style="background-image: url('/content/banner/223.jpg');"></div>
+        <a href="/~vgs499p">
+            <img src="/content/pfp/223.jpg" class="hover-card-avatar">
+        </a>
+        <a href="/~vgs499p">
+            <h4>vgs499p <small>@vgs499p</small></h4>
+        </a>
+                <div class="hover-card-stats">
+            <span><strong>8</strong> Followers</span>
+            <span><strong>6</strong> Following</span>
+            <span><strong>52</strong> Posts</span>
+        </div>
+    </div>
+
+                            <div class="plabels"> 
+                          
+                            </div>
+                            </span>
+                            <p>Hey there! i&#039;m using Ripple</p>
+                            
+                            
+                            <div class="interactions">
+                                <div><a href="like?v=7277"><img class="like" src="./img/interactions/heart.png"> <span class="count like">0</span></a></div>
+                                <div><a href="/status/7277"><img src="./img/interactions/comment.png"> <span class="count">0</span></a></div>
+                                <div><a href="repost?v=7277"><img class="like rtbtn" src="/img/repost.png"> <span class="count like rtbtn">0</span></a></div>
+                                <div><a href="#" class="open-modal" data-id="7277"><img class="rtbtn" src="/img/quote.png"> <span class="count">0</span></a></div>
+                                
+                                </div>
+                                </div>
+                            </div><hr class="j">
+                        <div class="userpost" id="post-7276">
+                        <div>
+                            <img class="postpfp" data-author-id="1" src="/content/pfp/1.jpg">
+                        </div>
+                        <div>
+                            <span class="postheader"><a href="~kylarz"><b class="displayname">DawnH</b></a> <img rel="twipsy" id="vfb" title="Verified" class="verified" src="/img/verified.png"> <span class="username">@kylarz</span> <span class="timeago" rel="twipsy" id="tmago7276" rel="tooltip" data-original-title="June 22, 2025 at 9:58 PM">17 hours ago</span> <span class="gtr"><a href="/status/7275">↪ @makeljbgreatagain</a></span>    <div class="hover-card">
+        <div class="hover-card-header" style="background-image: url('/content/banner/1.jpg');"></div>
+        <a href="/~kylarz">
+            <img src="/content/pfp/1.jpg" class="hover-card-avatar">
+        </a>
+        <a href="/~kylarz">
+            <h4>DawnH <img rel="twipsy" id="vfb" title="Verified" class="verified" src="/img/verified.png"><small>@kylarz</small></h4>
+        </a>
+                    <p class="hover-card-bio">ripple owner and creator (ily <a href="/~Azalea">@Azalea</a> &lt;33)</p>
+                <div class="hover-card-stats">
+            <span><strong>63</strong> Followers</span>
+            <span><strong>87</strong> Following</span>
+            <span><strong>1,178</strong> Posts</span>
+        </div>
+    </div>
+
+                            <div class="plabels"> 
+                          
+                            </div>
+                            </span>
+                            <p>real</p>
+                            
+                            
+                            <div class="interactions">
+                                <div><a href="like?v=7276"><img class="like" src="./img/interactions/heart.png"> <span class="count like">0</span></a></div>
+                                <div><a href="/status/7276"><img src="./img/interactions/comment.png"> <span class="count">0</span></a></div>
+                                <div><a href="repost?v=7276"><img class="like rtbtn" src="/img/repost.png"> <span class="count like rtbtn">0</span></a></div>
+                                <div><a href="#" class="open-modal" data-id="7276"><img class="rtbtn" src="/img/quote.png"> <span class="count">0</span></a></div>
+                                
+                                </div>
+                                </div>
+                            </div><hr class="j">
+                        <div class="userpost" id="post-7275">
+                        <div>
+                            <img class="postpfp" data-author-id="226" src="/content/pfp/226.jpg">
+                        </div>
+                        <div>
+                            <span class="postheader"><a href="~makeljbgreatagain"><b class="displayname">mel</b></a> <img rel="twipsy" id="vfb" title="Verified" class="verified" src="/img/verified.png"> <span class="username">@makeljbgreatagain</span> <span class="timeago" rel="twipsy" id="tmago7275" rel="tooltip" data-original-title="October 29, 2026 at 3:39 AM">17 hours ago</span> <span class="gtr"></span>    <div class="hover-card">
+        <div class="hover-card-header" style="background-image: url('/content/banner/226.jpg');"></div>
+        <a href="/~makeljbgreatagain">
+            <img src="/content/pfp/226.jpg" class="hover-card-avatar">
+        </a>
+        <a href="/~makeljbgreatagain">
+            <h4>mel <img rel="twipsy" id="vfb" title="Verified" class="verified" src="/img/verified.png"><small>@makeljbgreatagain</small></h4>
+        </a>
+                    <p class="hover-card-bio">stan loona</p>
+                <div class="hover-card-stats">
+            <span><strong>7</strong> Followers</span>
+            <span><strong>6</strong> Following</span>
+            <span><strong>69</strong> Posts</span>
+        </div>
+    </div>
+
+                            <div class="plabels"> 
+                          
+                            </div>
+                            </span>
+                            <p>The fridge is speaking to me</p>
+                            
+                            
+                            <div class="interactions">
+                                <div><a href="like?v=7275"><img class="like" src="./img/interactions/heart.png"> <span class="count like">1</span></a></div>
+                                <div><a href="/status/7275"><img src="./img/interactions/comment.png"> <span class="count">1</span></a></div>
+                                <div><a href="repost?v=7275"><img class="like rtbtn" src="/img/repost.png"> <span class="count like rtbtn">0</span></a></div>
+                                <div><a href="#" class="open-modal" data-id="7275"><img class="rtbtn" src="/img/quote.png"> <span class="count">0</span></a></div>
+                                
+                                </div>
+                                </div>
+                            </div><hr class="j">
+                        <div class="userpost" id="post-7274">
+                        <div>
+                            <img class="postpfp" data-author-id="1" src="/content/pfp/1.jpg">
+                        </div>
+                        <div>
+                            <span class="postheader"><a href="~kylarz"><b class="displayname">DawnH</b></a> <img rel="twipsy" id="vfb" title="Verified" class="verified" src="/img/verified.png"> <span class="username">@kylarz</span> <span class="timeago" rel="twipsy" id="tmago7274" rel="tooltip" data-original-title="June 22, 2025 at 9:58 PM">17 hours ago</span> <span class="gtr"></span>    <div class="hover-card">
+        <div class="hover-card-header" style="background-image: url('/content/banner/1.jpg');"></div>
+        <a href="/~kylarz">
+            <img src="/content/pfp/1.jpg" class="hover-card-avatar">
+        </a>
+        <a href="/~kylarz">
+            <h4>DawnH <img rel="twipsy" id="vfb" title="Verified" class="verified" src="/img/verified.png"><small>@kylarz</small></h4>
+        </a>
+                    <p class="hover-card-bio">ripple owner and creator (ily <a href="/~Azalea">@Azalea</a> &lt;33)</p>
+                <div class="hover-card-stats">
+            <span><strong>63</strong> Followers</span>
+            <span><strong>87</strong> Following</span>
+            <span><strong>1,178</strong> Posts</span>
+        </div>
+    </div>
+
+                            <div class="plabels"> 
+                          
+                            </div>
+                            </span>
+                            <p>my head is actually going to fucking explode</p>
+                            
+                            
+                            <div class="interactions">
+                                <div><a href="like?v=7274"><img class="like" src="./img/interactions/heart.png"> <span class="count like">0</span></a></div>
+                                <div><a href="/status/7274"><img src="./img/interactions/comment.png"> <span class="count">0</span></a></div>
+                                <div><a href="repost?v=7274"><img class="like rtbtn" src="/img/repost.png"> <span class="count like rtbtn">0</span></a></div>
+                                <div><a href="#" class="open-modal" data-id="7274"><img class="rtbtn" src="/img/quote.png"> <span class="count">0</span></a></div>
+                                
+                                </div>
+                                </div>
+                            </div><hr class="j">
+                        <div class="userpost" id="post-7273">
+                        <div>
+                            <img class="postpfp" data-author-id="1" src="/content/pfp/1.jpg">
+                        </div>
+                        <div>
+                            <span class="postheader"><a href="~kylarz"><b class="displayname">DawnH</b></a> <img rel="twipsy" id="vfb" title="Verified" class="verified" src="/img/verified.png"> <span class="username">@kylarz</span> <span class="timeago" rel="twipsy" id="tmago7273" rel="tooltip" data-original-title="June 22, 2025 at 9:58 PM">17 hours ago</span> <span class="gtr"><a href="/status/7241">↪ @chaziz</a></span>    <div class="hover-card">
+        <div class="hover-card-header" style="background-image: url('/content/banner/1.jpg');"></div>
+        <a href="/~kylarz">
+            <img src="/content/pfp/1.jpg" class="hover-card-avatar">
+        </a>
+        <a href="/~kylarz">
+            <h4>DawnH <img rel="twipsy" id="vfb" title="Verified" class="verified" src="/img/verified.png"><small>@kylarz</small></h4>
+        </a>
+                    <p class="hover-card-bio">ripple owner and creator (ily <a href="/~Azalea">@Azalea</a> &lt;33)</p>
+                <div class="hover-card-stats">
+            <span><strong>63</strong> Followers</span>
+            <span><strong>87</strong> Following</span>
+            <span><strong>1,178</strong> Posts</span>
+        </div>
+    </div>
+
+                            <div class="plabels"> 
+                          
+                            </div>
+                            </span>
+                            <p>since somewhat recently i forgot</p>
+                            
+                            
+                            <div class="interactions">
+                                <div><a href="like?v=7273"><img class="like" src="./img/interactions/heart.png"> <span class="count like">0</span></a></div>
+                                <div><a href="/status/7273"><img src="./img/interactions/comment.png"> <span class="count">0</span></a></div>
+                                <div><a href="repost?v=7273"><img class="like rtbtn" src="/img/repost.png"> <span class="count like rtbtn">0</span></a></div>
+                                <div><a href="#" class="open-modal" data-id="7273"><img class="rtbtn" src="/img/quote.png"> <span class="count">0</span></a></div>
+                                
+                                </div>
+                                </div>
+                            </div><hr class="j">
+                        <div class="userpost" id="post-7272">
+                        <div>
+                            <img class="postpfp" data-author-id="226" src="/content/pfp/226.jpg">
+                        </div>
+                        <div>
+                            <span class="postheader"><a href="~makeljbgreatagain"><b class="displayname">mel</b></a> <img rel="twipsy" id="vfb" title="Verified" class="verified" src="/img/verified.png"> <span class="username">@makeljbgreatagain</span> <span class="timeago" rel="twipsy" id="tmago7272" rel="tooltip" data-original-title="October 29, 2026 at 3:39 AM">19 hours ago</span> <span class="gtr"></span>    <div class="hover-card">
+        <div class="hover-card-header" style="background-image: url('/content/banner/226.jpg');"></div>
+        <a href="/~makeljbgreatagain">
+            <img src="/content/pfp/226.jpg" class="hover-card-avatar">
+        </a>
+        <a href="/~makeljbgreatagain">
+            <h4>mel <img rel="twipsy" id="vfb" title="Verified" class="verified" src="/img/verified.png"><small>@makeljbgreatagain</small></h4>
+        </a>
+                    <p class="hover-card-bio">stan loona</p>
+                <div class="hover-card-stats">
+            <span><strong>7</strong> Followers</span>
+            <span><strong>6</strong> Following</span>
+            <span><strong>69</strong> Posts</span>
+        </div>
+    </div>
+
+                            <div class="plabels"> 
+                          
+                            </div>
+                            </span>
+                            <p>i feel nipple</p>
+                            
+                            
+                            <div class="interactions">
+                                <div><a href="like?v=7272"><img class="like" src="./img/interactions/heart.png"> <span class="count like">1</span></a></div>
+                                <div><a href="/status/7272"><img src="./img/interactions/comment.png"> <span class="count">0</span></a></div>
+                                <div><a href="repost?v=7272"><img class="like rtbtn" src="/img/repost.png"> <span class="count like rtbtn">0</span></a></div>
+                                <div><a href="#" class="open-modal" data-id="7272"><img class="rtbtn" src="/img/quote.png"> <span class="count">0</span></a></div>
+                                
+                                </div>
+                                </div>
+                            </div><hr class="j">
+                        <div class="userpost" id="post-7271">
+                        <div>
+                            <img class="postpfp" data-author-id="223" src="/content/pfp/223.jpg">
+                        </div>
+                        <div>
+                            <span class="postheader"><a href="~vgs499p"><b class="displayname">vgs499p</b></a>  <span class="username">@vgs499p</span> <span class="timeago" rel="twipsy" id="tmago7271" rel="tooltip" data-original-title="October 29, 2026 at 1:23 AM">22 hours ago</span> <span class="gtr"></span>    <div class="hover-card">
+        <div class="hover-card-header" style="background-image: url('/content/banner/223.jpg');"></div>
+        <a href="/~vgs499p">
+            <img src="/content/pfp/223.jpg" class="hover-card-avatar">
+        </a>
+        <a href="/~vgs499p">
+            <h4>vgs499p <small>@vgs499p</small></h4>
+        </a>
+                <div class="hover-card-stats">
+            <span><strong>8</strong> Followers</span>
+            <span><strong>6</strong> Following</span>
+            <span><strong>52</strong> Posts</span>
+        </div>
+    </div>
+
+                            <div class="plabels"> 
+                          
+                            </div>
+                            </span>
+                            <p>How it feels cooking a yummy meal as an <a href="/results?q=%23angel">#angel</a></p>
+                            
+        <img onerror="this.src='/img/missing.png'" src="/content/attachments/img_6aebd66e900af.jpg" id="img7271" class="attachment clickable-image">
+                            
+                            <div class="interactions">
+                                <div><a href="like?v=7271"><img class="like" src="./img/interactions/heart.png"> <span class="count like">2</span></a></div>
+                                <div><a href="/status/7271"><img src="./img/interactions/comment.png"> <span class="count">0</span></a></div>
+                                <div><a href="repost?v=7271"><img class="like rtbtn" src="/img/repost.png"> <span class="count like rtbtn">0</span></a></div>
+                                <div><a href="#" class="open-modal" data-id="7271"><img class="rtbtn" src="/img/quote.png"> <span class="count">0</span></a></div>
+                                
+                                </div>
+                                </div>
+                            </div><hr class="j">
+                        <div class="userpost" id="post-7270">
+                        <div>
+                            <img class="postpfp" data-author-id="226" src="/content/pfp/226.jpg">
+                        </div>
+                        <div>
+                            <span class="postheader"><a href="~makeljbgreatagain"><b class="displayname">mel</b></a> <img rel="twipsy" id="vfb" title="Verified" class="verified" src="/img/verified.png"> <span class="username">@makeljbgreatagain</span> <span class="timeago" rel="twipsy" id="tmago7270" rel="tooltip" data-original-title="October 29, 2026 at 3:39 AM">22 hours ago</span> <span class="gtr"><a href="/status/7267">↪ @kylarz</a></span>    <div class="hover-card">
+        <div class="hover-card-header" style="background-image: url('/content/banner/226.jpg');"></div>
+        <a href="/~makeljbgreatagain">
+            <img src="/content/pfp/226.jpg" class="hover-card-avatar">
+        </a>
+        <a href="/~makeljbgreatagain">
+            <h4>mel <img rel="twipsy" id="vfb" title="Verified" class="verified" src="/img/verified.png"><small>@makeljbgreatagain</small></h4>
+        </a>
+                    <p class="hover-card-bio">stan loona</p>
+                <div class="hover-card-stats">
+            <span><strong>7</strong> Followers</span>
+            <span><strong>6</strong> Following</span>
+            <span><strong>69</strong> Posts</span>
+        </div>
+    </div>
+
+                            <div class="plabels"> 
+                          
+                            </div>
+                            </span>
+                            <p>mr nipple i agree im on my fone rn</p>
+                            
+                            
+                            <div class="interactions">
+                                <div><a href="like?v=7270"><img class="like" src="./img/interactions/heart.png"> <span class="count like">1</span></a></div>
+                                <div><a href="/status/7270"><img src="./img/interactions/comment.png"> <span class="count">0</span></a></div>
+                                <div><a href="repost?v=7270"><img class="like rtbtn" src="/img/repost.png"> <span class="count like rtbtn">0</span></a></div>
+                                <div><a href="#" class="open-modal" data-id="7270"><img class="rtbtn" src="/img/quote.png"> <span class="count">0</span></a></div>
+                                
+                                </div>
+                                </div>
+                            </div><hr class="j">
+                        <div class="userpost" id="post-7269">
+                        <div>
+                            <img class="postpfp" data-author-id="1" src="/content/pfp/1.jpg">
+                        </div>
+                        <div>
+                            <span class="postheader"><a href="~kylarz"><b class="displayname">DawnH</b></a> <img rel="twipsy" id="vfb" title="Verified" class="verified" src="/img/verified.png"> <span class="username">@kylarz</span> <span class="timeago" rel="twipsy" id="tmago7269" rel="tooltip" data-original-title="June 22, 2025 at 9:58 PM">22 hours ago</span> <span class="gtr"><a href="/status/7268">↪ @vgs499p</a></span>    <div class="hover-card">
+        <div class="hover-card-header" style="background-image: url('/content/banner/1.jpg');"></div>
+        <a href="/~kylarz">
+            <img src="/content/pfp/1.jpg" class="hover-card-avatar">
+        </a>
+        <a href="/~kylarz">
+            <h4>DawnH <img rel="twipsy" id="vfb" title="Verified" class="verified" src="/img/verified.png"><small>@kylarz</small></h4>
+        </a>
+                    <p class="hover-card-bio">ripple owner and creator (ily <a href="/~Azalea">@Azalea</a> &lt;33)</p>
+                <div class="hover-card-stats">
+            <span><strong>63</strong> Followers</span>
+            <span><strong>87</strong> Following</span>
+            <span><strong>1,178</strong> Posts</span>
+        </div>
+    </div>
+
+                            <div class="plabels"> 
+                          
+                            </div>
+                            </span>
+                            <p>Okay!</p>
+                            
+                            
+                            <div class="interactions">
+                                <div><a href="like?v=7269"><img class="like" src="./img/interactions/heart.png"> <span class="count like">0</span></a></div>
+                                <div><a href="/status/7269"><img src="./img/interactions/comment.png"> <span class="count">0</span></a></div>
+                                <div><a href="repost?v=7269"><img class="like rtbtn" src="/img/repost.png"> <span class="count like rtbtn">0</span></a></div>
+                                <div><a href="#" class="open-modal" data-id="7269"><img class="rtbtn" src="/img/quote.png"> <span class="count">0</span></a></div>
+                                
+                                </div>
+                                </div>
+                            </div><hr class="j">
+                        <div class="userpost" id="post-7268">
+                        <div>
+                            <img class="postpfp" data-author-id="223" src="/content/pfp/223.jpg">
+                        </div>
+                        <div>
+                            <span class="postheader"><a href="~vgs499p"><b class="displayname">vgs499p</b></a>  <span class="username">@vgs499p</span> <span class="timeago" rel="twipsy" id="tmago7268" rel="tooltip" data-original-title="October 29, 2026 at 1:23 AM">22 hours ago</span> <span class="gtr"><a href="/status/7267">↪ @kylarz</a></span>    <div class="hover-card">
+        <div class="hover-card-header" style="background-image: url('/content/banner/223.jpg');"></div>
+        <a href="/~vgs499p">
+            <img src="/content/pfp/223.jpg" class="hover-card-avatar">
+        </a>
+        <a href="/~vgs499p">
+            <h4>vgs499p <small>@vgs499p</small></h4>
+        </a>
+                <div class="hover-card-stats">
+            <span><strong>8</strong> Followers</span>
+            <span><strong>6</strong> Following</span>
+            <span><strong>52</strong> Posts</span>
+        </div>
+    </div>
+
+                            <div class="plabels"> 
+                          
+                            </div>
+                            </span>
+                            <p>Ok give me an api now so i can make a shitty port to arm32 legacy ios  immediately with haiku 5.5 on MEDIUM effort</p>
+                            
+                            
+                            <div class="interactions">
+                                <div><a href="like?v=7268"><img class="like" src="./img/interactions/heart.png"> <span class="count like">1</span></a></div>
+                                <div><a href="/status/7268"><img src="./img/interactions/comment.png"> <span class="count">1</span></a></div>
+                                <div><a href="repost?v=7268"><img class="like rtbtn" src="/img/repost.png"> <span class="count like rtbtn">0</span></a></div>
+                                <div><a href="#" class="open-modal" data-id="7268"><img class="rtbtn" src="/img/quote.png"> <span class="count">0</span></a></div>
+                                
+                                </div>
+                                </div>
+                            </div><hr class="j">
+                        <div class="userpost" id="post-7267">
+                        <div>
+                            <img class="postpfp" data-author-id="1" src="/content/pfp/1.jpg">
+                        </div>
+                        <div>
+                            <span class="postheader"><a href="~kylarz"><b class="displayname">DawnH</b></a> <img rel="twipsy" id="vfb" title="Verified" class="verified" src="/img/verified.png"> <span class="username">@kylarz</span> <span class="timeago" rel="twipsy" id="tmago7267" rel="tooltip" data-original-title="June 22, 2025 at 9:58 PM">22 hours ago</span> <span class="gtr"></span>    <div class="hover-card">
+        <div class="hover-card-header" style="background-image: url('/content/banner/1.jpg');"></div>
+        <a href="/~kylarz">
+            <img src="/content/pfp/1.jpg" class="hover-card-avatar">
+        </a>
+        <a href="/~kylarz">
+            <h4>DawnH <img rel="twipsy" id="vfb" title="Verified" class="verified" src="/img/verified.png"><small>@kylarz</small></h4>
+        </a>
+                    <p class="hover-card-bio">ripple owner and creator (ily <a href="/~Azalea">@Azalea</a> &lt;33)</p>
+                <div class="hover-card-stats">
+            <span><strong>63</strong> Followers</span>
+            <span><strong>87</strong> Following</span>
+            <span><strong>1,178</strong> Posts</span>
+        </div>
+    </div>
+
+                            <div class="plabels"> 
+                          
+                            </div>
+                            </span>
+                            <p>who needs a mobile site smh…desktop one works fine on phone</p>
+                            
+                            
+                            <div class="interactions">
+                                <div><a href="like?v=7267"><img class="like" src="./img/interactions/heart.png"> <span class="count like">1</span></a></div>
+                                <div><a href="/status/7267"><img src="./img/interactions/comment.png"> <span class="count">2</span></a></div>
+                                <div><a href="repost?v=7267"><img class="like rtbtn" src="/img/repost.png"> <span class="count like rtbtn">0</span></a></div>
+                                <div><a href="#" class="open-modal" data-id="7267"><img class="rtbtn" src="/img/quote.png"> <span class="count">0</span></a></div>
+                                
+                                </div>
+                                </div>
+                            </div><hr class="j">    
+            
+            <ul class="pager">
+                <li class="previous disabled">
+                    <a href="#">&larr; Newer</a>
+                </li>
+                <li class="next ">
+                    <a href="/?pageno=2">Older &rarr;</a>
+                </li>
+            </ul>
+
+              </div>
+          <div class="span4">
+<div style="margin-top: -10px;word-wrap: break-word; overflow-wrap: break-word; line-height: 1.5;">
+    <div class="mb-2">
+        <div style="font-size: 1.0rem; font-weight: 600;">uaow</div>
+        <div style="font-size: 0.7rem; color: #6c757d;">by <strong><a style="color: #6c757d; text-decoration:none;" href="/~shiypc">shiypc</a></strong> on November 3, 2026</div>
+    </div>
+    <div class="text-body">it says dont put anything stupid but im putting something stupid here 🤤</div>
+</div><small style="font-size:12px;"><a href="/news">View previous updates »</a></small>
+<hr class="sthr">
+<h3>Trending</h3>
+<a class="trndlink" href="/results?q=%23wow" rel="tooltip" data-original-title="#wow (5 posts)" style="font-size: 24px; margin: 0 5px; text-decoration: none;">#wow</a> <a class="trndlink" href="/results?q=%23larp" rel="tooltip" data-original-title="#larp (2 posts)" style="font-size: 15px; margin: 0 5px; text-decoration: none;">#larp</a> <a class="trndlink" href="/results?q=%23goals" rel="tooltip" data-original-title="#goals (1 posts)" style="font-size: 12px; margin: 0 5px; text-decoration: none;">#goals</a> <a class="trndlink" href="/results?q=%23apple" rel="tooltip" data-original-title="#apple (1 posts)" style="font-size: 12px; margin: 0 5px; text-decoration: none;">#apple</a> <a class="trndlink" href="/results?q=%23pchan" rel="tooltip" data-original-title="#pchan (1 posts)" style="font-size: 12px; margin: 0 5px; text-decoration: none;">#pchan</a> <a class="trndlink" href="/results?q=%23transgender" rel="tooltip" data-original-title="#transgender (1 posts)" style="font-size: 12px; margin: 0 5px; text-decoration: none;">#transgender</a> <a class="trndlink" href="/results?q=%23chud" rel="tooltip" data-original-title="#chud (1 posts)" style="font-size: 12px; margin: 0 5px; text-decoration: none;">#chud</a> <a class="trndlink" href="/results?q=%23gofundme" rel="tooltip" data-original-title="#gofundme (1 posts)" style="font-size: 12px; margin: 0 5px; text-decoration: none;">#gofundme</a> <a class="trndlink" href="/results?q=%23ripplerevival" rel="tooltip" data-original-title="#ripplerevival (1 posts)" style="font-size: 12px; margin: 0 5px; text-decoration: none;">#ripplerevival</a> <a class="trndlink" href="/results?q=%23free9" rel="tooltip" data-original-title="#free9 (1 posts)" style="font-size: 12px; margin: 0 5px; text-decoration: none;">#free9</a> <a class="trndlink" href="/results?q=%23fail" rel="tooltip" data-original-title="#fail (1 posts)" style="font-size: 12px; margin: 0 5px; text-decoration: none;">#fail</a> <a class="trndlink" href="/results?q=%23cache" rel="tooltip" data-original-title="#cache (1 posts)" style="font-size: 12px; margin: 0 5px; text-decoration: none;">#cache</a> <a class="trndlink" href="/results?q=%23getmelmorefurbys" rel="tooltip" data-original-title="#getmelmorefurbys (1 posts)" style="font-size: 12px; margin: 0 5px; text-decoration: none;">#getmelmorefurbys</a> <a class="trndlink" href="/results?q=%23f1" rel="tooltip" data-original-title="#f1 (1 posts)" style="font-size: 12px; margin: 0 5px; text-decoration: none;">#f1</a> <a class="trndlink" href="/results?q=%23angel" rel="tooltip" data-original-title="#angel (1 posts)" style="font-size: 12px; margin: 0 5px; text-decoration: none;">#angel</a> <hr style="margin-bottom: 9px !important;margin-top:20px !important;" class="sthr">
+<h3>Recently seen</h3>
+                   
+                        <div class="userpost ftl">
+                        <div>
+                            <img class="postpfp" data-author-id="218" src="/content/pfp/218.jpg">
+                        </div>
+                        <div>
+                        <span class="postheader"><a href="~riley"><b class="displayname">riley</b></a>  <span class="username">@riley</span></span>
+                              <p>
+                              <a class="btn disabled"><span class="sub-button-text">Follow</span></a> <span class="yt-subscription-button-subscriber-count-branded-horizontal subscribed">8</span>
+                              </p>
+                              </div>
+                        </div><hr class="sthr">
+                
+                        <div class="userpost ftl">
+                        <div>
+                            <img class="postpfp" data-author-id="89" src="/content/pfp/89.jpg">
+                        </div>
+                        <div>
+                        <span class="postheader"><a href="~Chaziz"><b class="displayname">Chaziz</b></a>  <span class="username">@Chaziz</span></span>
+                              <p>
+                              <a class="btn disabled"><span class="sub-button-text">Follow</span></a> <span class="yt-subscription-button-subscriber-count-branded-horizontal subscribed">10</span>
+                              </p>
+                              </div>
+                        </div><hr class="sthr">
+                
+                        <div class="userpost ftl">
+                        <div>
+                            <img class="postpfp" data-author-id="7" src="/content/pfp/7.jpg">
+                        </div>
+                        <div>
+                        <span class="postheader"><a href="~Evie"><b class="displayname">Evie</b></a>  <span class="username">@Evie</span></span>
+                              <p>
+                              <a class="btn disabled"><span class="sub-button-text">Follow</span></a> <span class="yt-subscription-button-subscriber-count-branded-horizontal subscribed">15</span>
+                              </p>
+                              </div>
+                        </div><hr class="sthr">
+                
+                        <div class="userpost ftl">
+                        <div>
+                            <img class="postpfp" data-author-id="154" src="/content/pfp/154.jpg">
+                        </div>
+                        <div>
+                        <span class="postheader"><a href="~TechPowerUp"><b class="displayname">TechPowerUp</b></a>  <span class="username">@TechPowerUp</span></span>
+                              <p>
+                              <a class="btn disabled"><span class="sub-button-text">Follow</span></a> <span class="yt-subscription-button-subscriber-count-branded-horizontal subscribed">5</span>
+                              </p>
+                              </div>
+                        </div><hr class="sthr">
+                
+                        <div class="userpost ftl">
+                        <div>
+                            <img class="postpfp" data-author-id="224" src="/content/pfp/224.jpg">
+                        </div>
+                        <div>
+                        <span class="postheader"><a href="~sk3p"><b class="displayname">sk3p</b></a>  <span class="username">@sk3p</span></span>
+                              <p>
+                              <a class="btn disabled"><span class="sub-button-text">Follow</span></a> <span class="yt-subscription-button-subscriber-count-branded-horizontal subscribed">5</span>
+                              </p>
+                              </div>
+                        </div><hr class="sthr">
+                            <h3>Who to follow</h3>
+                   
+                        <div class="userpost ftl">
+                        <div>
+                            <img class="postpfp" data-author-id="191" src="/content/pfp/default.png">
+                        </div>
+                        <div>
+                        <span class="postheader"><a href="~PatrioticPasquale"><b class="displayname">PatrioticPasquale</b></a>  <span class="username">@PatrioticPasquale</span></span>
+                              <p>
+                              <a class="btn disabled"><span class="sub-button-text">Follow</span></a> <span class="yt-subscription-button-subscriber-count-branded-horizontal subscribed">2</span>
+                              </p>
+                              </div>
+                        </div><hr style="margin-bottom: 9px !important;margin-top:20px !important;" class="sthr">
+                
+                        <div class="userpost ftl">
+                        <div>
+                            <img class="postpfp" data-author-id="159" src="/content/pfp/159.jpg">
+                        </div>
+                        <div>
+                        <span class="postheader"><a href="~LamarBerry"><b class="displayname">Lamar Berry </b></a>  <span class="username">@LamarBerry</span></span>
+                              <p>
+                              <a class="btn disabled"><span class="sub-button-text">Follow</span></a> <span class="yt-subscription-button-subscriber-count-branded-horizontal subscribed">1</span>
+                              </p>
+                              </div>
+                        </div><hr style="margin-bottom: 9px !important;margin-top:20px !important;" class="sthr">
+                
+                        <div class="userpost ftl">
+                        <div>
+                            <img class="postpfp" data-author-id="225" src="/content/pfp/225.jpg">
+                        </div>
+                        <div>
+                        <span class="postheader"><a href="~LonelyDiggers"><b class="displayname">lonelydiggers</b></a>  <span class="username">@LonelyDiggers</span></span>
+                              <p>
+                              <a class="btn disabled"><span class="sub-button-text">Follow</span></a> <span class="yt-subscription-button-subscriber-count-branded-horizontal subscribed">1</span>
+                              </p>
+                              </div>
+                        </div><hr style="margin-bottom: 9px !important;margin-top:20px !important;" class="sthr">
+                
+                        <div class="userpost ftl">
+                        <div>
+                            <img class="postpfp" data-author-id="218" src="/content/pfp/218.jpg">
+                        </div>
+                        <div>
+                        <span class="postheader"><a href="~riley"><b class="displayname">riley</b></a>  <span class="username">@riley</span></span>
+                              <p>
+                              <a class="btn disabled"><span class="sub-button-text">Follow</span></a> <span class="yt-subscription-button-subscriber-count-branded-horizontal subscribed">8</span>
+                              </p>
+                              </div>
+                        </div><hr style="margin-bottom: 9px !important;margin-top:20px !important;" class="sthr">
+                
+                        <div class="userpost ftl">
+                        <div>
+                            <img class="postpfp" data-author-id="70" src="/content/pfp/70.jpg">
+                        </div>
+                        <div>
+                        <span class="postheader"><a href="~SqueezeMe"><b class="displayname">Fletchr, the Creatr</b></a>  <span class="username">@SqueezeMe</span></span>
+                              <p>
+                              <a class="btn disabled"><span class="sub-button-text">Follow</span></a> <span class="yt-subscription-button-subscriber-count-branded-horizontal subscribed">10</span>
+                              </p>
+                              </div>
+                        </div><hr style="margin-bottom: 9px !important;margin-top:20px !important;" class="sthr">
+                
+                        <div class="userpost ftl">
+                        <div>
+                            <img class="postpfp" data-author-id="22" src="/content/pfp/default.png">
+                        </div>
+                        <div>
+                        <span class="postheader"><a href="~MrNetBooksOfAddict"><b class="displayname">MrNetBooksOfAddict</b></a>  <span class="username">@MrNetBooksOfAddict</span></span>
+                              <p>
+                              <a class="btn disabled"><span class="sub-button-text">Follow</span></a> <span class="yt-subscription-button-subscriber-count-branded-horizontal subscribed">8</span>
+                              </p>
+                              </div>
+                        </div><hr style="margin-bottom: 9px !important;margin-top:20px !important;" class="sthr">
+                
+                        <div class="userpost ftl">
+                        <div>
+                            <img class="postpfp" data-author-id="61" src="/content/pfp/61.jpg">
+                        </div>
+                        <div>
+                        <span class="postheader"><a href="~AppleSalt"><b class="displayname">Apple</b></a>  <span class="username">@AppleSalt</span></span>
+                              <p>
+                              <a class="btn disabled"><span class="sub-button-text">Follow</span></a> <span class="yt-subscription-button-subscriber-count-branded-horizontal subscribed">5</span>
+                              </p>
+                              </div>
+                        </div><hr style="margin-bottom: 9px !important;margin-top:20px !important;" class="sthr">
+                
+                        <div class="userpost ftl">
+                        <div>
+                            <img class="postpfp" data-author-id="235" src="/content/pfp/default.png">
+                        </div>
+                        <div>
+                        <span class="postheader"><a href="~tempacc1234"><b class="displayname">tempacc1234</b></a>  <span class="username">@tempacc1234</span></span>
+                              <p>
+                              <a class="btn disabled"><span class="sub-button-text">Follow</span></a> <span class="yt-subscription-button-subscriber-count-branded-horizontal subscribed">0</span>
+                              </p>
+                              </div>
+                        </div><hr style="margin-bottom: 9px !important;margin-top:20px !important;" class="sthr">
+                
+                        <div class="userpost ftl">
+                        <div>
+                            <img class="postpfp" data-author-id="157" src="/content/pfp/default.png">
+                        </div>
+                        <div>
+                        <span class="postheader"><a href="~Noah_MAXWELL"><b class="displayname">Noah_MAXWELL</b></a>  <span class="username">@Noah_MAXWELL</span></span>
+                              <p>
+                              <a class="btn disabled"><span class="sub-button-text">Follow</span></a> <span class="yt-subscription-button-subscriber-count-branded-horizontal subscribed">0</span>
+                              </p>
+                              </div>
+                        </div><hr style="margin-bottom: 9px !important;margin-top:20px !important;" class="sthr">
+                
+                        <div class="userpost ftl">
+                        <div>
+                            <img class="postpfp" data-author-id="58" src="/content/pfp/58.jpg">
+                        </div>
+                        <div>
+                        <span class="postheader"><a href="~rosaura"><b class="displayname">rosaura</b></a>  <span class="username">@rosaura</span></span>
+                              <p>
+                              <a class="btn disabled"><span class="sub-button-text">Follow</span></a> <span class="yt-subscription-button-subscriber-count-branded-horizontal subscribed">3</span>
+                              </p>
+                              </div>
+                        </div><hr style="margin-bottom: 9px !important;margin-top:20px !important;" class="sthr">
+                          </div>
+        </div>
+      </div>
+
+            <footer>
+        <p>&copy; 2023-2026 <b>strata</b>digital <span>-</span> <a href="/about">About</a> <span>-</span> <a href="/tos">Terms of Service</a> <span>-</span> <a href="/privacy">Privacy Policy</a> <span>-</span> <a href="/help">Help</a> <span>-</span> <a href="/news">News</a> <span>-</span> <a href="https://discord.gg/56pNzgcWJD">Discord</a></p>
+      </footer>
+<script type="text/javascript" src="/js/fjs.js"></script>
+<div id="quoteModal" class="modal hide fade">
+  <form id="quoteForm" method="post" action="/quote" enctype="multipart/form-data">
+  <div class="modal-header">
+    <a href="#" class="close" data-dismiss="modal">×</a>
+    <h3>Quote Post</h3>
+  </div>
+  <div class="modal-body">
+  <input type="hidden" name="qid" id="modalqid">
+   <div class="modal-form">
+   <textarea name="postcontentsQ" class="newpost qf" placeholder="What's on your mind?"></textarea>
+                <div class="input-group" style="width: 550px;height: 20px;">
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const textarea = document.querySelector('textarea[name="postcontentsQ"]');
+  const charNum = document.getElementById('charNumQ');
+  const submitBtn = document.querySelector('input[type="submit"][name="submit"]');
+  const maxLength = 256;
+
+  const updateCounter = () => {
+    const remaining = maxLength - textarea.value.length;
+    charNum.textContent = remaining;
+
+    charNum.style.color = 'gray';
+
+    if (remaining <= 20 && remaining >= 0) {
+      charNum.style.color = 'orange';
+    } else if (remaining < 0) {
+      charNum.style.color = 'red';
+    }
+
+    submitBtn.disabled = remaining < 0;
+  };
+
+  updateCounter();
+
+  textarea.addEventListener('input', updateCounter);
+});
+</script>
+            <div></div>
+            <div style="width:550px;height:20px;"><span id="charNumQ"></span><div class="aimg"><label><img src="/img/img.png"><input type="file" id="fipQ" name="qimages[]" multiple accept="image/jpeg,image/png,image/gif"></label><span id="imgnameQ"></span></div></div>
+          </div>
+    <div id="quotePreview" class="quotepost" style="display:block;"></div>
+  </div>
+</div>
+  <div class="modal-footer" style="margin-bottom:-20px">
+    <button type="submit" name="submit" class="btn error">Post</button>
+  </div>
+  </form><script type="text/javascript" src="/js/qjs2.js"></script>
+<script>
+    $('[rel=tooltip], [rel=twipsy], [rel=tooltiplfm]').twipsy({
+        placement: 'above',
+        title: 'data-original-title',
+    });
+    $('[rel=tooltipabt').twipsy({
+        html: true
+    });
+    $(document).ready(function() {
+        $('.userpost:has(ul, ol)').each(function() {
+            $(this).find('p').each(function() {
+                var $p = $(this);
+                if (!$p.text().trim() && $p.find('img').length === 0) {
+                    $p.remove();
+                }
+            });
+        });
+    });
+
+</script>      <script>
+document.getElementById('fip').addEventListener('change', function() {
+  const names = Array.from(this.files).slice(0, 5).map(f => f.name);
+  document.getElementById('imgname').textContent = names.join(', ');
+});
+const form = document.getElementById("npform");
+const fileInput = document.getElementById("fip");
+const newpost = document.querySelector(".newpost");
+
+window.addEventListener('paste', e => {
+  if (document.activeElement === newpost) {
+    if (e.clipboardData && e.clipboardData.files.length > 0) {
+      const existingFiles = Array.from(fileInput.files);
+      const pastedFiles = Array.from(e.clipboardData.files);
+      const combinedFiles = existingFiles.concat(pastedFiles).slice(0, 5);
+      const dataTransfer = new DataTransfer();
+      combinedFiles.forEach(file => dataTransfer.items.add(file));
+
+      fileInput.files = dataTransfer.files;
+      fileInput.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+  }
+});
+const h1 = document.getElementById('jt');
+const mfs = 30;
+const sfs = 54;
+
+function ft() {
+  h1.style.fontSize = sfs + 'px';
+  let fs = sfs;
+
+  const slh = parseInt(getComputedStyle(h1).lineHeight) || h1.offsetHeight;
+
+  while (h1.offsetHeight > slh && fs > mfs) {
+    fs--;
+    h1.style.fontSize = fs + 'px';
+  }
+}
+window.addEventListener('load', ft);
+</script>
+<script src="/js/ipv.js"></script>
+    </div> <!-- /container -->
+
+  </body>
+</html>
