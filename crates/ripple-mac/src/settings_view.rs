@@ -261,7 +261,7 @@ impl App {
                     ]);
                 }
                 content = content.push(card(shortcuts));
-                content=content.push(card(column![text("Local storage").size(15).font(BOLD),text("App preferences save automatically on this Mac. Passwords and login cookies stay in memory and are cleared when you quit or sign out.").size(12).line_height(1.5).color(c.muted),
+                content=content.push(card(column![text("Local storage").size(15).font(BOLD),text("App preferences save automatically on this Mac. Your sign-in session is saved in Keychain and restored when you reopen Ripple. Sign out removes it. Your password is never stored.").size(12).line_height(1.5).color(c.muted),
                     button(text("Reset app preferences").size(12)).on_press(Message::ResetPreferences).padding([9,13]).style(bootstrap_button),
                     text("Resets appearance, reading, and media preferences. Your Ripple account is unaffected.").size(11).color(c.muted),
                 ].spacing(13)));

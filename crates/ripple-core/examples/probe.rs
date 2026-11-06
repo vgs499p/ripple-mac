@@ -3,8 +3,15 @@ use ripple_core::{Client, Route};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    println!("User-Agent: {}", ripple_core::user_agent());
     let client = Client::new()?;
     let home = client.load(&Route::Public, 1).await?;
+    if let Some(quote) = &home.quote_form {
+        assert_eq!(quote.form.action, "https://ripple.tel/quote");
+        assert_eq!(quote.field, "postcontentsQ");
+        assert!(quote.form.hidden.iter().any(|(name, _)| name == "qid"));
+        println!("PASS quote form discovery (read-only; no quote published)");
+    }
     assert!(!home.posts.is_empty(), "Public timeline unexpectedly empty");
     println!(
         "PASS public timeline: {} posts, {} trends, older={}, login_form={}",

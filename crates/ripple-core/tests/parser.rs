@@ -68,6 +68,17 @@ fn composer_is_discovered_and_preserves_hidden_and_submit_fields() {
 }
 
 #[test]
+fn quote_form_retains_the_live_target_and_distinct_fields() {
+    let html = r#"<a class="brand" href="/"></a><form id="quoteForm" method="post" action="/quote" enctype="multipart/form-data"><input type="hidden" name="qid" id="modalqid"><textarea name="postcontentsQ"></textarea><input type="file" name="qimages[]" multiple><button type="submit">Post</button></form>"#;
+    let quote = parse_page(html, &base()).unwrap().quote_form.unwrap();
+    assert_eq!(quote.form.action, "https://ripple.tel/quote");
+    assert_eq!(quote.field, "postcontentsQ");
+    assert!(quote.form.multipart);
+    assert_eq!(quote.file_field.as_deref(), Some("qimages[]"));
+    assert!(quote.form.hidden.contains(&("qid".into(), String::new())));
+}
+
+#[test]
 fn forms_cannot_send_credentials_or_posts_off_origin() {
     let html = r#"<a class="brand" href="/"></a><form id="npform" method="post" action="https://outside.example/post"><textarea name="postcontents"></textarea></form><form method="post" action="//outside.example/login"><input name="username"><input type="password"></form>"#;
     let page = parse_page(html, &base()).unwrap();

@@ -2,11 +2,15 @@
 //! Portable, direct-to-Ripple web client. No GUI, browser engine or proxy server.
 mod account;
 mod parse;
+mod session;
+mod user_agent;
 pub use account::{Choice, EditableForm, Field, FieldKind, Notification};
+pub use session::SessionStorage;
+pub use user_agent::user_agent;
 
 use futures_util::StreamExt;
 pub use parse::{parse_page, Announcement, Composer, Link, Page, Person, Post, Profile};
-use reqwest::{cookie::Jar, redirect::Policy, Client as HttpClient, Response};
+use reqwest::{redirect::Policy, Client as HttpClient, Response};
 use serde::{Deserialize, Serialize};
 use std::{sync::Arc, time::Duration};
 use tokio::sync::Semaphore;
@@ -164,6 +168,7 @@ pub struct Client {
     media_slots: Arc<Semaphore>,
     navigation: Arc<std::sync::Mutex<std::collections::HashSet<String>>>,
     actions: Arc<std::sync::Mutex<std::collections::HashSet<String>>>,
+    session: Arc<session::Session>,
 }
 
 impl std::fmt::Debug for Client {
@@ -194,13 +199,37 @@ pub fn trusted_url(url: &Url) -> bool {
 
 impl Client {
     pub fn new() -> Result<Self, Error> {
+        Self::with_session(Arc::new(session::Session::default()))
+    }
+
+    pub fn restore_session(storage: Arc<dyn SessionStorage>) -> Result<Self, Error> {
+        Self::with_session(Arc::new(session::Session::restore(storage)))
+    }
+
+    pub fn remember_session(
+        &self,
+        storage: Arc<dyn SessionStorage>,
+        account: String,
+    ) -> Result<(), String> {
+        self.session.remember(storage, account)
+    }
+
+    pub fn forget_session(&self) -> Result<(), String> {
+        self.session.forget()
+    }
+
+    pub fn saved_account(&self) -> Option<String> {
+        self.session.account()
+    }
+
+    pub fn take_session_error(&self) -> Option<String> {
+        self.session.take_error()
+    }
+
+    fn with_session(session: Arc<session::Session>) -> Result<Self, Error> {
         let builder = || {
             HttpClient::builder()
-                .user_agent(concat!(
-                    "RippleNative/",
-                    env!("CARGO_PKG_VERSION"),
-                    " (direct web client)"
-                ))
+                .user_agent(user_agent())
                 .https_only(true)
                 .connect_timeout(Duration::from_secs(8))
                 .timeout(Duration::from_secs(20))
@@ -208,13 +237,12 @@ impl Client {
                 .retry(reqwest::retry::never())
         };
         Ok(Self {
-            http: builder()
-                .cookie_provider(Arc::new(Jar::default()))
-                .build()?,
+            http: builder().cookie_provider(session.clone()).build()?,
             media: builder().build()?,
             media_slots: Arc::new(Semaphore::new(4)),
             navigation: Arc::default(),
             actions: Arc::default(),
+            session,
         })
     }
 
@@ -361,7 +389,7 @@ impl Client {
         Ok(())
     }
 
-    /// Credentials and cookies stay in memory; neither is written to disk.
+    /// Passwords are never saved. The caller may remember a confirmed session in a secure store.
     pub async fn login(&self, username: String, password: String) -> Result<Page, Error> {
         let home = self.load(&Route::Public, 1).await?;
         let form = home.login_form.ok_or(Error::UnexpectedPage)?;

@@ -1,8 +1,8 @@
-# Ripple Native — Mac Beta 2
+# Ripple Native — Mac Beta 3
 
 A compiled Rust client that connects directly to https://ripple.tel over HTTPS. There is no intermediary service, embedded website, or public API dependency. The interface keeps Ripple's red, charcoal and white identity with desktop navigation and compact post lists.
 
-[Download Mac Beta 2](https://github.com/vgs499p/ripple-mac/releases/tag/v0.4.0-beta.2) · [Homebrew installation](docs/HOMEBREW.md)
+[Download Mac Beta 3](https://github.com/vgs499p/ripple-mac/releases/tag/v0.4.0-beta.3) · [Homebrew installation](docs/HOMEBREW.md)
 
 ## Run
 
@@ -25,7 +25,7 @@ Implemented:
 - The real paginated Users directory, verified badges and profile About Me details.
 - Local Light/Dark/System appearance, full theme packs, exact Ripple accent presets and custom colors, recolored Ripple branding, density, interface size, wallpaper/photo preferences, and an About page.
 - Profile details, wallpapers and banners, followers/following lists, and thread navigation.
-- Sign-in through Ripple's actual login form, with in-memory session cookies.
+- Sign-in through Ripple's actual login form, with sessions saved in macOS Keychain.
 - Likes, reposts, follow/unfollow through action links discovered in the current page.
 - Public posts, replies and quotes through discovered forms, including hidden fields.
 - Native photo picker, PNG/JPEG/GIF/WebP attachments, upload size limits and attachment removal.
@@ -41,7 +41,9 @@ Replies, quotes, uploads, social actions and settings saves have not been verifi
 
 The bundled public snapshot and one profile snapshot were captured on November 5, 2026 at approximately 20:36 America/Fortaleza. They are explicitly labeled as offline previews. Photos and avatars that were not captured show placeholders. Snapshot data cannot be used to submit social actions or settings changes. Refresh reconnects to the real site.
 
-See [theme pack instructions](docs/THEMES.md) for Breeze, Nord, Catppuccin, Rosé Pine and importing/exporting custom palettes. [Beta 2 release notes](CHANGELOG.md) describe the current scope.
+See [theme pack instructions](docs/THEMES.md) for Breeze, Nord, Catppuccin, Rosé Pine and importing/exporting custom palettes. [Beta 3 release notes](CHANGELOG.md) describe the current scope.
+
+Session labels and the client User-Agent format are documented in [USER_AGENT.md](docs/USER_AGENT.md).
 
 ## Controls
 
@@ -52,7 +54,7 @@ See [theme pack instructions](docs/THEMES.md) for Breeze, Nord, Catppuccin, Ros�
 - `Cmd+Q`: quit
 - Escape: leave sign-in or app settings
 
-Click an author/avatar to open their profile, a hashtag to search, or a photo to open its original in the default browser. Likes and reposts require sign-in. Click Reply or Quote to open the corresponding composer. Sign out or quit to discard the local session. Drafts are not persisted to disk; navigating keeps an unfinished reply or quote attached to its destination. Local app preferences are stored in `~/Library/Application Support/Ripple Native/preferences.json`, separately from the account. Credentials and cookies remain in memory.
+Click an author/avatar to open their profile, a hashtag to search, or a photo to open its original in the default browser. Likes and reposts require sign-in. Click Reply or Quote to open the corresponding composer. Your sign-in survives quitting and restarting. Sign out removes the saved session from Keychain. Drafts are not persisted to disk; navigating keeps an unfinished reply or quote attached to its destination. Local app preferences are stored in `~/Library/Application Support/Ripple Native/preferences.json`, separately from the account. Passwords are never saved. Session cookies and the account handle are saved in Keychain, separate from preferences. Ripple can still expire or revoke a session.
 
 ## Rendering and limits
 

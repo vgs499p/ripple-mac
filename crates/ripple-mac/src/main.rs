@@ -2,6 +2,7 @@
 #[cfg(target_os = "macos")]
 mod mac_menu;
 mod preferences;
+mod secure_session;
 mod snapshot_media;
 mod themes;
 mod ui;

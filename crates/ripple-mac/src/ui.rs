@@ -91,6 +91,7 @@ pub enum Message {
         client: Client,
         result: Result<Page, String>,
     },
+    SessionRestored(Client),
     SignOut,
     Edit(text_editor::Action),
     Publish,
@@ -281,7 +282,15 @@ impl App {
             #[cfg(feature = "qa")]
             bench_remaining: 0,
         };
-        let task = app.load(Route::Public, 1);
+        app.loading = true;
+        let task = Task::perform(
+            async {
+                tokio::task::spawn_blocking(crate::secure_session::restore)
+                    .await
+                    .expect("session restoration worker")
+            },
+            Message::SessionRestored,
+        );
         let brand = app.update_brand();
         (
             app,
@@ -703,6 +712,14 @@ impl App {
                     return self.update(Message::Navigate(Route::Search(query)));
                 }
             }
+            Message::SessionRestored(client) => {
+                if self.generation != 0 {
+                    return Task::none();
+                }
+                self.notice = client.take_session_error();
+                self.client = client;
+                return self.load(Route::Public, 1);
+            }
             Message::Loaded { id, page, result } => {
                 if id != self.generation {
                     return Task::none();
@@ -711,12 +728,38 @@ impl App {
                 match result {
                     Ok(fetched) => {
                         self.snapshot = false;
+                        if self.route == Route::Public
+                            && fetched.login_form.is_some()
+                            && fetched.composer.is_none()
+                            && self.client.saved_account().is_some()
+                        {
+                            match self.client.forget_session() {
+                                Ok(()) => {
+                                    self.client = Client::new().expect("TLS client initialization")
+                                }
+                                Err(error) => self.notice = Some(error),
+                            }
+                            self.account = None;
+                            self.notice.get_or_insert_with(|| {
+                                "Your saved session expired. Sign in again.".into()
+                            });
+                        }
                         if fetched.login_form.is_some()
                             && fetched.account.is_none()
                             && self.account.is_some()
                         {
                             self.account = None;
                             self.notice=Some("Your session expired. Sign in again to continue; your draft is still here.".into());
+                        }
+                        if fetched.composer.is_some() && fetched.login_form.is_none() {
+                            self.account = fetched
+                                .account
+                                .clone()
+                                .or_else(|| self.client.saved_account())
+                                .or_else(|| self.account.clone());
+                        }
+                        if let Some(error) = self.client.take_session_error() {
+                            self.notice = Some(error);
                         }
                         self.sync_account_page(&fetched);
                         self.page_number = page;
@@ -872,7 +915,15 @@ impl App {
                         self.directory = false;
                         self.trend_view = false;
                         self.login_open = false;
-                        self.notice = Some("Signed in for this session.".into());
+                        self.notice = Some(
+                            match crate::secure_session::remember(
+                                &self.client,
+                                self.account.clone().unwrap(),
+                            ) {
+                                Ok(()) => "Signed in. Your session is saved in Keychain.".into(),
+                                Err(error) => error,
+                            },
+                        );
                         return self.load_visible_media();
                     }
                     Err(error) => self.error = Some(error),
@@ -882,6 +933,11 @@ impl App {
                 if self.publishing {
                     return Task::none();
                 }
+                if let Err(error) = self.client.forget_session() {
+                    self.error = Some(error);
+                    return Task::none();
+                }
+                self.signing_in = false;
                 self.client = Client::new().expect("TLS client initialization");
                 self.navigation.clear();
                 self.form_drafts.clear();
@@ -892,7 +948,7 @@ impl App {
                 self.draft = text_editor::Content::new();
                 self.uploads.clear();
                 self.composition = Composition::Post;
-                self.notice = Some("Local session cleared.".into());
+                self.notice = Some("Signed out. Saved sign-in removed from Keychain.".into());
                 return self.load(Route::Public, 1);
             }
             Message::Edit(action) => {
@@ -2522,7 +2578,7 @@ impl App {
             text_input("Your password", &self.password).secure(true).on_input(Message::Password).on_submit(Message::Login).padding(10).size(14),
             button(text(if self.signing_in { "Signing in..." } else { "Sign in" }).size(14)).padding([8,18])
                 .on_press_maybe((!self.signing_in && !self.username.trim().is_empty() && !self.password.is_empty()).then_some(Message::Login)).style(primary),
-            text("Your session stays in memory until you quit. Sign-in is experimental in this prototype.").size(12).color(self.colors().muted).line_height(1.5),
+            text("Stay signed in across restarts. Your session is saved in Keychain; your password is never stored.").size(12).color(self.colors().muted).line_height(1.5),
         ].spacing(12).max_width(360);
         if !self.signing_in {
             fields = fields.push(
