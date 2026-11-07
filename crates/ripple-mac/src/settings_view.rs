@@ -200,6 +200,7 @@ impl App {
                 let valid = preferences::parse_accent(&self.accent_text).is_some();
                 let custom = row![
                     text_input("#D20404", &self.accent_text)
+                        .style(form_input)
                         .on_input(Message::AccentText)
                         .on_submit(Message::ApplyAccent)
                         .padding(10)

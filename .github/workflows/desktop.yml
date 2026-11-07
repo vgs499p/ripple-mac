@@ -42,7 +42,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Linux build and package dependencies
         if: runner.os == 'Linux'
-        run: sudo apt-get update && sudo apt-get install -y libgtk-3-dev libxkbcommon-dev libwayland-dev libfontconfig1-dev rpm dpkg-dev
+        run: sudo apt-get update && sudo apt-get install -y libgtk-3-dev libxkbcommon-dev libxkbcommon-x11-0 libwayland-dev libfontconfig1-dev rpm dpkg-dev xvfb
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
       - name: Core tests
@@ -50,6 +50,16 @@ jobs:
       - name: Build Linux with the CPU renderer
         if: runner.os == 'Linux'
         run: cargo build --locked --release -p ripple-mac --no-default-features --features software
+      - name: Check Linux startup without Vulkan
+        if: runner.os == 'Linux'
+        run: |
+          set +e
+          VK_ICD_FILENAMES=/nonexistent xvfb-run -a timeout 15s target/release/ripple > startup.log 2>&1
+          code=$?
+          set -e
+          cat startup.log
+          test "$code" = 124
+          ! grep -E 'panicked|error while loading shared libraries' startup.log
       - name: Build Windows
         if: runner.os == 'Windows'
         run: cargo build --locked --release -p ripple-mac

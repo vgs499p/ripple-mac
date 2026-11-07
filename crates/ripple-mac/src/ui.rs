@@ -2584,9 +2584,9 @@ impl App {
         let mut fields = column![
             text("Sign in to Ripple").size(25).font(BOLD),
             Space::with_height(5), text("Username").size(13).font(BOLD),
-            text_input("Your username", &self.username).id("username").on_input(Message::Username).padding(10).size(14),
+            text_input("Your username", &self.username).id("username").style(form_input).on_input(Message::Username).padding(10).size(14),
             text("Password").size(13).font(BOLD),
-            text_input("Your password", &self.password).secure(true).on_input(Message::Password).on_submit(Message::Login).padding(10).size(14),
+            text_input("Your password", &self.password).style(form_input).secure(true).on_input(Message::Password).on_submit(Message::Login).padding(10).size(14),
             button(text(if self.signing_in { "Signing in..." } else { "Sign in" }).size(14)).padding([8,18])
                 .on_press_maybe((!self.signing_in && !self.username.trim().is_empty() && !self.password.is_empty()).then_some(Message::Login)).style(primary),
             text(crate::secure_session::description()).size(12).color(self.colors().muted).line_height(1.5),
@@ -2727,6 +2727,7 @@ impl App {
                         let editor: Element<'_, Message> = match field.kind {
                             FieldKind::Text | FieldKind::Password => {
                                 text_input(&field.label, &draft.value)
+                                    .style(form_input)
                                     .secure(field.kind == FieldKind::Password)
                                     .on_input(move |v| Message::FieldText(form_index, index, v))
                                     .padding(10)
@@ -2974,6 +2975,28 @@ fn divider<'a>(height: u16) -> iced::widget::Rule<'a, Theme> {
 }
 fn theme_colors(theme: &Theme) -> preferences::Colors {
     themes::colors(theme)
+}
+// The navigation palette is dark even in Ripple Light. Do not let the
+// default widget style use those chrome colors for form placeholders.
+fn form_input(theme: &Theme, status: text_input::Status) -> text_input::Style {
+    let c = theme_colors(theme);
+    let border_color = match status {
+        text_input::Status::Focused => theme.palette().primary,
+        text_input::Status::Hovered => c.muted,
+        _ => c.border,
+    };
+    text_input::Style {
+        background: c.surface.into(),
+        border: Border {
+            color: border_color,
+            width: 1.0,
+            radius: 4.0.into(),
+        },
+        icon: c.muted,
+        placeholder: preferences::mix(c.text, c.surface, 0.15),
+        value: c.text,
+        selection: theme.extended_palette().primary.weak.color,
+    }
 }
 fn white_panel(theme: &Theme) -> container::Style {
     let c = theme_colors(theme);
