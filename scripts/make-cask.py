@@ -38,7 +38,7 @@ a.output.write_text(f'''cask "ripple-mac" do
 {downloads}
   name "Ripple Native"
   desc "Native Ripple client with local themes"
-  homepage "https://github.com/vgs499p/ripple-mac"
+  homepage "https://github.com/vgs499p/ripple-desktop"
   depends_on macos: ">= :big_sur"
   app "Ripple Beta.app"
 end

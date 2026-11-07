@@ -23,14 +23,14 @@ with tempfile.TemporaryDirectory() as tmp:
  elif a.format=="deb":
   if osname!="linux": raise SystemExit("DEB builds require Linux")
   pkgarch={"x86_64":"amd64","aarch64":"arm64"}[arch]; debversion=version.replace("-","~",1)
-  (stage/"DEBIAN").mkdir(); (stage/"DEBIAN/control").write_text(f"Package: ripple-native\nVersion: {debversion}\nArchitecture: {pkgarch}\nMaintainer: Ripple Native contributors <342574562+vgs499p@users.noreply.github.com>\nSection: net\nPriority: optional\nHomepage: https://github.com/vgs499p/ripple-mac\nDepends: libc6 (>= 2.35), libgcc-s1, libgtk-3-0, libxkbcommon0, libxkbcommon-x11-0, libfontconfig1\nRecommends: mesa-vulkan-drivers, xdg-utils\nDescription: Native Ripple social client\n Direct HTTPS client with local themes and profile support.\n")
+  (stage/"DEBIAN").mkdir(); (stage/"DEBIAN/control").write_text(f"Package: ripple-native\nVersion: {debversion}\nArchitecture: {pkgarch}\nMaintainer: Ripple Native contributors <342574562+vgs499p@users.noreply.github.com>\nSection: net\nPriority: optional\nHomepage: https://github.com/vgs499p/ripple-desktop\nDepends: libc6 (>= 2.35), libgcc-s1, libgtk-3-0, libxkbcommon0, libxkbcommon-x11-0, libfontconfig1\nRecommends: mesa-vulkan-drivers, xdg-utils\nDescription: Native Ripple social client\n Direct HTTPS client with local themes and profile support.\n")
   name=out/f"ripple-native_{debversion}_{pkgarch}.deb"; subprocess.run(["dpkg-deb","--root-owner-group","-Zxz","--build",str(stage),str(name)],check=True)
  else:
   if osname!="linux": raise SystemExit("RPM builds require Linux")
   top=Path(tmp)/"rpm"; (top/"SPECS").mkdir(parents=True)
   spec=top/"SPECS/ripple.spec"; release=version.split("-",1)[1] if "-" in version else "1"; release="0."+release if "-" in version else release
   files="\n".join("/"+str(f.relative_to(stage)) for f in stage.rglob("*") if f.is_file())
-  spec.write_text(f"Name: ripple-native\nVersion: {version.split('-')[0]}\nRelease: {release}\nSummary: Native Ripple social client\nLicense: GPL-3.0-or-later\nURL: https://github.com/vgs499p/ripple-mac\nRequires: gtk3, libxkbcommon, libxkbcommon-x11, fontconfig\n%description\nNative direct HTTPS Ripple client with local themes.\n%install\nmkdir -p %{{buildroot}}\ncp -a {stage}/usr %{{buildroot}}/\n%files\n{files}\n")
+  spec.write_text(f"Name: ripple-native\nVersion: {version.split('-')[0]}\nRelease: {release}\nSummary: Native Ripple social client\nLicense: GPL-3.0-or-later\nURL: https://github.com/vgs499p/ripple-desktop\nRequires: gtk3, libxkbcommon, libxkbcommon-x11, fontconfig\n%description\nNative direct HTTPS Ripple client with local themes.\n%install\nmkdir -p %{{buildroot}}\ncp -a {stage}/usr %{{buildroot}}/\n%files\n{files}\n")
   subprocess.run(["rpmbuild","-bb","--define",f"_topdir {top}","--define","_build_id_links none",str(spec)],check=True)
   names=list((top/"RPMS").rglob("*.rpm"));
   if len(names)!=1: raise SystemExit("Expected one RPM")

@@ -2,7 +2,7 @@
 
 A compiled Rust client that connects directly to https://ripple.tel over HTTPS. There is no intermediary service, embedded website, or public API dependency. The interface keeps Ripple's red, charcoal and white identity with desktop navigation and compact post lists.
 
-[Download Desktop Beta 7](https://github.com/vgs499p/ripple-mac/releases/tag/v0.4.0-beta.7) · [Homebrew installation](docs/HOMEBREW.md)
+[Download Desktop Beta 7](https://github.com/vgs499p/ripple-desktop/releases/tag/v0.4.0-beta.7) · [Homebrew installation](docs/HOMEBREW.md)
 
 See [desktop platform builds and packaging](docs/PLATFORMS.md) for Intel macOS, Linux, Windows and BSD status.
 

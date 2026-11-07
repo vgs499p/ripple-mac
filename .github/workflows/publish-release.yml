@@ -1,0 +1,63 @@
+name: Publish native release
+on:
+  workflow_dispatch:
+    inputs:
+      native_run:
+        required: true
+        description: Native matrix run
+      supplement_run:
+        required: false
+        description: Optional targeted platform retry run
+      release_tag:
+        required: true
+        description: Release tag matching Cargo version
+permissions:
+  contents: write
+  actions: read
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.native_run }}
+          path: artifacts
+          merge-multiple: true
+      - uses: actions/download-artifact@v4
+        if: inputs.supplement_run != ''
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.supplement_run }}
+          path: artifacts
+          merge-multiple: true
+      - name: Validate version and complete artifact set
+        env:
+          RELEASE_TAG: ${{ inputs.release_tag }}
+        run: |
+          python3 - <<'PY'
+          import os,tomllib
+          from pathlib import Path
+          v=tomllib.load(open('Cargo.toml','rb'))['workspace']['package']['version']
+          assert os.environ['RELEASE_TAG']=='v'+v
+          root=Path('artifacts')
+          for pattern in ['*macos-arm64.zip','*macos-x86_64.zip','*windows-x86_64.zip','*.deb','*.rpm','*linux*.tar.gz','*freebsd*.tar.gz','*openbsd*.tar.gz','*netbsd*.tar.gz']:
+              assert len(list(root.glob(pattern)))==1,pattern
+          PY
+          cp docs/WINDOWS.md artifacts/
+          git archive --format=tar.gz --prefix=ripple-desktop/ HEAD -o artifacts/ripple-desktop-source.tar.gz
+          (cd artifacts && sha256sum * > SHA256SUMS)
+      - name: Publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
+        run: |
+          cat > /tmp/notes.md <<'NOTES'
+          Native Intel/Apple silicon macOS, Linux x86_64 DEB/RPM/tar, Windows x86_64 ZIP, and FreeBSD/OpenBSD/NetBSD tar builds.
+
+          Adds the server-recorded posting-client label beneath detailed posts. Verified on the iPhone and with the desktop parser against a live canonical thread. Core/parser tests pass on the main desktop platforms. Linux DEB startup under Xvfb and RPM installation on Fedora pass. Windows and BSD interactive GUI use remains untested. Windows requires the Microsoft Visual C++ runtime described in WINDOWS.md.
+
+          DragonFly remains blocked by its packaged Rust 1.85.1 versus the dependencies’ Rust 1.88 minimum. Saved sign-in uses macOS Keychain; other desktop platforms currently retain sign-in for the running process only.
+          NOTES
+          gh release create "$RELEASE_TAG" artifacts/* --target "$GITHUB_SHA" --prerelease --title "Ripple Desktop $RELEASE_TAG" --notes-file /tmp/notes.md
