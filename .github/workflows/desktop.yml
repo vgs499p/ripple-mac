@@ -1,0 +1,139 @@
+name: Desktop packages
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Optional new release tag, matching the Cargo version
+        required: false
+        default: ''
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  desktop:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-22.04
+            platform: linux-x86_64
+          - os: windows-latest
+            platform: windows-x86_64
+          - os: macos-15-intel
+            platform: macos-x86_64
+          - os: macos-15
+            platform: macos-arm64
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Linux build and package dependencies
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y libgtk-3-dev libxkbcommon-dev libwayland-dev libfontconfig1-dev rpm dpkg-dev
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: Core tests
+        run: cargo test --locked -p ripple-core --lib
+      - name: Build
+        if: runner.os != 'macOS'
+        run: cargo build --locked --release -p ripple-mac
+      - name: Package Linux
+        if: runner.os == 'Linux'
+        run: |
+          python3 scripts/package-unix.py --format deb
+          python3 scripts/package-unix.py --format rpm
+          python3 scripts/package-unix.py --format tar
+          dpkg-deb --info dist/*.deb
+          rpm -qp --requires dist/*.rpm
+      - name: Package macOS
+        if: runner.os == 'macOS'
+        run: |
+          sh scripts/bundle-macos.sh
+          ditto -c -k --keepParent 'dist/Ripple Beta.app' 'dist/ripple-native-${{ matrix.platform }}.zip'
+          rm -rf 'dist/Ripple Beta.app'
+      - name: Package Windows (interactive use untested)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force dist,stage
+          Copy-Item target/release/ripple.exe,LICENSE,COPYING-GPL-3.0,NOTICE,THIRD-PARTY-NOTICES.txt stage/
+          Compress-Archive stage/* dist/ripple-native-windows-x86_64.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.platform }}
+          path: dist/*
+          if-no-files-found: error
+  bsd:
+    strategy:
+      fail-fast: false
+      matrix:
+        system: [freebsd, openbsd, netbsd, dragonflybsd]
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build on freebsd (software renderer)
+        if: matrix.system == 'freebsd'
+        uses: vmactions/freebsd-vm@9531fe5c80f1b1da4fabc932aeb721f62fb29240
+        with:
+          usesh: true
+          prepare: pkg install -y rust pkgconf gtk3 libxkbcommon fontconfig python3
+          run: |
+            export PATH="/usr/local/bin:/usr/pkg/bin:$PATH"
+            cargo build --locked --release -p ripple-mac --no-default-features --features software
+            python3 scripts/package-unix.py --format tar
+      - name: Build on openbsd (software renderer)
+        if: matrix.system == 'openbsd'
+        uses: vmactions/openbsd-vm@1cc6da6be20a78f7aa2bd867f67508f6e82aca58
+        with:
+          usesh: true
+          prepare: pkg_add rust gtk+3 libxkbcommon python3
+          run: |
+            export PATH="/usr/local/bin:/usr/pkg/bin:$PATH"
+            cargo build --locked --release -p ripple-mac --no-default-features --features software
+            python3 scripts/package-unix.py --format tar
+      - name: Build on netbsd (software renderer)
+        if: matrix.system == 'netbsd'
+        uses: vmactions/netbsd-vm@3e19c989980c16a9194922e6d33f93e4f490d00d
+        with:
+          usesh: true
+          prepare: pkgin -y install rust pkg-config gtk3+ libxkbcommon fontconfig python311
+          run: |
+            export PATH="/usr/local/bin:/usr/pkg/bin:$PATH"
+            cargo build --locked --release -p ripple-mac --no-default-features --features software
+            python3 scripts/package-unix.py --format tar
+      - name: Build on dragonflybsd (software renderer)
+        if: matrix.system == 'dragonflybsd'
+        uses: vmactions/dragonflybsd-vm@839a3e6945a3dc3c33bcb56a34a2833d97df07f2
+        with:
+          usesh: true
+          prepare: pkg install -y rust pkgconf gtk3 libxkbcommon fontconfig python3
+          run: |
+            export PATH="/usr/local/bin:/usr/pkg/bin:$PATH"
+            cargo build --locked --release -p ripple-mac --no-default-features --features software
+            python3 scripts/package-unix.py --format tar
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.system }}-x86_64
+          path: dist/*.tar.gz
+          if-no-files-found: error
+  publish:
+    needs: [desktop, bsd]
+    if: always() && github.event_name == 'workflow_dispatch' && inputs.release_tag != '' && needs.desktop.result == 'success'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - name: Validate version and publish build outputs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
+        run: |
+          python3 -c 'import os,tomllib; v=tomllib.load(open("Cargo.toml","rb"))["workspace"]["package"]["version"]; assert os.environ["RELEASE_TAG"]=="v"+v'
+          (cd dist && sha256sum * > SHA256SUMS)
+          gh release create "$RELEASE_TAG" dist/* --target "$GITHUB_SHA" --prerelease --title "Ripple desktop $RELEASE_TAG" --notes "Native Intel/Apple silicon macOS, Linux DEB/RPM, and Windows builds. Successful BSD builds are attached as separate archives. Windows and BSD interactive use is untested; consult workflow results for build status."

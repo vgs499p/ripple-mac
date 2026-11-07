@@ -5,11 +5,11 @@ DIST_DIR=${RIPPLE_DIST_DIR:-"$PROJECT_DIR/dist"}
 BUILD_DIR=${CARGO_TARGET_DIR:-"$PROJECT_DIR/target"}
 export CARGO_TARGET_DIR="$BUILD_DIR"
 export MACOSX_DEPLOYMENT_TARGET=${MACOSX_DEPLOYMENT_TARGET:-11.0}
-cargo build --manifest-path "$PROJECT_DIR/Cargo.toml" --locked --release -p ripple-mac
+cargo build ${RIPPLE_CARGO_TARGET:+--target "$RIPPLE_CARGO_TARGET"} --manifest-path "$PROJECT_DIR/Cargo.toml" --locked --release -p ripple-mac
 APP_NAME=${RIPPLE_APP_NAME:-"Ripple Beta"}
 APP_DIR="$DIST_DIR/$APP_NAME.app"
 mkdir -p "$APP_DIR/Contents/MacOS" "$APP_DIR/Contents/Resources"
-cp "$BUILD_DIR/release/ripple" "$APP_DIR/Contents/MacOS/ripple"
+cp "$BUILD_DIR/${RIPPLE_CARGO_TARGET:+$RIPPLE_CARGO_TARGET/}release/ripple" "$APP_DIR/Contents/MacOS/ripple"
 cp "$PROJECT_DIR/assets/Ripple.icns" "$APP_DIR/Contents/Resources/Ripple.icns"
 cp "$PROJECT_DIR/LICENSE" "$PROJECT_DIR/COPYING-GPL-3.0" "$PROJECT_DIR/NOTICE" "$PROJECT_DIR/THIRD-PARTY-NOTICES.txt" "$APP_DIR/Contents/Resources/"
 cp "$PROJECT_DIR/assets/Info.plist" "$APP_DIR/Contents/Info.plist"

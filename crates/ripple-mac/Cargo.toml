@@ -34,3 +34,9 @@ rfd = { version = "0.15", default-features = false }
 iced_runtime = "0.13.2"
 resvg = "0.42"
 
+
+[target.'cfg(target_os = "windows")'.dependencies]
+rfd = { version = "0.15", default-features = false }
+
+[target.'cfg(any(target_os = "linux", target_os = "freebsd", target_os = "openbsd", target_os = "netbsd", target_os = "dragonfly"))'.dependencies]
+rfd = { version = "0.15", default-features = false, features = ["gtk3"] }

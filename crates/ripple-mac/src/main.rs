@@ -1,3 +1,4 @@
+#![cfg_attr(target_os = "windows", windows_subsystem = "windows")]
 // SPDX-License-Identifier: GPL-2.0-or-later
 #[cfg(target_os = "macos")]
 mod mac_menu;

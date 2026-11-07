@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Ripple
+Comment=Native Ripple social client
+Exec=ripple
+Icon=tel.ripple.native
+Terminal=false
+Categories=Network;InstantMessaging;
+StartupWMClass=ripple

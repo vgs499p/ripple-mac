@@ -3119,7 +3119,6 @@ async fn open_browser(address: &str) -> Result<(), String> {
 }
 
 async fn pick_photos() -> Result<Vec<Upload>, String> {
-    #[cfg(target_os = "macos")]
     {
         tokio::task::spawn_blocking(|| {
             use std::io::Read;
@@ -3168,14 +3167,9 @@ async fn pick_photos() -> Result<Vec<Upload>, String> {
         .await
         .map_err(|e| e.to_string())?
     }
-    #[cfg(not(target_os = "macos"))]
-    {
-        Err("The native photo picker is implemented for macOS in this prototype.".into())
-    }
 }
 
 async fn import_theme() -> Result<Option<themes::ThemePack>, String> {
-    #[cfg(target_os = "macos")]
     {
         let Some(file) = rfd::AsyncFileDialog::new()
             .set_title("Import Ripple theme")
@@ -3191,13 +3185,8 @@ async fn import_theme() -> Result<Option<themes::ThemePack>, String> {
             .map_err(|e| e.to_string())?
             .map(Some)
     }
-    #[cfg(not(target_os = "macos"))]
-    {
-        Err("Theme file dialogs are not available on this platform yet.".into())
-    }
 }
 async fn export_theme(pack: themes::ThemePack) -> Result<bool, String> {
-    #[cfg(target_os = "macos")]
     {
         let Some(file) = rfd::AsyncFileDialog::new()
             .set_title("Export Ripple theme")
@@ -3216,11 +3205,6 @@ async fn export_theme(pack: themes::ThemePack) -> Result<bool, String> {
         })
         .await
         .map_err(|e| e.to_string())?
-    }
-    #[cfg(not(target_os = "macos"))]
-    {
-        let _ = pack;
-        Err("Theme file dialogs are not available on this platform yet.".into())
     }
 }
 
