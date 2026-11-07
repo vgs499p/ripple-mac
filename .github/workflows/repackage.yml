@@ -1,0 +1,61 @@
+name: Finalize desktop packages
+on:
+  workflow_dispatch:
+    inputs:
+      build_run:
+        description: Native desktop workflow run ID
+        required: true
+permissions:
+  contents: read
+  actions: read
+jobs:
+  packages:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y rpm
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.build_run }}
+          path: native
+      - name: Collect current dependency licenses
+        run: python3 scripts/generate-notices.py
+      - name: Repackage the native Linux binary with corrected dependencies
+        run: |
+          mkdir extracted
+          tar -xzf native/linux-x86_64/*.tar.gz -C extracted
+          python3 scripts/package-unix.py --format deb --binary extracted/usr/bin/ripple
+          python3 scripts/package-unix.py --format rpm --binary extracted/usr/bin/ripple
+          python3 scripts/package-unix.py --format tar --binary extracted/usr/bin/ripple
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linux-x86_64
+          path: dist/*
+      - name: Update portable notices
+        run: |
+          python3 - <<'PY'
+          import zipfile,tarfile,shutil
+          from pathlib import Path
+          notice=Path('THIRD-PARTY-NOTICES.txt')
+          Path('portable').mkdir()
+          with zipfile.ZipFile('native/windows-x86_64/ripple-native-windows-x86_64.zip') as z:
+              z.extractall('portable/windows')
+          shutil.copy2(notice,'portable/windows/THIRD-PARTY-NOTICES.txt')
+          with zipfile.ZipFile('portable/ripple-native-windows-x86_64.zip','w',zipfile.ZIP_DEFLATED) as z:
+              for p in Path('portable/windows').iterdir(): z.write(p,p.name)
+          for archive in Path('native').glob('*bsd*/*.tar.gz'):
+              dest=Path('portable')/archive.stem
+              dest.mkdir()
+              with tarfile.open(archive) as t: t.extractall(dest,filter='fully_trusted')
+              for p in dest.rglob('THIRD-PARTY-NOTICES.txt'): shutil.copy2(notice,p)
+              with tarfile.open(Path('portable')/archive.name,'w:gz') as t: t.add(dest/'usr',arcname='usr')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: portable-final
+          path: |
+            portable/*.zip
+            portable/*.tar.gz
+            THIRD-PARTY-NOTICES.txt
