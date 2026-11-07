@@ -274,6 +274,8 @@ fn source_footer_belongs_to_the_requested_post_not_its_replies() {
     assert_eq!(page.posts[0].source.as_deref(), Some("Ripple for iOS (legacy)"));
     assert_eq!(page.posts[0].text, "Hello");
     assert_eq!(page.posts[1].source, None);
+    let canonical = parse_page(html, &url::Url::parse("https://ripple.tel/alice/status/42").unwrap()).unwrap();
+    assert_eq!(canonical.posts[0].source.as_deref(), Some("Ripple for iOS (legacy)"));
     let timeline = parse_page(html, &base()).unwrap();
     assert!(timeline.posts.iter().all(|p| p.source.is_none()));
 }

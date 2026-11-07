@@ -304,7 +304,7 @@ pub fn parse_page(html: &str, base: &Url) -> Result<Page, Error> {
     }
     // The website exposes immutable client attribution on the post detail page.
     // Its footer belongs to the requested post, not to the replies below it.
-    if let Some(id) = base.path().strip_prefix("/status/").and_then(|p| p.parse::<u64>().ok()) {
+    if let Some(id) = base.path().rsplit_once("/status/").and_then(|(_, id)| id.parse::<u64>().ok()) {
         if let Some(source) = root.select(&sel("p.text-muted > span"))
             .map(readable).find_map(|s| s.strip_prefix("via Ripple ").map(|tail| format!("Ripple {tail}"))) {
             if let Some(post) = posts.iter_mut().find(|post| post.id == id) {
