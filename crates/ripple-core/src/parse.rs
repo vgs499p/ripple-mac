@@ -19,6 +19,8 @@ pub struct Post {
     pub avatar: Option<String>,
     pub verified: bool,
     pub time: String,
+    #[serde(default)]
+    pub source: Option<String>,
     pub text: String,
     pub images: Vec<String>,
     pub links: Vec<Link>,
@@ -288,6 +290,7 @@ pub fn parse_page(html: &str, base: &Url) -> Result<Page, Error> {
                 .next()
                 .is_some(),
             time: first_text(element, ".timeago"),
+            source: None,
             text,
             images,
             links,
@@ -298,6 +301,16 @@ pub fn parse_page(html: &str, base: &Url) -> Result<Page, Error> {
             like_action: action_url(element, ".interactions a[href]", "like", base),
             repost_action: action_url(element, ".interactions a[href]", "repost", base),
         });
+    }
+    // The website exposes immutable client attribution on the post detail page.
+    // Its footer belongs to the requested post, not to the replies below it.
+    if let Some(id) = base.path().strip_prefix("/status/").and_then(|p| p.parse::<u64>().ok()) {
+        if let Some(source) = root.select(&sel("p.text-muted > span"))
+            .map(readable).find_map(|s| s.strip_prefix("via Ripple ").map(|tail| format!("Ripple {tail}"))) {
+            if let Some(post) = posts.iter_mut().find(|post| post.id == id) {
+                post.source = Some(source);
+            }
+        }
     }
     let older = root.select(&sel("a[href]")).any(|a| {
         let label = readable(a).to_lowercase();

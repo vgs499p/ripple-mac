@@ -43,7 +43,7 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
       - name: Core tests
-        run: cargo test --locked -p ripple-core --lib
+        run: cargo test --locked -p ripple-core
       - name: Build
         if: runner.os != 'macOS'
         run: cargo build --locked --release -p ripple-mac

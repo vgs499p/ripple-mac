@@ -2408,6 +2408,9 @@ impl App {
                     .style(quiet),
             );
         }
+        if let Some(source) = &post.source {
+            body = body.push(text(format!("via {source}")).size(11).color(self.colors().muted));
+        }
         let metrics = row![
             button(metric(&self.heart, &post.likes))
                 .on_press_maybe(

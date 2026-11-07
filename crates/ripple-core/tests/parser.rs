@@ -266,3 +266,14 @@ fn account_credentials_form_is_not_a_login_challenge() {
             .is_none()
     );
 }
+
+#[test]
+fn source_footer_belongs_to_the_requested_post_not_its_replies() {
+    let html = r#"<a class="brand" href="/"></a><div class="userpost" id="post-42"><span class="postheader"><b class="displayname">Alice</b><span class="username">@alice</span></span><p>Hello</p></div><p class="text-muted">Today <span>via Ripple for iOS (legacy)</span></p><div class="userpost" id="post-43"><span class="postheader"><b class="displayname">Bob</b><span class="username">@bob</span></span><p>Reply</p></div>"#;
+    let page = parse_page(html, &url::Url::parse("https://ripple.tel/status/42").unwrap()).unwrap();
+    assert_eq!(page.posts[0].source.as_deref(), Some("Ripple for iOS (legacy)"));
+    assert_eq!(page.posts[0].text, "Hello");
+    assert_eq!(page.posts[1].source, None);
+    let timeline = parse_page(html, &base()).unwrap();
+    assert!(timeline.posts.iter().all(|p| p.source.is_none()));
+}

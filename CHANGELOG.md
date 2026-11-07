@@ -1,3 +1,8 @@
+# 0.4.0-beta.7
+
+- Render Ripple’s recorded posting client beneath the original post on its detail page, including “Ripple for Mac” and “Ripple for iOS (legacy)”.
+- Keep source attribution separate from post text and preserve the server’s historical label.
+
 # 0.4.0-beta.6
 
 - Add native Intel/ARM macOS, Linux DEB/RPM, Windows portable ZIP and experimental BSD build jobs.
