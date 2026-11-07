@@ -1,0 +1,38 @@
+name: Linux CPU renderer packages
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  linux:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 60
+    env:
+      RIPPLE_NOTICE_FEATURES: software
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y libgtk-3-dev libxkbcommon-dev libxkbcommon-x11-0 libwayland-dev libfontconfig1-dev rpm dpkg-dev xvfb
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: linux-software
+      - run: cargo build --release --locked -p ripple-mac --no-default-features --features software
+      - name: Verify no GPU backend and launch without Vulkan
+        run: |
+          ! cargo tree --locked -p ripple-mac --no-default-features --features software | grep 'wgpu v'
+          set +e
+          VK_ICD_FILENAMES=/nonexistent xvfb-run -a timeout 15s target/release/ripple > startup.log 2>&1
+          code=$?
+          set -e
+          cat startup.log
+          test "$code" = 124
+          ! grep -E 'panicked|error while loading shared libraries' startup.log
+      - run: |
+          python3 scripts/generate-notices.py
+          python3 scripts/package-unix.py --format deb
+          python3 scripts/package-unix.py --format rpm
+          python3 scripts/package-unix.py --format tar
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linux-x86_64
+          path: dist/*

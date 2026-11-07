@@ -56,40 +56,15 @@ jobs:
   linux-glibc217:
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    container: quay.io/pypa/manylinux2014_x86_64
-    env:
-      RIPPLE_GLIBC_MIN: '2.17'
-      RIPPLE_NOTICE_FEATURES: software
     steps:
-      - name: Install graphics headers from the legacy baseline
-        run: |
-          yum install -y gtk3-devel libxkbcommon-devel libxkbcommon-x11-devel fontconfig-devel rpm-build xorg-x11-server-Xvfb
       - uses: actions/checkout@v4
-      - name: Install compiler
-        run: |
-          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs -o /tmp/rustup.sh
-          sh /tmp/rustup.sh -y --profile minimal
-      - name: Compile and inspect ABI requirements
-        run: |
-          . "$HOME/.cargo/env"
-          cargo build --release --locked -p ripple-mac --no-default-features --features software
-          objdump -T target/release/ripple | grep -oE 'GLIBC_[0-9.]+' | sort -Vu > glibc-symbols.txt
-          cat glibc-symbols.txt
-          test "$(tail -1 glibc-symbols.txt)" = GLIBC_2.17
-          /opt/python/cp311-cp311/bin/python3 scripts/generate-notices.py
-          /opt/python/cp311-cp311/bin/python3 scripts/package-unix.py --format rpm
-          /opt/python/cp311-cp311/bin/python3 scripts/package-unix.py --format tar
-          mv dist/*linux-x86_64.tar.gz dist/ripple-native-linux-glibc217-x86_64.tar.gz
-      - name: Start under the legacy X server
-        run: |
-          . "$HOME/.cargo/env"
-          set +e
-          xvfb-run -a timeout 15s target/release/ripple > startup.log 2>&1
-          code=$?
-          set -e
-          cat startup.log
-          test "$code" = 124
-          ! grep -E 'panicked|error while loading shared libraries' startup.log
+      - name: Build inside glibc 2.17 without running Actions Node inside it
+        run: docker run --rm -v "$PWD:/src" -w /src -e RIPPLE_GLIBC_MIN=2.17 -e RIPPLE_NOTICE_FEATURES=software quay.io/pypa/manylinux2014_x86_64 bash scripts/build-legacy-linux.sh
+      - name: Build DEB around the checked legacy binary
+        env:
+          RIPPLE_GLIBC_MIN: '2.17'
+          RIPPLE_NOTICE_FEATURES: software
+        run: python3 scripts/package-unix.py --format deb
       - uses: actions/upload-artifact@v4
         with:
           name: linux-glibc217
@@ -138,8 +113,8 @@ jobs:
           usesh: true
           prepare: |
             for set in xbase xcomp; do
-              ftp -o /tmp/$set.tgz https://cdn.NetBSD.org/pub/NetBSD/NetBSD-9.5/amd64/binary/sets/$set.tgz
-              tar -xpf /tmp/$set.tgz -C /
+              ftp -o /tmp/$set.tar.xz https://cdn.NetBSD.org/pub/NetBSD/NetBSD-9.5/amd64/binary/sets/$set.tar.xz
+              tar -xpf /tmp/$set.tar.xz -C /
             done
             /usr/sbin/pkg_add rust pkgconf gtk3+ libxkbcommon fontconfig python313
           run: |
