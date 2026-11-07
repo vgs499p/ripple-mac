@@ -1,3 +1,7 @@
+# 0.4.0-beta.5
+
+- Keep the thread selected after a reply and show the correct reply/quote success message.
+
 # 0.4.0-beta.4
 
 - Fix replies being reported as unsuccessful when Ripple only shows them in the conversation thread. Confirmation now checks the thread used for the reply.

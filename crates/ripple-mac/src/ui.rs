@@ -995,11 +995,19 @@ impl App {
                 self.publishing = false;
                 match result {
                     Ok(page) => {
+                        let completed = self.composition.clone();
                         self.page = Some(page);
                         self.page_number = 1;
-                        self.route = Route::Public;
+                        self.route = match &completed {
+                            Composition::Reply(id) => Route::Thread(*id),
+                            _ => Route::Public,
+                        };
                         self.draft = text_editor::Content::new();
-                        self.notice = Some("Your post is on Ripple.".into());
+                        self.notice = Some(match &completed {
+                            Composition::Reply(_) => "Your reply is on Ripple.",
+                            Composition::Quote(_) => "Your quote is on Ripple.",
+                            Composition::Post => "Your post is on Ripple.",
+                        }.into());
                         self.uploads.clear();
                         self.composition = Composition::Post;
                         return Task::batch([

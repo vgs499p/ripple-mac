@@ -10,7 +10,7 @@ brew install --cask vgs499p/ripple-mac/ripple-mac
 The cask needs the corresponding GitHub release archive to be published. Generate it from the final archive to keep the download checksum exact:
 
 ```sh
-python3 scripts/make-cask.py --archive /path/to/Ripple-Beta-4-macOS-arm64.zip --version 0.4.0-beta.4 --url https://github.com/vgs499p/ripple-mac/releases/download/v0.4.0-beta.4/Ripple-Beta-4-macOS-arm64.zip --output Casks/ripple-mac.rb
+python3 scripts/make-cask.py --archive /path/to/Ripple-Beta-5-macOS-arm64.zip --version 0.4.0-beta.5 --url https://github.com/vgs499p/ripple-mac/releases/download/v0.4.0-beta.5/Ripple-Beta-5-macOS-arm64.zip --output Casks/ripple-mac.rb
 ```
 
 The current build supports Apple silicon and macOS 11+. It is ad-hoc signed, not Developer ID signed or notarized. Downloaded builds can therefore require macOS approval before opening. The cask does not disable Gatekeeper or remove quarantine.

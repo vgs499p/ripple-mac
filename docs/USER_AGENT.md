@@ -4,7 +4,7 @@ The desktop client sends its own name and version, plus conventional macOS and
 CPU tokens in `User-Agent`. For example:
 
 ```text
-RippleNative/0.4.0-beta.4 (Macintosh; ARM Mac OS X 27_2; aarch64)
+RippleNative/0.4.0-beta.5 (Macintosh; ARM Mac OS X 27_2; aarch64)
 ```
 
 The OS version is read from the Mac at runtime. No username, device name or
