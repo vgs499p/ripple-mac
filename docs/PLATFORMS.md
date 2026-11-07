@@ -12,4 +12,4 @@ Manual builds upload workflow artifacts. Supply a release_tag matching the Cargo
 
 ## Beta 6 build results
 
-Intel and Apple silicon macOS, Linux x86_64, Windows x86_64, FreeBSD and OpenBSD compiled successfully on native runners/VMs. Windows and BSD GUI interactions have not been tested. Linux package startup checks caught and corrected an X11 runtime dependency. NetBSD requires the X distribution sets in its VM image; that build is being retried. DragonFly's available Rust 1.85.1 is below the dependency minimum of Rust 1.88, so no DragonFly binary is published.
+Intel and Apple silicon macOS, Linux x86_64, Windows x86_64, FreeBSD and OpenBSD compiled successfully on native runners/VMs. Windows and BSD GUI interactions have not been tested. Linux package startup checks caught and corrected an X11 runtime dependency. NetBSD compiled successfully after installing the official X distribution sets in the VM image. DragonFly's available Rust 1.85.1 is below the dependency minimum of Rust 1.88, so no DragonFly binary is published.

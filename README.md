@@ -2,7 +2,7 @@
 
 A compiled Rust client that connects directly to https://ripple.tel over HTTPS. There is no intermediary service, embedded website, or public API dependency. The interface keeps Ripple's red, charcoal and white identity with desktop navigation and compact post lists.
 
-[Download Mac Beta 5](https://github.com/vgs499p/ripple-mac/releases/tag/v0.4.0-beta.5) · [Homebrew installation](docs/HOMEBREW.md)
+[Download Desktop Beta 6](https://github.com/vgs499p/ripple-mac/releases/tag/v0.4.0-beta.6) · [Homebrew installation](docs/HOMEBREW.md)
 
 See [desktop platform builds and packaging](docs/PLATFORMS.md) for Intel macOS, Linux, Windows and BSD status.
 
@@ -43,7 +43,7 @@ The reply composer opens in the selected thread. Reply confirmation now checks t
 
 The bundled public snapshot and one profile snapshot were captured on November 5, 2026 at approximately 20:36 America/Fortaleza. They are explicitly labeled as offline previews. Photos and avatars that were not captured show placeholders. Snapshot data cannot be used to submit social actions or settings changes. Refresh reconnects to the real site.
 
-See [theme pack instructions](docs/THEMES.md) for Breeze, Nord, Catppuccin, Rosé Pine and importing/exporting custom palettes. [Beta 5 release notes](CHANGELOG.md) describe the current scope.
+See [theme pack instructions](docs/THEMES.md) for Breeze, Nord, Catppuccin, Rosé Pine and importing/exporting custom palettes. [Beta 6 release notes](CHANGELOG.md) describe the current scope.
 
 Session labels and the client User-Agent format are documented in [USER_AGENT.md](docs/USER_AGENT.md).
 

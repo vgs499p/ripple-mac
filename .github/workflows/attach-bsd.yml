@@ -1,0 +1,44 @@
+name: Attach verified BSD build
+on:
+  workflow_dispatch:
+    inputs:
+      bsd_run:
+        required: true
+        description: Successful NetBSD build run
+      notices_run:
+        required: true
+        description: Finalized desktop notices run
+permissions:
+  contents: write
+  actions: read
+jobs:
+  attach:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.bsd_run }}
+          name: netbsd-x86_64
+          path: bsd
+      - uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.notices_run }}
+          name: portable-final
+          path: notices
+      - name: Package notices and publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          mkdir stage output
+          tar -xzf bsd/*.tar.gz -C stage
+          cp notices/THIRD-PARTY-NOTICES.txt stage/usr/local/share/doc/ripple-native/THIRD-PARTY-NOTICES.txt
+          name=$(basename bsd/*.tar.gz)
+          tar -czf "output/$name" -C stage usr
+          (cd output && sha256sum *.tar.gz > SHA256SUMS-netbsd)
+          gh release upload v0.4.0-beta.6 output/*
+          gh api repos/$GH_REPO/releases/tags/v0.4.0-beta.6 --jq .body > /tmp/notes.md
+          sed -i 's/FreeBSD and OpenBSD/FreeBSD, OpenBSD and NetBSD/; s/NetBSD is being built separately; /NetBSD also compiled successfully; /' /tmp/notes.md
+          gh release edit v0.4.0-beta.6 --notes-file /tmp/notes.md
