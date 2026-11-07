@@ -37,7 +37,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 60
     env:
-      RIPPLE_NOTICE_FEATURES: ${{ runner.os == 'Linux' && 'software' || '' }}
+      RIPPLE_NOTICE_FEATURES: ${{ matrix.platform == 'linux-x86_64' && 'software' || '' }}
     steps:
       - uses: actions/checkout@v4
       - name: Linux build and package dependencies
