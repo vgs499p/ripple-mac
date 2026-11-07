@@ -14,3 +14,5 @@ python3 scripts/make-cask.py --archive /path/to/Ripple-Beta-5-macOS-arm64.zip --
 ```
 
 The current build supports Apple silicon and macOS 11+. It is ad-hoc signed, not Developer ID signed or notarized. Downloaded builds can therefore require macOS approval before opening. The cask does not disable Gatekeeper or remove quarantine.
+
+For an Intel and Apple silicon release, provide `--intel-archive` and `--intel-url` alongside the ARM archive and URL. The generated cask selects the correct download and verifies a separate checksum for each architecture.
