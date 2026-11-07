@@ -6,11 +6,16 @@ on:
         description: Optional new release tag, matching the Cargo version
         required: false
         default: ''
+      bsd_only:
+        description: Skip the macOS/Linux/Windows jobs when retrying BSD packaging
+        type: boolean
+        default: false
   pull_request:
 permissions:
   contents: read
 jobs:
   desktop:
+    if: ${{ !inputs.bsd_only }}
     strategy:
       fail-fast: false
       matrix:
@@ -81,7 +86,7 @@ jobs:
           run: |
             export PATH="/usr/local/bin:/usr/pkg/bin:$PATH"
             cargo build --locked --release -p ripple-mac --no-default-features --features software
-            python3 scripts/package-unix.py --format tar
+            (command -v python3 >/dev/null && python3 scripts/package-unix.py --format tar) || python3.13 scripts/package-unix.py --format tar
       - name: Build on openbsd (software renderer)
         if: matrix.system == 'openbsd'
         uses: vmactions/openbsd-vm@1cc6da6be20a78f7aa2bd867f67508f6e82aca58
@@ -91,17 +96,17 @@ jobs:
           run: |
             export PATH="/usr/local/bin:/usr/pkg/bin:$PATH"
             cargo build --locked --release -p ripple-mac --no-default-features --features software
-            python3 scripts/package-unix.py --format tar
+            (command -v python3 >/dev/null && python3 scripts/package-unix.py --format tar) || python3.13 scripts/package-unix.py --format tar
       - name: Build on netbsd (software renderer)
         if: matrix.system == 'netbsd'
         uses: vmactions/netbsd-vm@3e19c989980c16a9194922e6d33f93e4f490d00d
         with:
           usesh: true
-          prepare: pkgin -y install rust pkg-config gtk3+ libxkbcommon fontconfig python311
+          prepare: /usr/sbin/pkg_add rust pkgconf gtk3+ libxkbcommon fontconfig python313
           run: |
             export PATH="/usr/local/bin:/usr/pkg/bin:$PATH"
             cargo build --locked --release -p ripple-mac --no-default-features --features software
-            python3 scripts/package-unix.py --format tar
+            (command -v python3 >/dev/null && python3 scripts/package-unix.py --format tar) || python3.13 scripts/package-unix.py --format tar
       - name: Build on dragonflybsd (software renderer)
         if: matrix.system == 'dragonflybsd'
         uses: vmactions/dragonflybsd-vm@839a3e6945a3dc3c33bcb56a34a2833d97df07f2
@@ -111,7 +116,7 @@ jobs:
           run: |
             export PATH="/usr/local/bin:/usr/pkg/bin:$PATH"
             cargo build --locked --release -p ripple-mac --no-default-features --features software
-            python3 scripts/package-unix.py --format tar
+            (command -v python3 >/dev/null && python3 scripts/package-unix.py --format tar) || python3.13 scripts/package-unix.py --format tar
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.system }}-x86_64
