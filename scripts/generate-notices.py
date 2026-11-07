@@ -11,5 +11,5 @@ for package in sorted(metadata['packages'],key=lambda p:(p['name'],p['version'])
  paths={p for pattern in ['LICENSE*','LICENCE*','COPYING*','NOTICE*','UNLICENSE*'] for p in root.glob(pattern) if p.is_file()}
  if package.get('license_file'): paths.add(root/package['license_file'])
  for path in sorted(paths):
-  if path.is_file(): parts.append('\n'+path.name+'\n'+path.read_text(errors='replace'))
-Path('THIRD-PARTY-NOTICES.txt').write_text('\n'.join(parts))
+  if path.is_file(): parts.append('\n'+path.name+'\n'+path.read_text(encoding='utf-8',errors='replace'))
+Path('THIRD-PARTY-NOTICES.txt').write_text('\n'.join(parts),encoding='utf-8')

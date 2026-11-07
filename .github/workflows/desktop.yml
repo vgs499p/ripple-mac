@@ -15,6 +15,15 @@ on:
         type: choice
         options: [all, freebsd, openbsd, netbsd, dragonflybsd]
         default: all
+      desktop_only:
+        description: Skip BSD VM jobs
+        type: boolean
+        default: false
+      desktop_platform:
+        description: Desktop platform to retry
+        type: choice
+        options: [all, windows]
+        default: all
   pull_request:
 permissions:
   contents: read
@@ -24,15 +33,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - os: ubuntu-22.04
-            platform: linux-x86_64
-          - os: windows-latest
-            platform: windows-x86_64
-          - os: macos-15-intel
-            platform: macos-x86_64
-          - os: macos-15
-            platform: macos-arm64
+        include: ${{ fromJSON(inputs.desktop_platform == 'windows' && '[{"os":"windows-latest","platform":"windows-x86_64"}]' || '[{"os":"ubuntu-22.04","platform":"linux-x86_64"},{"os":"windows-latest","platform":"windows-x86_64"},{"os":"macos-15-intel","platform":"macos-x86_64"},{"os":"macos-15","platform":"macos-arm64"}]') }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 60
     steps:
@@ -77,6 +78,7 @@ jobs:
           path: dist/*
           if-no-files-found: error
   bsd:
+    if: ${{ !inputs.desktop_only }}
     strategy:
       fail-fast: false
       matrix:
