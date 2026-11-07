@@ -8,6 +8,12 @@ on:
       supplement_run:
         required: false
         description: Optional targeted platform retry run
+      linux_run:
+        required: true
+        description: Validated CPU-rendered Linux run
+      bsd_run:
+        required: false
+        description: Optional targeted BSD retry run
       release_tag:
         required: true
         description: Release tag matching Cargo version
@@ -30,6 +36,19 @@ jobs:
         with:
           github-token: ${{ github.token }}
           run-id: ${{ inputs.supplement_run }}
+          path: artifacts
+          merge-multiple: true
+      - uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.linux_run }}
+          name: linux-x86_64
+          path: artifacts
+      - uses: actions/download-artifact@v4
+        if: inputs.bsd_run != ''
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.bsd_run }}
           path: artifacts
           merge-multiple: true
       - name: Validate version and complete artifact set
@@ -56,7 +75,7 @@ jobs:
           cat > /tmp/notes.md <<'NOTES'
           Native Intel/Apple silicon macOS, Linux x86_64 DEB/RPM/tar, Windows x86_64 ZIP, and FreeBSD/OpenBSD/NetBSD tar builds.
 
-          Adds the server-recorded posting-client label beneath detailed posts. Verified on the iPhone and with the desktop parser against a live canonical thread. Core/parser tests pass on the main desktop platforms. Linux DEB startup under Xvfb and RPM installation on Fedora pass. Windows and BSD interactive GUI use remains untested. Windows requires the Microsoft Visual C++ runtime described in WINDOWS.md.
+          Adds the server-recorded posting-client label beneath detailed posts. Verified on the iPhone and with the desktop parser against a live canonical thread. Core/parser tests pass on the main desktop platforms. Linux uses CPU rendering to support machines without Vulkan, fixing a reported GPU initialization panic. The packaged binary starts under Xvfb with Vulkan explicitly disabled. DEB/RPM installation checks are recorded in CI. Windows and BSD interactive GUI use remains untested. Windows requires the Microsoft Visual C++ runtime described in WINDOWS.md.
 
           DragonFly remains blocked by its packaged Rust 1.85.1 versus the dependencies’ Rust 1.88 minimum. Saved sign-in uses macOS Keychain; other desktop platforms currently retain sign-in for the running process only.
           NOTES

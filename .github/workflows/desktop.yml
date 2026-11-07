@@ -36,6 +36,8 @@ jobs:
         include: ${{ fromJSON(inputs.desktop_platform == 'windows' && '[{"os":"windows-latest","platform":"windows-x86_64"}]' || '[{"os":"ubuntu-22.04","platform":"linux-x86_64"},{"os":"windows-latest","platform":"windows-x86_64"},{"os":"macos-15-intel","platform":"macos-x86_64"},{"os":"macos-15","platform":"macos-arm64"}]') }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 60
+    env:
+      RIPPLE_NOTICE_FEATURES: ${{ runner.os == 'Linux' && 'software' || '' }}
     steps:
       - uses: actions/checkout@v4
       - name: Linux build and package dependencies
@@ -45,8 +47,11 @@ jobs:
       - uses: Swatinem/rust-cache@v2
       - name: Core tests
         run: cargo test --locked -p ripple-core
-      - name: Build
-        if: runner.os != 'macOS'
+      - name: Build Linux with the CPU renderer
+        if: runner.os == 'Linux'
+        run: cargo build --locked --release -p ripple-mac --no-default-features --features software
+      - name: Build Windows
+        if: runner.os == 'Windows'
         run: cargo build --locked --release -p ripple-mac
       - name: Collect desktop dependency notices
         if: runner.os != 'macOS'
