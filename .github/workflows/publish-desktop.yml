@@ -31,7 +31,7 @@ jobs:
           mkdir release
           cp native/macos-*/*.zip release/
           cp finalized/linux-x86_64/* release/
-          cp finalized/portable-final/* release/
+          find finalized/portable-final -type f -exec cp {} release/ \;
           cp docs/WINDOWS.md release/WINDOWS.md
           git archive --format=tar.gz --prefix=ripple-native/ HEAD -o release/ripple-native-source.tar.gz
           (cd release && sha256sum * > SHA256SUMS)
