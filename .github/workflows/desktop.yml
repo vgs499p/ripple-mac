@@ -91,6 +91,7 @@ jobs:
         if: matrix.system == 'freebsd'
         uses: vmactions/freebsd-vm@9531fe5c80f1b1da4fabc932aeb721f62fb29240
         with:
+          release: "15.1"
           usesh: true
           prepare: pkg install -y rust pkgconf gtk3 libxkbcommon fontconfig python3
           run: |
@@ -102,6 +103,7 @@ jobs:
         if: matrix.system == 'openbsd'
         uses: vmactions/openbsd-vm@1cc6da6be20a78f7aa2bd867f67508f6e82aca58
         with:
+          release: "8.0"
           usesh: true
           prepare: pkg_add rust gtk+3 libxkbcommon python3
           run: |
@@ -113,6 +115,7 @@ jobs:
         if: matrix.system == 'netbsd'
         uses: vmactions/netbsd-vm@3e19c989980c16a9194922e6d33f93e4f490d00d
         with:
+          release: "11.1"
           usesh: true
           prepare: |
             release=$(uname -r | sed 's/_.*//')

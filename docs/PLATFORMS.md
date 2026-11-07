@@ -13,3 +13,10 @@ Manual builds upload workflow artifacts. Supply a release_tag matching the Cargo
 ## Beta 6 build results
 
 Intel and Apple silicon macOS, Linux x86_64, Windows x86_64, FreeBSD and OpenBSD compiled successfully on native runners/VMs. Windows and BSD GUI interactions have not been tested. Linux package startup checks caught and corrected an X11 runtime dependency. NetBSD compiled successfully after installing the official X distribution sets in the VM image. DragonFly's available Rust 1.85.1 is below the dependency minimum of Rust 1.88, so no DragonFly binary is published.
+
+## Runtime baselines
+
+- Both Mac architectures declare macOS 11.0. Older-version GUI compatibility has not been verified.
+- Linux x86_64 builds use Ubuntu 22.04 and require glibc 2.35+, GTK 3, libxkbcommon and libxkbcommon-x11.
+- Windows x86_64 targets Windows 10+ and requires the supported Visual C++ v14 runtime; GUI behavior is untested.
+- Current BSD archives are built natively on FreeBSD 15.1, OpenBSD 8.0 and NetBSD 11.1, respectively. These are exact build baselines, not established backwards-compatible minimums.
