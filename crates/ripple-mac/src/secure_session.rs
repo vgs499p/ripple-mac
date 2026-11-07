@@ -80,3 +80,11 @@ pub fn remember(client: &Client, account: String) -> Result<(), String> {
         Err("Secure session storage is not configured on this platform.".into())
     }
 }
+
+pub fn description() -> &'static str {
+    if cfg!(target_os = "macos") {
+        "Your session is saved in Keychain and restored when you reopen Ripple. Sign out removes it. Your password is never stored."
+    } else {
+        "Preferences save automatically. Sign-in lasts until the app closes; secure session persistence is not available on this platform yet. Your password is never stored."
+    }
+}

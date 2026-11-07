@@ -1,8 +1,10 @@
-# Ripple Native — Mac Beta 5
+# Ripple Native — Desktop Beta 6
 
 A compiled Rust client that connects directly to https://ripple.tel over HTTPS. There is no intermediary service, embedded website, or public API dependency. The interface keeps Ripple's red, charcoal and white identity with desktop navigation and compact post lists.
 
 [Download Mac Beta 5](https://github.com/vgs499p/ripple-mac/releases/tag/v0.4.0-beta.5) · [Homebrew installation](docs/HOMEBREW.md)
+
+See [desktop platform builds and packaging](docs/PLATFORMS.md) for Intel macOS, Linux, Windows and BSD status.
 
 ## Run
 

@@ -948,7 +948,7 @@ impl App {
                 self.draft = text_editor::Content::new();
                 self.uploads.clear();
                 self.composition = Composition::Post;
-                self.notice = Some("Signed out. Saved sign-in removed from Keychain.".into());
+                self.notice = Some("Signed out. Any saved sign-in was removed.".into());
                 return self.load(Route::Public, 1);
             }
             Message::Edit(action) => {
@@ -1628,7 +1628,7 @@ impl App {
         let (title, subtitle) = if let Some(page) = self.local_page {
             match page {
                 LocalPage::About | LocalPage::License => (
-                    "Ripple for Mac".into(),
+                    "Ripple desktop".into(),
                     format!(
                         "Version {} • A native Rust client",
                         env!("CARGO_PKG_VERSION")
@@ -2586,7 +2586,7 @@ impl App {
             text_input("Your password", &self.password).secure(true).on_input(Message::Password).on_submit(Message::Login).padding(10).size(14),
             button(text(if self.signing_in { "Signing in..." } else { "Sign in" }).size(14)).padding([8,18])
                 .on_press_maybe((!self.signing_in && !self.username.trim().is_empty() && !self.password.is_empty()).then_some(Message::Login)).style(primary),
-            text("Stay signed in across restarts. Your session is saved in Keychain; your password is never stored.").size(12).color(self.colors().muted).line_height(1.5),
+            text(crate::secure_session::description()).size(12).color(self.colors().muted).line_height(1.5),
         ].spacing(12).max_width(360);
         if !self.signing_in {
             fields = fields.push(
@@ -2894,7 +2894,7 @@ impl App {
             )
             .push(Space::with_height(14))
             .push(
-                text(format!("Ripple for Mac · {}", env!("CARGO_PKG_VERSION")))
+                text(format!("Ripple desktop · {}", env!("CARGO_PKG_VERSION")))
                     .size(10)
                     .color(self.colors().muted),
             );

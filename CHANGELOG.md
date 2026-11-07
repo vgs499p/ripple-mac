@@ -1,3 +1,9 @@
+# 0.4.0-beta.6
+
+- Add native Intel/ARM macOS, Linux DEB/RPM, Windows portable ZIP and experimental BSD build jobs.
+- Enable file pickers and theme import/export on Windows, Linux and BSD.
+- Report the actual platform and architecture in About.
+
 # 0.4.0-beta.5
 
 - Keep the thread selected after a reply and show the correct reply/quote success message.

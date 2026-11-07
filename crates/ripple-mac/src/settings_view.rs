@@ -145,7 +145,7 @@ impl App {
                         column![
                             text("Color mode").size(15).font(BOLD),
                             modes,
-                            text("System follows macOS when you return to the app.")
+                            text("System appearance follows macOS; other desktops currently use the light appearance.")
                                 .size(12)
                                 .color(c.muted)
                         ]
@@ -232,7 +232,7 @@ impl App {
             LocalPage::General => {
                 content = content.push(section(
                     "General",
-                    "Preferences for this Mac, separate from your Ripple account.",
+                    "Preferences for this device, separate from your Ripple account.",
                     c,
                 ));
                 content=content.push(card(column![text("Photos and data").size(15).font(BOLD),
@@ -261,7 +261,7 @@ impl App {
                     ]);
                 }
                 content = content.push(card(shortcuts));
-                content=content.push(card(column![text("Local storage").size(15).font(BOLD),text("App preferences save automatically on this Mac. Your sign-in session is saved in Keychain and restored when you reopen Ripple. Sign out removes it. Your password is never stored.").size(12).line_height(1.5).color(c.muted),
+                content=content.push(card(column![text("Local storage").size(15).font(BOLD),text(crate::secure_session::description()).size(12).line_height(1.5).color(c.muted),
                     button(text("Reset app preferences").size(12)).on_press(Message::ResetPreferences).padding([9,13]).style(bootstrap_button),
                     text("Resets appearance, reading, and media preferences. Your Ripple account is unaffected.").size(11).color(c.muted),
                 ].spacing(13)));
@@ -269,7 +269,7 @@ impl App {
             LocalPage::About => {
                 content=content.push(card(column![
                     container(image(self.logo.clone()).width(145).height(63)).padding([18,22]).center_x(Length::Fill).style(|_|container::Style{background:Some(rgb(31,35,41).into()),border:border::rounded(7),..Default::default()}),
-                    text("Ripple for Mac").size(26).font(BOLD),text(format!("Version {} · Apple silicon",env!("CARGO_PKG_VERSION"))).size(13).color(c.muted),
+                    text("Ripple desktop").size(26).font(BOLD),text(format!("Version {} · {} {}",env!("CARGO_PKG_VERSION"),std::env::consts::OS,std::env::consts::ARCH)).size(13).color(c.muted),
                     text("A native desktop home for Ripple, built with Rust. Connects directly to ripple.tel using the same pages and forms as the website.").size(14).line_height(1.5),
                     row![button(text("Ripple website").size(12).font(BOLD)).on_press(Message::Open("https://ripple.tel/".into())).padding([9,15]).style(primary),button(text("Source license").size(12)).on_press(Message::Local(LocalPage::License)).padding([9,15]).style(bootstrap_button)].spacing(10),
                 ].spacing(15)));
@@ -309,7 +309,7 @@ impl App {
                 content = content
                     .push(section(
                         "Source license",
-                        "Application source: GNU GPL version 2 or later. This Mac binary is distributed under GPL version 3 or later for dependency compatibility.",
+                        "Application source: GNU GPL version 2 or later. This desktop binary is distributed under GPL version 3 or later for dependency compatibility.",
                         c,
                     ))
                     .push(card(
@@ -328,7 +328,7 @@ impl App {
         content = content.push(
             text(
                 if matches!(page, LocalPage::Appearance | LocalPage::General) {
-                    "Changes save automatically on this Mac."
+                    "Changes save automatically on this device."
                 } else {
                     ""
                 },

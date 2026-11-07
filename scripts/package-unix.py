@@ -13,6 +13,10 @@ with tempfile.TemporaryDirectory() as tmp:
  copy("packaging/ripple.desktop","usr/share/applications/tel.ripple.native.desktop")
  copy("assets/icon.png","usr/share/icons/hicolor/256x256/apps/tel.ripple.native.png")
  for f in ["LICENSE","COPYING-GPL-3.0","NOTICE","THIRD-PARTY-NOTICES.txt"]: copy(f,"usr/share/doc/ripple-native/"+f)
+ if osname!="linux":
+  (stage/"usr/local").mkdir();
+  for item in list((stage/"usr").iterdir()):
+   if item.name!="local": shutil.move(str(item),stage/"usr/local"/item.name)
  if a.format=="tar":
   name=out/f"ripple-native-{version}-{osname}-{arch}.tar.gz"
   with tarfile.open(name,"w:gz") as tar: tar.add(stage/"usr",arcname="usr")
