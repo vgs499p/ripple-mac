@@ -1,0 +1,50 @@
+name: Package installation checks
+on:
+  workflow_dispatch:
+    inputs:
+      build_run:
+        description: Desktop packages workflow run ID
+        required: true
+permissions:
+  contents: read
+  actions: read
+jobs:
+  deb:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.build_run }}
+          name: linux-x86_64
+          path: packages
+      - run: sudo apt-get update && sudo apt-get install -y xvfb mesa-vulkan-drivers desktop-file-utils ./packages/*.deb
+      - name: Validate installation and start a window under Xvfb
+        shell: bash
+        run: |
+          dpkg-query -W ripple-native
+          desktop-file-validate /usr/share/applications/tel.ripple.native.desktop
+          set +e
+          xvfb-run -a timeout 15s ripple >startup.log 2>&1
+          status=$?
+          set -e
+          cat startup.log
+          test "$status" = 124
+          ! grep -E 'panicked|error while loading shared libraries' startup.log
+  rpm:
+    runs-on: ubuntu-latest
+    container: registry.fedoraproject.org/fedora:latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.build_run }}
+          name: linux-x86_64
+          path: packages
+      - name: Install and verify RPM on Fedora
+        run: |
+          dnf install -y packages/*.rpm
+          rpm -V ripple-native
+          ldd /usr/bin/ripple > dependencies.txt
+          cat dependencies.txt
+          ! grep 'not found' dependencies.txt
