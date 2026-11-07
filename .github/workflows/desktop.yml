@@ -10,6 +10,11 @@ on:
         description: Skip the macOS/Linux/Windows jobs when retrying BSD packaging
         type: boolean
         default: false
+      bsd_system:
+        description: BSD target to retry
+        type: choice
+        options: [all, freebsd, openbsd, netbsd, dragonflybsd]
+        default: all
   pull_request:
 permissions:
   contents: read
@@ -72,7 +77,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        system: [freebsd, openbsd, netbsd, dragonflybsd]
+        system: ${{ fromJSON(inputs.bsd_system != '' && inputs.bsd_system != 'all' && format('["{0}"]', inputs.bsd_system) || '["freebsd","openbsd","netbsd","dragonflybsd"]') }}
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
@@ -102,7 +107,13 @@ jobs:
         uses: vmactions/netbsd-vm@3e19c989980c16a9194922e6d33f93e4f490d00d
         with:
           usesh: true
-          prepare: /usr/sbin/pkg_add rust pkgconf gtk3+ libxkbcommon fontconfig python313
+          prepare: |
+            release=$(uname -r | sed 's/_.*//')
+            for set in xbase xcomp; do
+              ftp -o /tmp/$set.tar.xz https://cdn.NetBSD.org/pub/NetBSD/NetBSD-$release/amd64/binary/sets/$set.tar.xz
+              tar -xpf /tmp/$set.tar.xz -C /
+            done
+            /usr/sbin/pkg_add rust pkgconf gtk3+ libxkbcommon fontconfig python313
           run: |
             export PATH="/usr/local/bin:/usr/pkg/bin:$PATH"
             cargo build --locked --release -p ripple-mac --no-default-features --features software
