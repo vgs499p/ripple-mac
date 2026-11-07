@@ -47,6 +47,9 @@ jobs:
       - name: Build
         if: runner.os != 'macOS'
         run: cargo build --locked --release -p ripple-mac
+      - name: Collect desktop dependency notices
+        if: runner.os != 'macOS'
+        run: python3 scripts/generate-notices.py
       - name: Package Linux
         if: runner.os == 'Linux'
         run: |
@@ -91,6 +94,7 @@ jobs:
           run: |
             export PATH="/usr/local/bin:/usr/pkg/bin:$PATH"
             cargo build --locked --release -p ripple-mac --no-default-features --features software
+            (command -v python3 >/dev/null && python3 scripts/generate-notices.py) || python3.13 scripts/generate-notices.py
             (command -v python3 >/dev/null && python3 scripts/package-unix.py --format tar) || python3.13 scripts/package-unix.py --format tar
       - name: Build on openbsd (software renderer)
         if: matrix.system == 'openbsd'
@@ -101,6 +105,7 @@ jobs:
           run: |
             export PATH="/usr/local/bin:/usr/pkg/bin:$PATH"
             cargo build --locked --release -p ripple-mac --no-default-features --features software
+            (command -v python3 >/dev/null && python3 scripts/generate-notices.py) || python3.13 scripts/generate-notices.py
             (command -v python3 >/dev/null && python3 scripts/package-unix.py --format tar) || python3.13 scripts/package-unix.py --format tar
       - name: Build on netbsd (software renderer)
         if: matrix.system == 'netbsd'
@@ -117,6 +122,7 @@ jobs:
           run: |
             export PATH="/usr/local/bin:/usr/pkg/bin:$PATH"
             cargo build --locked --release -p ripple-mac --no-default-features --features software
+            (command -v python3 >/dev/null && python3 scripts/generate-notices.py) || python3.13 scripts/generate-notices.py
             (command -v python3 >/dev/null && python3 scripts/package-unix.py --format tar) || python3.13 scripts/package-unix.py --format tar
       - name: Build on dragonflybsd (software renderer)
         if: matrix.system == 'dragonflybsd'
@@ -127,6 +133,7 @@ jobs:
           run: |
             export PATH="/usr/local/bin:/usr/pkg/bin:$PATH"
             cargo build --locked --release -p ripple-mac --no-default-features --features software
+            (command -v python3 >/dev/null && python3 scripts/generate-notices.py) || python3.13 scripts/generate-notices.py
             (command -v python3 >/dev/null && python3 scripts/package-unix.py --format tar) || python3.13 scripts/package-unix.py --format tar
       - uses: actions/upload-artifact@v4
         with:

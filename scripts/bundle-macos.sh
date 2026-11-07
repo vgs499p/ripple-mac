@@ -6,6 +6,7 @@ BUILD_DIR=${CARGO_TARGET_DIR:-"$PROJECT_DIR/target"}
 export CARGO_TARGET_DIR="$BUILD_DIR"
 export MACOSX_DEPLOYMENT_TARGET=${MACOSX_DEPLOYMENT_TARGET:-11.0}
 cargo build ${RIPPLE_CARGO_TARGET:+--target "$RIPPLE_CARGO_TARGET"} --manifest-path "$PROJECT_DIR/Cargo.toml" --locked --release -p ripple-mac
+python3 "$PROJECT_DIR/scripts/generate-notices.py"
 APP_NAME=${RIPPLE_APP_NAME:-"Ripple Beta"}
 APP_DIR="$DIST_DIR/$APP_NAME.app"
 mkdir -p "$APP_DIR/Contents/MacOS" "$APP_DIR/Contents/Resources"

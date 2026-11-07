@@ -9,3 +9,7 @@ Build locally with `cargo build --release --locked -p ripple-mac`. For CPU rende
 macOS saves sessions in Keychain. Other platforms currently keep sign-in in memory for the process and report that secure persistence is unavailable. No plaintext cookie fallback is used. File pickers and theme import/export are available on all desktop builds. Preferences follow APPDATA on Windows and XDG_CONFIG_HOME on Linux/BSD.
 
 Manual builds upload workflow artifacts. Supply a release_tag matching the Cargo version to publish a prerelease after the main desktop jobs pass. A failed BSD job remains visible and never produces a fake binary.
+
+## Beta 6 build results
+
+Intel and Apple silicon macOS, Linux x86_64, Windows x86_64, FreeBSD and OpenBSD compiled successfully on native runners/VMs. Windows and BSD GUI interactions have not been tested. Linux package startup checks caught and corrected an X11 runtime dependency. NetBSD requires the X distribution sets in its VM image; that build is being retried. DragonFly's available Rust 1.85.1 is below the dependency minimum of Rust 1.88, so no DragonFly binary is published.

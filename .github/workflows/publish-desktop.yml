@@ -1,0 +1,49 @@
+name: Publish validated desktop packages
+on:
+  workflow_dispatch:
+    inputs:
+      native_run:
+        required: true
+        description: Native desktop build run
+      packages_run:
+        required: true
+        description: Finalized packages run
+permissions:
+  contents: write
+  actions: read
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.native_run }}
+          path: native
+      - uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.packages_run }}
+          path: finalized
+      - name: Stage validated packages and corresponding sources
+        run: |
+          mkdir release
+          cp native/macos-*/*.zip release/
+          cp finalized/linux-x86_64/* release/
+          cp finalized/portable-final/* release/
+          git archive --format=tar.gz --prefix=ripple-native/ HEAD -o release/ripple-native-source.tar.gz
+          (cd release && sha256sum * > SHA256SUMS)
+      - name: Publish draft
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release upload v0.4.0-beta.6 release/* --clobber
+          cat > /tmp/notes.md <<'NOTES'
+          Native builds for Intel and Apple silicon macOS, Linux x86_64 (DEB/RPM/tar), Windows x86_64 (ZIP), FreeBSD and OpenBSD (tar archives).
+
+          Core tests pass on the main desktop platforms. Corrected Linux packages were checked by installing the DEB and starting under Xvfb, and installing/verifying the RPM on Fedora. Windows and BSD interactive use remains untested. NetBSD is being built separately; DragonFly is blocked by its packaged Rust 1.85 versus dependencies requiring Rust 1.88.
+
+          File pickers and theme import/export are enabled across desktop builds. Saved sessions currently use macOS Keychain; other platforms retain sign-in for the running process only.
+          NOTES
+          gh release edit v0.4.0-beta.6 --target "$GITHUB_SHA" --notes-file /tmp/notes.md --draft=false --prerelease
