@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 """Collect dependency license texts from the locked, downloaded Cargo sources."""
-import json, subprocess
+import json, subprocess, os
 from pathlib import Path
-metadata=json.loads(subprocess.check_output(['cargo','metadata','--locked','--format-version','1']))
+host=subprocess.check_output(['rustc','-vV'],text=True).split('host: ',1)[1].splitlines()[0]
+args=['cargo','metadata','--locked','--format-version','1','--filter-platform',os.environ.get('RIPPLE_CARGO_TARGET',host)]
+if os.environ.get('RIPPLE_NOTICE_FEATURES')=='software': args += ['--no-default-features','--features','ripple-mac/software']
+metadata=json.loads(subprocess.check_output(args))
 parts=['Third-party Rust dependencies for Ripple desktop.\nApplication source: GPL-2.0-or-later. Desktop binaries: GPL-3.0-or-later.\nDependency versions and checksums are pinned by Cargo.lock.\n']
 for package in sorted(metadata['packages'],key=lambda p:(p['name'],p['version'])):
  if not package['source']: continue

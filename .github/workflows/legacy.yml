@@ -1,0 +1,155 @@
+name: Legacy compatibility builds
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  intel-sierra:
+    runs-on: macos-15-intel
+    timeout-minutes: 60
+    env:
+      MACOSX_DEPLOYMENT_TARGET: '10.12'
+      RIPPLE_CARGO_FLAGS: --no-default-features --features software
+      RIPPLE_NOTICE_FEATURES: software
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: sierra-software
+      - run: |
+          sh scripts/bundle-macos.sh
+          xcrun vtool -show-build 'dist/Ripple Beta.app/Contents/MacOS/ripple'
+          test "$(/usr/libexec/PlistBuddy -c 'Print :LSMinimumSystemVersion' 'dist/Ripple Beta.app/Contents/Info.plist')" = 10.12
+          ditto -c -k --keepParent 'dist/Ripple Beta.app' dist/ripple-native-macos-x86_64-sierra.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: intel-sierra
+          path: dist/*.zip
+  windows7:
+    runs-on: windows-latest
+    timeout-minutes: 60
+    env:
+      RIPPLE_CARGO_TARGET: x86_64-win7-windows-msvc
+      RIPPLE_NOTICE_FEATURES: software
+      RUSTFLAGS: -C target-feature=+crt-static
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@nightly
+        with:
+          components: rust-src
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: win7-software
+      - run: cargo build --release --locked -p ripple-mac --no-default-features --features software -Z build-std=std,panic_abort --target x86_64-win7-windows-msvc
+      - run: python scripts/generate-notices.py
+      - shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force dist,stage
+          Copy-Item target/x86_64-win7-windows-msvc/release/ripple.exe,LICENSE,COPYING-GPL-3.0,NOTICE,THIRD-PARTY-NOTICES.txt stage/
+          'Experimental Windows 7 SP1 x64 target. Built with custom Rust std and software rendering. Runtime compatibility is unverified.' | Out-File -Encoding utf8 stage/COMPATIBILITY.txt
+          Compress-Archive stage/* dist/ripple-native-windows7-x86_64-experimental.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows7-experimental
+          path: dist/*.zip
+  linux-glibc217:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    container: quay.io/pypa/manylinux2014_x86_64
+    env:
+      RIPPLE_GLIBC_MIN: '2.17'
+      RIPPLE_NOTICE_FEATURES: software
+    steps:
+      - name: Install graphics headers from the legacy baseline
+        run: |
+          yum install -y gtk3-devel libxkbcommon-devel libxkbcommon-x11-devel fontconfig-devel rpm-build xorg-x11-server-Xvfb
+      - uses: actions/checkout@v4
+      - name: Install compiler
+        run: |
+          curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs -o /tmp/rustup.sh
+          sh /tmp/rustup.sh -y --profile minimal
+      - name: Compile and inspect ABI requirements
+        run: |
+          . "$HOME/.cargo/env"
+          cargo build --release --locked -p ripple-mac --no-default-features --features software
+          objdump -T target/release/ripple | grep -oE 'GLIBC_[0-9.]+' | sort -Vu > glibc-symbols.txt
+          cat glibc-symbols.txt
+          test "$(tail -1 glibc-symbols.txt)" = GLIBC_2.17
+          /opt/python/cp311-cp311/bin/python3 scripts/generate-notices.py
+          /opt/python/cp311-cp311/bin/python3 scripts/package-unix.py --format rpm
+          /opt/python/cp311-cp311/bin/python3 scripts/package-unix.py --format tar
+          mv dist/*linux-x86_64.tar.gz dist/ripple-native-linux-glibc217-x86_64.tar.gz
+      - name: Start under the legacy X server
+        run: |
+          . "$HOME/.cargo/env"
+          set +e
+          xvfb-run -a timeout 15s target/release/ripple > startup.log 2>&1
+          code=$?
+          set -e
+          cat startup.log
+          test "$code" = 124
+          ! grep -E 'panicked|error while loading shared libraries' startup.log
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linux-glibc217
+          path: |
+            dist/*
+            glibc-symbols.txt
+  older-bsd:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        system: [freebsd, openbsd, netbsd]
+    steps:
+      - uses: actions/checkout@v4
+      - name: FreeBSD 13.5
+        if: matrix.system == 'freebsd'
+        uses: vmactions/freebsd-vm@9531fe5c80f1b1da4fabc932aeb721f62fb29240
+        with:
+          release: '13.5'
+          usesh: true
+          prepare: |
+            pkg install -y rust pkgconf gtk3 libxkbcommon fontconfig python3
+          run: |
+            cargo build --locked --release -p ripple-mac --no-default-features --features software
+            RIPPLE_NOTICE_FEATURES=software python3 scripts/generate-notices.py
+            python3 scripts/package-unix.py --format tar
+            mv dist/*freebsd*.tar.gz dist/ripple-native-freebsd13.5-amd64.tar.gz
+      - name: OpenBSD 7.8
+        if: matrix.system == 'openbsd'
+        uses: vmactions/openbsd-vm@1cc6da6be20a78f7aa2bd867f67508f6e82aca58
+        with:
+          release: '7.8'
+          usesh: true
+          prepare: pkg_add rust gtk+3 libxkbcommon python3
+          run: |
+            cargo build --locked --release -p ripple-mac --no-default-features --features software
+            RIPPLE_NOTICE_FEATURES=software python3 scripts/generate-notices.py
+            python3 scripts/package-unix.py --format tar
+            mv dist/*openbsd*.tar.gz dist/ripple-native-openbsd7.8-amd64.tar.gz
+      - name: NetBSD 9.5
+        if: matrix.system == 'netbsd'
+        uses: vmactions/netbsd-vm@3e19c989980c16a9194922e6d33f93e4f490d00d
+        with:
+          release: '9.5'
+          usesh: true
+          prepare: |
+            for set in xbase xcomp; do
+              ftp -o /tmp/$set.tgz https://cdn.NetBSD.org/pub/NetBSD/NetBSD-9.5/amd64/binary/sets/$set.tgz
+              tar -xpf /tmp/$set.tgz -C /
+            done
+            /usr/sbin/pkg_add rust pkgconf gtk3+ libxkbcommon fontconfig python313
+          run: |
+            export PATH="/usr/local/bin:/usr/pkg/bin:$PATH"
+            cargo build --locked --release -p ripple-mac --no-default-features --features software
+            RIPPLE_NOTICE_FEATURES=software python3.13 scripts/generate-notices.py
+            python3.13 scripts/package-unix.py --format tar
+            mv dist/*netbsd*.tar.gz dist/ripple-native-netbsd9.5-amd64.tar.gz
+      - uses: actions/upload-artifact@v4
+        with:
+          name: legacy-${{ matrix.system }}
+          path: dist/*.tar.gz
+          if-no-files-found: error

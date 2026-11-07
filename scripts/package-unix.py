@@ -5,6 +5,8 @@ from pathlib import Path
 p=argparse.ArgumentParser(); p.add_argument("--format",choices=["tar","deb","rpm"],default="tar"); p.add_argument("--binary",type=Path,default=Path("target/release/ripple")); a=p.parse_args()
 root=Path(__file__).resolve().parent.parent
 version=json.loads(subprocess.check_output(["cargo","metadata","--no-deps","--format-version","1"],cwd=root))["packages"][0]["version"]
+glibc_min=os.environ.get("RIPPLE_GLIBC_MIN","2.35")
+if not all(part.isdigit() for part in glibc_min.split(".")): raise SystemExit("Invalid glibc minimum")
 osname=platform.system().lower(); arch=platform.machine().lower(); out=root/"dist"; out.mkdir(exist_ok=True)
 with tempfile.TemporaryDirectory() as tmp:
  stage=Path(tmp)/"root"; (stage/"usr/bin").mkdir(parents=True); shutil.copy2(a.binary,stage/"usr/bin/ripple"); (stage/"usr/bin/ripple").chmod(0o755)
@@ -23,7 +25,7 @@ with tempfile.TemporaryDirectory() as tmp:
  elif a.format=="deb":
   if osname!="linux": raise SystemExit("DEB builds require Linux")
   pkgarch={"x86_64":"amd64","aarch64":"arm64"}[arch]; debversion=version.replace("-","~",1)
-  (stage/"DEBIAN").mkdir(); (stage/"DEBIAN/control").write_text(f"Package: ripple-native\nVersion: {debversion}\nArchitecture: {pkgarch}\nMaintainer: Ripple Native contributors <342574562+vgs499p@users.noreply.github.com>\nSection: net\nPriority: optional\nHomepage: https://github.com/vgs499p/ripple-desktop\nDepends: libc6 (>= 2.35), libgcc-s1, libgtk-3-0, libxkbcommon0, libxkbcommon-x11-0, libfontconfig1\nRecommends: mesa-vulkan-drivers, xdg-utils\nDescription: Native Ripple social client\n Direct HTTPS client with local themes and profile support.\n")
+  (stage/"DEBIAN").mkdir(); (stage/"DEBIAN/control").write_text(f"Package: ripple-native\nVersion: {debversion}\nArchitecture: {pkgarch}\nMaintainer: Ripple Native contributors <342574562+vgs499p@users.noreply.github.com>\nSection: net\nPriority: optional\nHomepage: https://github.com/vgs499p/ripple-desktop\nDepends: libc6 (>= {glibc_min}), libgcc-s1, libgtk-3-0, libxkbcommon0, libxkbcommon-x11-0, libfontconfig1\nRecommends: mesa-vulkan-drivers, xdg-utils\nDescription: Native Ripple social client\n Direct HTTPS client with local themes and profile support.\n")
   name=out/f"ripple-native_{debversion}_{pkgarch}.deb"; subprocess.run(["dpkg-deb","--root-owner-group","-Zxz","--build",str(stage),str(name)],check=True)
  else:
   if osname!="linux": raise SystemExit("RPM builds require Linux")
